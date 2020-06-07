@@ -16,9 +16,13 @@ namespace Api.Controllers
             _MSGConfigHelper = mSGConfigHelper;
 
         }
-        public ActionResult<string> Get()
+        public IActionResult Get()
         {
-            return new ActionResult<string>("API running" + Environment.NewLine + _MSGConfigHelper.AuthServerUrl);
+            return new JsonResult("API running" 
+                + Environment.NewLine + _MSGConfigHelper.AuthServerUrl
+                + Environment.NewLine + _MSGConfigHelper.MSGGenDB01);
+
+
         }
     }
 }

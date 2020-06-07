@@ -10,8 +10,10 @@ namespace Api
     {
         string TestClientUrl { get; set; }
         string AuthServerUrl { get; set; }
-
         string MSGApiGenUrl { get; set; }
+
+        string MSGGenDB01 { get; set; }
+
     }
 
     public class MSGConfigHelper : IMSGConfigHelper
@@ -21,7 +23,8 @@ namespace Api
         public string AuthServerUrl { get; set; }
 
         public string MSGApiGenUrl { get; set; }
-         
+
+        public string MSGGenDB01 { get; set; }
 
         private readonly IConfiguration _configuration;
 
@@ -34,6 +37,8 @@ namespace Api
             AuthServerUrl = configuration["AuthServerUrl"];
 
             MSGApiGenUrl = configuration["MSGApiGenUrl"];
+
+            MSGGenDB01 = configuration["MSGGenDB01"];
         }
 
         
