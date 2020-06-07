@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Api.Controllers
 {
-    [Route("identity")]
+    [Route("api/[controller]")]
     [Authorize]
     public class IdentityController : ControllerBase
     {
