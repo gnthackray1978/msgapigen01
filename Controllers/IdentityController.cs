@@ -16,13 +16,11 @@ namespace Api.Controllers
 
         public IActionResult Get()
         {
-            string payload = "Secure endpoint";
+         
 
-            return new JsonResult(new { payload = payload });
+            ClaimsPrincipal currentUser = this.User;
 
-           // ClaimsPrincipal currentUser = this.User;
-
-           // return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value });
+            return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value });
         }
     }
 }
