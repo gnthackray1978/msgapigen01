@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System;
+using System.Diagnostics;
 
 namespace Api.Controllers
 {
@@ -15,12 +17,12 @@ namespace Api.Controllers
 
 
         public IActionResult Get()
-        {
-         
-
+        {         
             ClaimsPrincipal currentUser = this.User;
 
+            Console.WriteLine("gotten");
 
+            Debug.WriteLine("debug gotten");
 
             return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value});
         }
