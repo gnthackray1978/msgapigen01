@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System;
 using System.Diagnostics;
+using Serilog;
+using Serilog.Events;
 
 namespace Api.Controllers
 {
@@ -14,11 +16,19 @@ namespace Api.Controllers
     [Authorize]
     public class IdentityController : ControllerBase
     {
+        private readonly  ILogger  _logger;
 
+        public IdentityController(ILogger logger)
+        {
+
+            _logger = logger;
+        }
 
         public IActionResult Get()
         {         
             ClaimsPrincipal currentUser = this.User;
+
+            _logger.Debug("test");
 
             Console.WriteLine("gotten");
 
