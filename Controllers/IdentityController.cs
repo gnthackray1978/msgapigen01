@@ -20,7 +20,9 @@ namespace Api.Controllers
 
             ClaimsPrincipal currentUser = this.User;
 
-            return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value,c.Issuer,c.Subject, c.OriginalIssuer });
+
+
+            return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value});
         }
     }
 }
