@@ -28,11 +28,25 @@ namespace Api.Controllers
         {         
             ClaimsPrincipal currentUser = this.User;
 
-            _logger.Debug("test");
+           
 
-            Console.WriteLine("gotten");
+            foreach(var c in currentUser.Claims)
+            {
+                var t = c.Type ?? "";
+                var v = c.Value ?? "";
+                var i = c.Issuer ?? "";
+                var o = c.OriginalIssuer ?? "";
+                //var s = c.Subject. ?? "";
+                _logger.Debug(t + " " + v + " " + i + " "+o);
+                _logger.Debug("props");
+                foreach (var p in c.Properties)
+                {
+                    _logger.Debug(p.Value);
+                }
 
-            Debug.WriteLine("debug gotten");
+
+
+            }
 
             return new JsonResult(from c in currentUser.Claims select new { c.Type, c.Value});
         }
