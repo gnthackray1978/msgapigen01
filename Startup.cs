@@ -11,6 +11,7 @@ using GqlMovies.Api.Types;
 using GqlMovies.Api.Models;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
+using GraphQL.Types;
 
 namespace Api
 {
@@ -61,9 +62,15 @@ namespace Api
                 });
             });
 
-            services.AddSingleton<IDependencyResolver>(
-                s => new FuncDependencyResolver(s.GetRequiredService)
-            );
+            //services.AddSingleton<IDependencyResolver>(
+            //    s => new FuncDependencyResolver(s.GetRequiredService)
+            //);
+
+            services.AddSingleton(
+  s => new MainSchema(
+      new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
+
+
             services.AddHttpClient<IMovieService, MovieService>();
             services.AddSingleton<MovieQuery>();
             services.AddSingleton<MovieType>();

@@ -1,11 +1,12 @@
 using GraphQL;
 using GraphQL.Types;
+using System;
 
 namespace GqlMovies.Api.Schemas
 {
 	public class MainSchema : Schema
 	{
-		public MainSchema(IDependencyResolver resolver): base(resolver)
+		public MainSchema(IServiceProvider resolver): base(resolver)
 		{
 			Query = new Query();
 		}

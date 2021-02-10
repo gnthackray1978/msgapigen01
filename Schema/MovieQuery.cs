@@ -4,6 +4,7 @@ using GqlMovies.Api.Services;
 using GraphQL.Types;
 using System.Collections.Generic;
 using System.Reflection;
+using GraphQL;
 
 namespace GqlMovies.Api.Schemas
 {

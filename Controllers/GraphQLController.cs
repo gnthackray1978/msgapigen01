@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using GqlMovies.Api.Schemas;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using GraphQL.NewtonsoftJson;
 
 namespace GqlMovies.Api.Controllers
 {
@@ -13,6 +14,7 @@ namespace GqlMovies.Api.Controllers
 		public string Query { get; set; }
 		public JObject Variables { get; set; }
 	}
+
 //Route("api/[controller]")]
 	[ApiController]
 	[Route("[controller]")]
@@ -28,7 +30,13 @@ namespace GqlMovies.Api.Controllers
 		[HttpPost]
 		public async Task<IActionResult> PostAsync([FromBody] GraphQLQuery query)
 		{
-			var json = await _schema.ExecuteAsync(_ =>
+			var writer = new GraphQL.SystemTextJson.DocumentWriter();
+
+			JObject variables = query.Variables;
+
+			
+
+			var json = await _schema.ExecuteAsync(writer,_ =>
 			{
 				_.Query = query.Query;
 				_.Inputs = query.Variables.ToInputs();
