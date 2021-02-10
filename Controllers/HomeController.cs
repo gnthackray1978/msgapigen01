@@ -19,8 +19,9 @@ namespace Api.Controllers
         public IActionResult Get()
         {
             string payload = "API running - "
-                + Environment.NewLine + _MSGConfigHelper.AuthServerUrl
-                + Environment.NewLine + _MSGConfigHelper.MSGGenDB01;
+                + Environment.NewLine + _MSGConfigHelper.AuthServerUrl;
+
+              //  + Environment.NewLine + _MSGConfigHelper.MSGGenDB01;
 
             return new JsonResult(new { payload = payload});
 
