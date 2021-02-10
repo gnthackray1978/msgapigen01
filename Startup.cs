@@ -1,11 +1,16 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+﻿
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using GraphQL;
+using GqlMovies.Api.Services;
+using GqlMovies.Api.Schemas;
+using GqlMovies.Api.Types;
+using GqlMovies.Api.Models;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Server.Ui.Voyager;
 
 namespace Api
 {
@@ -56,14 +61,42 @@ namespace Api
                 });
             });
 
+            services.AddSingleton<IDependencyResolver>(
+                s => new FuncDependencyResolver(s.GetRequiredService)
+            );
+            services.AddHttpClient<IMovieService, MovieService>();
+            services.AddSingleton<MovieQuery>();
+            services.AddSingleton<MovieType>();
+            services.AddSingleton<ResultsType<MovieType, Movie>>();
+            services.AddSingleton<MainSchema>();
+            //services.AddCors(o => o.AddPolicy("MyPolicy", p =>
+            //{
+            //    p.AllowAnyHeader();
+            //    p.AllowAnyMethod();
+            //    p.AllowAnyOrigin();
+            //}));
 
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseHttpsRedirection();
+            //}
+
             app.UseCors("default");
             app.UseAuthentication();
             // app.UseMvc();
+
+            app.UseWebSockets();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" });
+            app.UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/voyager" });
             app.UseRouting();
             app.UseAuthorization();
 
@@ -75,6 +108,12 @@ namespace Api
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        
+        
+        //.UseWebSockets()
+        //    .UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" })
+        //    .UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/voyager" });
+         
         }
     }
 }
