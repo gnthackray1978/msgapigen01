@@ -18,7 +18,7 @@ namespace Api.Controllers
         }
         public IActionResult Get()
         {
-            string payload = "API running - "
+            string payload = "API running -- "
                 + Environment.NewLine + _MSGConfigHelper.AuthServerUrl;
 
               //  + Environment.NewLine + _MSGConfigHelper.MSGGenDB01;
