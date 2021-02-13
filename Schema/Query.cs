@@ -8,7 +8,9 @@ namespace GqlMovies.Api.Schemas
 		{
 			Name = "Query";
 
-			Field<MovieQuery>( "movie", resolve: context => new{ });
+			Field<SiteQuery>( "site", resolve: context => new{ });
+
+			Field<ClaimQuery>("claim", resolve: context => new { });
 		}
 	}
 }

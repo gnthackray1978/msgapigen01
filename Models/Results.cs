@@ -13,6 +13,7 @@ namespace GqlMovies.Api.Models
         public int total_pages { private get; set; }
         public int TotalPages => total_pages;
 
+        public string Error { get; set; }
 
     }
 }

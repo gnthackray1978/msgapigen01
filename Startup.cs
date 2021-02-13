@@ -61,28 +61,29 @@ namespace Api
                         .AllowAnyMethod();
                 });
             });
+ 
 
-            //services.AddSingleton<IDependencyResolver>(
-            //    s => new FuncDependencyResolver(s.GetRequiredService)
-            //);
+            services.AddSingleton(s => new MainSchema( new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
 
-            services.AddSingleton(
-  s => new MainSchema(
-      new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
+            services.AddHttpClient<IClaimsListService, ClaimListService>();
+            services.AddHttpClient<ISiteListService, SiteListService>();
+          
+            
+            services.AddSingleton<ClaimQuery>();
 
+            services.AddSingleton<SiteQuery>();
 
-            services.AddHttpClient<IMovieService, MovieService>();
-            services.AddSingleton<MovieQuery>();
-            services.AddSingleton<MovieType>();
-            services.AddSingleton<ResultsType<MovieType, Movie>>();
+            services.AddSingleton<MSGClaimType>();
+            services.AddSingleton<SiteType>();
+
+            services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
+
+            services.AddSingleton<SiteResultType<SiteType, Site>>();
+
+         
+            
             services.AddSingleton<MainSchema>();
-            //services.AddCors(o => o.AddPolicy("MyPolicy", p =>
-            //{
-            //    p.AllowAnyHeader();
-            //    p.AllowAnyMethod();
-            //    p.AllowAnyOrigin();
-            //}));
-
+            
             services.AddControllers().AddNewtonsoftJson();
         }
 
