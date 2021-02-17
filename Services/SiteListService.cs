@@ -14,7 +14,7 @@ using Api.Models;
 namespace GqlMovies.Api.Services
 {
 
-    public class SiteListService : ISiteListService
+    public class SiteListService  : ISiteListService
     {
        
 
@@ -93,4 +93,5 @@ namespace GqlMovies.Api.Services
             return results;
         }
     }
+     
 }

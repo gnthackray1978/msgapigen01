@@ -1,24 +1,21 @@
-using GqlMovies.Api.Models;
+﻿using GqlMovies.Api.Models;
 using GqlMovies.Api.Types;
 using GqlMovies.Api.Services;
 using GraphQL.Types;
 using System.Collections.Generic;
-using System.Reflection;
 using GraphQL;
 using System.Security.Claims;
 using System;
 
 namespace GqlMovies.Api.Schemas
 {
-    public class SiteQuery : ObjectGraphType
+    public class SiteFunctionQuery : ObjectGraphType
 	{
-		
-
-		public SiteQuery(ISiteListService service)
+		public SiteFunctionQuery(IFunctionListService service)
 		{
-			Name = "Site";
+			Name = "Function";
 
-			FieldAsync<SiteType, Site>(
+			FieldAsync<SiteFunctionType, SiteFunction>(
 				"single",
 				arguments: new QueryArguments(
 					new QueryArgument<IntGraphType> { Name = "id" }
@@ -28,28 +25,26 @@ namespace GqlMovies.Api.Schemas
 					try
 					{
 						var currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+					}
+					catch (Exception e)
+					{
 
 					}
-					catch (Exception e) { 
-					
-					}
-					
-
-					//
+					 
 					var id = context.GetArgument<int>("id");
+
 					return service.GetAsync(id);
 				}
 			);
 
-			FieldAsync<SiteResultType<SiteType, Site>, Results<Site>>(
+			FieldAsync<SiteFunctionResultType<SiteFunctionType, SiteFunction>, Results<SiteFunction>>(
 				"search",
 				arguments: new QueryArguments(
-					new QueryArgument<StringGraphType> { Name = "query" },
-                    new QueryArgument<StringGraphType> { Name = "page" }
+					new QueryArgument<IntGraphType> { Name = "appid" }
 				),
 				resolve: context =>
 				{
-					ClaimsPrincipal currentUser =null;
+					ClaimsPrincipal currentUser = null;
 
 					try
 					{
@@ -59,15 +54,17 @@ namespace GqlMovies.Api.Schemas
 					{
 
 					}
+				 
+					var appId = context.GetArgument<int?>("appid");
 
-					var obj = new Dictionary<string, string>();
-					
-					var query = context.GetArgument<string>("query");
-                    var page = context.GetArgument<string>("page");
-
-					if (query != null) obj.Add("query", query);
-
-					return service.ListAsync(obj, currentUser);
+					if (appId == null || appId == 0)
+					{
+						return service.ListAsync(currentUser);
+					}
+					else
+					{
+						return service.ListAsync(appId.Value, currentUser);
+					}
 				}
 			);
 

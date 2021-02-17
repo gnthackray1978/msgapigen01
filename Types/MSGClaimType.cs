@@ -15,4 +15,5 @@ namespace GqlMovies.Api.Types
 
 		}
 	}
+
 }

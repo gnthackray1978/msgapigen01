@@ -65,23 +65,30 @@ namespace Api
 
             services.AddSingleton(s => new MainSchema( new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
 
+
             services.AddHttpClient<IClaimsListService, ClaimListService>();
             services.AddHttpClient<ISiteListService, SiteListService>();
-          
-            
-            services.AddSingleton<ClaimQuery>();
+            services.AddHttpClient<IFunctionListService, SiteFunctionService>();
 
+
+
+            services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
+            services.AddSingleton<SiteFunctionQuery>();
+
 
             services.AddSingleton<MSGClaimType>();
             services.AddSingleton<SiteType>();
+           services.AddSingleton<SiteFunctionType>();
+
 
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
-
             services.AddSingleton<SiteResultType<SiteType, Site>>();
-
-         
+            services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
             
+
+
+
             services.AddSingleton<MainSchema>();
             
             services.AddControllers().AddNewtonsoftJson();
