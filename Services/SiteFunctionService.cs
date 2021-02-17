@@ -37,6 +37,8 @@ namespace GqlMovies.Api.Services
                 {
                     Id = f.Id,
                     Name = f.Name,
+                    Description = f.Description,
+                    PageName = f.PageName
                 }; 
             }
             catch (Exception e)
@@ -63,7 +65,8 @@ namespace GqlMovies.Api.Services
                     {
                         Id = f.Id,
                         Name = f.Name,
-                        
+                        Description = f.Description,
+                        PageName = f.PageName
                     };
 
                     _sites.Add(siteFunction);
@@ -101,7 +104,8 @@ namespace GqlMovies.Api.Services
                     {
                         Id = f.Id,
                         Name = f.Name,
-
+                        Description = f.Description,
+                        PageName = f.PageName
                     };
 
                     _sites.Add(siteFunction);
