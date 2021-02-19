@@ -30,15 +30,17 @@ namespace GqlMovies.Api.Services
             try
             {
                 var a = new AzureDBContext();
-
+                var pageList = a.MsgPages.ToList();
                 var f = a.Msgfunctions.FirstOrDefault(fi => fi.Id == id);
+                var page = pageList.FirstOrDefault(p => p.Id == f.Page);
 
                 siteFunction = new SiteFunction()
                 {
                     Id = f.Id,
                     Name = f.Name,
                     Description = f.Description,
-                    PageName = f.PageName
+                    PageName = page.Name,
+                    PageTitle = page.Title
                 }; 
             }
             catch (Exception e)
@@ -56,17 +58,21 @@ namespace GqlMovies.Api.Services
             try
             {
                 var a = new AzureDBContext();
-
+                var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions.Where(fi => fi.ApplicationId == applicationId);
+                
 
                 foreach (var f in app)
                 {
+                    var page = pageList.FirstOrDefault(p => p.Id == f.Page);
+
                     var siteFunction = new SiteFunction()
                     {
                         Id = f.Id,
                         Name = f.Name,
                         Description = f.Description,
-                        PageName = f.PageName
+                        PageName = page.Name,
+                        PageTitle = page.Title
                     };
 
                     _sites.Add(siteFunction);
@@ -95,17 +101,20 @@ namespace GqlMovies.Api.Services
             try
             {
                 var a = new AzureDBContext();
-
+                var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions;
 
                 foreach (var f in app)
                 {
+                    var page = pageList.FirstOrDefault(p => p.Id == f.Page);
+
                     var siteFunction = new SiteFunction()
                     {
                         Id = f.Id,
                         Name = f.Name,
                         Description = f.Description,
-                        PageName = f.PageName
+                        PageName = page.Name,
+                        PageTitle = page.Title
                     };
 
                     _sites.Add(siteFunction);

@@ -10,7 +10,8 @@ namespace GqlMovies.Api.Types
 			Field(m => m.Id);
 			Field(m => m.Name);
 			Field(m => m.Description);
-
-        }
+			Field(m => m.DefaultPageName);
+			Field(m => m.DefaultPageTitle);
+		}
 	}
 }

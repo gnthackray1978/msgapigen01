@@ -35,13 +35,20 @@ namespace GqlMovies.Api.Services
             {
                 var a = new AzureDBContext();
 
+                var pageList = a.MsgPages.ToList();
+
                 var app = a.Msgapplications.FirstOrDefault(fi => fi.Id == id);
+
+                var page = pageList.FirstOrDefault(p => p.Id == app.DefaultPage);
 
                 site = new Site()
                 {
                     Id = app.Id,
                     Name = app.ApplicationName,
-                    Description = app.Description
+                    Description = app.Description,
+                    DefaultPageName = page.Name,
+                    DefaultPageTitle = page.Title
+
                 };
 
             }
@@ -66,14 +73,19 @@ namespace GqlMovies.Api.Services
             try
             {
                 var a = new AzureDBContext();
+                var pageList = a.MsgPages.ToList();
 
                 foreach (var app in a.Msgapplications)
                 {
+                    var page = pageList.FirstOrDefault(p => p.Id == app.DefaultPage);
+
                     _sites.Add(new Site()
                     {
                         Id = app.Id,
                         Name = app.ApplicationName,
-                        Description = app.Description
+                        Description = app.Description,
+                        DefaultPageName = page.Name,
+                        DefaultPageTitle = page.Title
                     });
                 }
 
