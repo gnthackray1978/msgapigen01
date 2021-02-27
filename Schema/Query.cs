@@ -13,6 +13,8 @@ namespace GqlMovies.Api.Schemas
 			Field<ClaimQuery>("claim", resolve: context => new { });
 
 			Field<SiteFunctionQuery>("function", resolve: context => new { });
+
+			Field<WillQuery>("will", resolve: context => new { });
 		}
 	}
 }

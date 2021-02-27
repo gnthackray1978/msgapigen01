@@ -105,5 +105,4 @@ namespace GqlMovies.Api.Services
             return results;
         }
     }
-     
 }

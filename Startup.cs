@@ -12,6 +12,7 @@ using GqlMovies.Api.Models;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
+using Api.Services.interfaces;
 
 namespace Api
 {
@@ -69,19 +70,21 @@ namespace Api
             services.AddHttpClient<IClaimsListService, ClaimListService>();
             services.AddHttpClient<ISiteListService, SiteListService>();
             services.AddHttpClient<IFunctionListService, SiteFunctionService>();
-
+            services.AddHttpClient<IWillListService, WillListService>();
 
 
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
             services.AddSingleton<SiteFunctionQuery>();
+            services.AddSingleton<WillQuery>();
 
 
             services.AddSingleton<MSGClaimType>();
             services.AddSingleton<SiteType>();
-           services.AddSingleton<SiteFunctionType>();
+            services.AddSingleton<SiteFunctionType>();
+            services.AddSingleton<WillType>();
 
-
+            services.AddSingleton<WillResultType<WillType, Will>>();
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
