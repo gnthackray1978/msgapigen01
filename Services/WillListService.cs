@@ -25,8 +25,8 @@ namespace GqlMovies.Api.Services
                 return source;
         }
 
-        public static IEnumerable<LincsWills> SortIf
-            (this IQueryable<LincsWills> source, 
+        public static IEnumerable<IWill> SortIf
+            (this IQueryable<IWill> source, 
             string columnName,
             string columnOrder)
         {
@@ -125,7 +125,7 @@ namespace GqlMovies.Api.Services
         }
  
 
-        public async Task<Results<Will>> ListAsync(ParamObject searchParams)
+        public async Task<Results<Will>> LincolnshireWillsList(ParamObject searchParams)
         {
             var _wills = new List<Will>();
 
@@ -157,7 +157,7 @@ namespace GqlMovies.Api.Services
 
                 totalRecs = unpaged.Count();
 
-                foreach (var app in unpaged.Skip(searchParams.First).Take(searchParams.Offset))
+                foreach (var app in unpaged.Skip(searchParams.Offset).Take(searchParams.Limit))
                 {                 
                     _wills.Add(new Will()
                     {
@@ -188,11 +188,85 @@ namespace GqlMovies.Api.Services
 
 
             results.results = _wills;
-            results.Page = searchParams.First == 0 ? 0 : searchParams.First / searchParams.Offset;
-            results.total_pages = totalRecs/ searchParams.Offset;
+            results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
+            results.total_pages = totalRecs/ searchParams.Limit;
             results.total_results = totalRecs;
 
             return results;
         }
+
+
+
+        public async Task<Results<Will>> NorfolkWillsList(ParamObject searchParams)
+        {
+            var _wills = new List<Will>();
+
+            var results = new Results<Will>();
+
+            int totalRecs = 0;
+
+            try
+            {
+                var a = new AzureDBContext();
+
+                //searchParams.First
+
+                Func<int, int, bool> validDates = (start, end) => {
+                    if (start <= 0 && end <= 0) return false;
+                    if (start > end) return false;
+
+                    return true;
+                };
+
+                var unpaged = a.NorfolkWills
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Surname), w => w.Surname.ToLower().Contains(searchParams.Surname))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Desc), w => w.Description.ToLower().Contains(searchParams.Desc))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.RefArg), w => w.Reference.ToLower().Contains(searchParams.RefArg))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Place), w => w.Place.ToLower().Contains(searchParams.Place))
+                    .WhereIf(validDates(searchParams.YearStart, searchParams.YearEnd),
+                            w => w.Year >= searchParams.YearStart && w.Year <= searchParams.YearEnd)
+                    .SortIf(searchParams.SortColumn, searchParams.SortOrder);
+
+                totalRecs = unpaged.Count();
+
+                foreach (var app in unpaged.Skip(searchParams.Offset).Take(searchParams.Limit))
+                {
+                    _wills.Add(new Will()
+                    {
+                        Id = app.Id,
+                        Aliases = app.Aliases ?? "",
+                        Collection = app.Collection ?? "",
+                        DateString = app.DateString ?? "",
+                        Description = app.Description ?? "",
+                        FirstName = app.FirstName ?? "",
+                        Occupation = app.Occupation ?? "",
+                        Place = app.Place ?? "",
+                        Reference = app.Reference ?? "",
+                        Surname = app.Surname ?? "",
+                        Typ = app.Typ.GetValueOrDefault(),
+                        Url = app.Url ?? "",
+                        Year = app.Year.GetValueOrDefault()
+                    });
+                }
+
+
+            }
+            catch (Exception e)
+            {
+
+                results.Error = e.Message;
+            }
+
+
+
+            results.results = _wills;
+            results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
+            results.total_pages = totalRecs / searchParams.Limit;
+            results.total_results = totalRecs;
+
+            return results;
+        }
+
+
     }
 }

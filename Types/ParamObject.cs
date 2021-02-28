@@ -16,7 +16,7 @@ namespace Api.Types
         public string Place { get; set; }
 
         public string Surname { get; set; }
-        public int First { get; set; }
+        public int Limit { get; set; }
         public int Offset { get; set; }
         public ClaimsPrincipal User { get; set; }
         public string SortColumn { get; set; }

@@ -12,7 +12,9 @@ namespace Api.Services.interfaces
     {
         Task<Will> GetAsync(int id);
 
-        Task<Results<Will>> ListAsync(ParamObject searchParams);
-         
+        Task<Results<Will>> LincolnshireWillsList(ParamObject searchParams);
+
+        Task<Results<Will>> NorfolkWillsList(ParamObject searchParams);
+
     }
 }
