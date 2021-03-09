@@ -8,23 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Api.Models;
 using Api.Services.interfaces;
 using Api.Types;
-using System.Linq.Expressions;
 using AzureContext.Models;
 
 namespace GqlMovies.Api.Services
 {
-    public static class LinqExtensions {
-        public static IQueryable<TSource> WhereIf<TSource>(
-        this IQueryable<TSource> source,
-        bool condition,
-        Expression<Func<TSource, bool>> predicate)
-        {
-            if (condition)
-                return source.Where(predicate);
-            else
-                return source;
-        }
-
+    public static class WillsLinqExtensions {
+ 
         public static IEnumerable<IWill> SortIf
             (this IQueryable<IWill> source, 
             string columnName,
@@ -73,9 +62,7 @@ namespace GqlMovies.Api.Services
             
         }
     }
-
-
-    //
+        //
     public class WillListService : IWillListService
     {
 
@@ -113,7 +100,7 @@ namespace GqlMovies.Api.Services
                     Surname = app.Surname,
                     Typ = app.Typ.GetValueOrDefault(),
                     Url = app.Url,
-                    Year = app.Year.GetValueOrDefault()
+                    Year = app.Year
                 };
 
             }
@@ -125,7 +112,7 @@ namespace GqlMovies.Api.Services
         }
  
 
-        public async Task<Results<Will>> LincolnshireWillsList(ParamObject searchParams)
+        public async Task<Results<Will>> LincolnshireWillsList(WillSearchParamObj searchParams)
         {
             var _wills = new List<Will>();
 
@@ -173,7 +160,7 @@ namespace GqlMovies.Api.Services
                         Surname = app.Surname ?? "",
                         Typ = app.Typ.GetValueOrDefault(),
                        Url = app.Url ?? "",
-                        Year = app.Year.GetValueOrDefault()
+                        Year = app.Year
                     });
                 }
 
@@ -197,7 +184,7 @@ namespace GqlMovies.Api.Services
 
 
 
-        public async Task<Results<Will>> NorfolkWillsList(ParamObject searchParams)
+        public async Task<Results<Will>> NorfolkWillsList(WillSearchParamObj searchParams)
         {
             var _wills = new List<Will>();
 
@@ -245,7 +232,7 @@ namespace GqlMovies.Api.Services
                         Surname = app.Surname ?? "",
                         Typ = app.Typ.GetValueOrDefault(),
                         Url = app.Url ?? "",
-                        Year = app.Year.GetValueOrDefault()
+                        Year = app.Year
                     });
                 }
 

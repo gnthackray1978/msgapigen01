@@ -15,6 +15,8 @@ namespace GqlMovies.Api.Schemas
 			Field<SiteFunctionQuery>("function", resolve: context => new { });
 
 			Field<WillQuery>("will", resolve: context => new { });
+
+			Field<DNAQuery>("dna", resolve: context => new { });
 		}
 	}
 }

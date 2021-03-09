@@ -13,6 +13,7 @@ using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
 using Api.Services.interfaces;
+using Api.Types.DNAAnalyse;
 
 namespace Api
 {
@@ -71,12 +72,13 @@ namespace Api
             services.AddHttpClient<ISiteListService, SiteListService>();
             services.AddHttpClient<IFunctionListService, SiteFunctionService>();
             services.AddHttpClient<IWillListService, WillListService>();
-
+            services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
 
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
             services.AddSingleton<SiteFunctionQuery>();
             services.AddSingleton<WillQuery>();
+            services.AddSingleton<DNAQuery>();
 
 
             services.AddSingleton<MSGClaimType>();
@@ -84,13 +86,22 @@ namespace Api
             services.AddSingleton<SiteFunctionType>();
             services.AddSingleton<WillType>();
 
+            services.AddSingleton<FTMViewType>();
+            services.AddSingleton<TreeRecType>();
+            services.AddSingleton<PersonOfInterestType>();
+            services.AddSingleton<DupeType>();
+
+
             services.AddSingleton<WillResultType<WillType, Will>>();
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
-            
 
-
+            services.AddSingleton<DupeResult>();
+            services.AddSingleton<FTMViewResult>();
+            services.AddSingleton<PersonOfInterestResult>();
+            services.AddSingleton<TreeRecResult>();
+          
 
             services.AddSingleton<MainSchema>();
             

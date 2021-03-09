@@ -7,55 +7,27 @@ using System.Security.Claims;
 using System;
 using Api.Services.interfaces;
 using Api.Types;
+using Api.Types.DNAAnalyse;
 
 namespace GqlMovies.Api.Schemas
 {
-    public class WillQuery : ObjectGraphType
+    public class DNAQuery : ObjectGraphType
 	{
-		public WillQuery(IWillListService service)
+		public DNAQuery(IDNAAnalyseListService service)
 		{
-			Name = "Will";
+			Name = "Dna";
 
-			FieldAsync<WillType, Will>(
-				"single",
-				arguments: new QueryArguments(
-					new QueryArgument<IntGraphType> { Name = "id" }
-				),
-				resolve: context =>
-				{
-					try
-					{
-						var currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-
-					}
-					catch (Exception e)
-					{
-
-					}
-
-
-					//
-					var id = context.GetArgument<int>("id");
-					return service.GetAsync(id);
-				}
-			);
-
-			FieldAsync<WillResultType<WillType, Will>, Results<Will>>(
-				"lincssearch",
+            #region dupesearch
+            FieldAsync<DupeResult, Results<Dupe>>(
+				"dupesearch",
 				arguments: new QueryArguments(
 					new QueryArgument<StringGraphType> { Name = "query" },
 					new QueryArgument<IntGraphType> { Name = "limit" },
 					new QueryArgument<IntGraphType> { Name = "offset" },
 					new QueryArgument<StringGraphType> { Name = "sortColumn" },
-					new QueryArgument<StringGraphType> { Name = "sortOrder" },
-					new QueryArgument<IntGraphType> { Name = "yearStart" },
-					new QueryArgument<IntGraphType> { Name = "yearEnd" },
-					new QueryArgument<StringGraphType> { Name = "ref" },
-					new QueryArgument<StringGraphType> { Name = "desc" },
-					new QueryArgument<StringGraphType> { Name = "place" }, 
-					new QueryArgument<StringGraphType> { Name = "surname" }
-				
-
+					new QueryArgument<StringGraphType> { Name = "sortOrder" }, 
+					new QueryArgument<StringGraphType> { Name = "surname" } 
+					 
 				),
 				resolve: context =>
 				{
@@ -75,41 +47,37 @@ namespace GqlMovies.Api.Schemas
 					var query = context.GetArgument<string>("query");
 					var limit = context.GetArgument<int>("limit");
 					var offset = context.GetArgument<int>("offset");
-					
+
 					var sortColumn = context.GetArgument<string>("sortColumn");
 					var sortOrder = context.GetArgument<string>("sortOrder");
-
-					var yearStart = context.GetArgument<int>("yearStart");
-					var yearEnd = context.GetArgument<int>("yearEnd");
-
-					var refArg = context.GetArgument<string>("ref");
-					var desc = context.GetArgument<string>("desc");
-					var place = context.GetArgument<string>("place");
+					 
 					var surname = context.GetArgument<string>("surname");
-					  
 
-					var pobj = new WillSearchParamObj();
+
+					var pobj = new DNASearchParamObj();
 
 					pobj.User = currentUser;
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
 					pobj.SortOrder = sortOrder;
-					pobj.YearEnd = yearEnd;
-					pobj.YearStart = yearStart;
-					pobj.RefArg = refArg;
-					pobj.Desc = desc;
-					pobj.Place = place;
+				 
+			 
 					pobj.Surname = surname;
 
 
 
-					return service.LincolnshireWillsList(pobj);
+					return service.DupeList(pobj);
 				}
 			);
 
-			FieldAsync<WillResultType<WillType, Will>, Results<Will>>(
-				"norfolksearch",
+			#endregion
+
+ 
+			#region ftmviewsearch
+
+			FieldAsync<FTMViewResult, Results<FTMView>>(
+				"ftmviewsearch",
 				arguments: new QueryArguments(
 					new QueryArgument<StringGraphType> { Name = "query" },
 					new QueryArgument<IntGraphType> { Name = "limit" },
@@ -117,10 +85,8 @@ namespace GqlMovies.Api.Schemas
 					new QueryArgument<StringGraphType> { Name = "sortColumn" },
 					new QueryArgument<StringGraphType> { Name = "sortOrder" },
 					new QueryArgument<IntGraphType> { Name = "yearStart" },
-					new QueryArgument<IntGraphType> { Name = "yearEnd" },
-					new QueryArgument<StringGraphType> { Name = "ref" },
-					new QueryArgument<StringGraphType> { Name = "desc" },
-					new QueryArgument<StringGraphType> { Name = "place" },
+					new QueryArgument<IntGraphType> { Name = "yearEnd" },			 
+					new QueryArgument<StringGraphType> { Name = "location" },
 					new QueryArgument<StringGraphType> { Name = "surname" }
 
 
@@ -156,7 +122,7 @@ namespace GqlMovies.Api.Schemas
 					var surname = context.GetArgument<string>("surname");
 
 
-					var pobj = new WillSearchParamObj();
+					var pobj = new DNASearchParamObj();
 
 					pobj.User = currentUser;
 					pobj.Limit = limit;
@@ -165,16 +131,132 @@ namespace GqlMovies.Api.Schemas
 					pobj.SortOrder = sortOrder;
 					pobj.YearEnd = yearEnd;
 					pobj.YearStart = yearStart;
-					pobj.RefArg = refArg;
-					pobj.Desc = desc;
-					pobj.Place = place;
+				 
 					pobj.Surname = surname;
 
 
 
-					return service.NorfolkWillsList(pobj);
+					return service.FTMViewList(pobj);
 				}
 			);
+
+            #endregion
+
+            #region poi search
+
+            FieldAsync<PersonOfInterestResult, Results<PersonOfInterestSubset>>(
+				"poisearch",
+				arguments: new QueryArguments(
+					new QueryArgument<StringGraphType> { Name = "query" },
+					new QueryArgument<IntGraphType> { Name = "limit" },
+					new QueryArgument<IntGraphType> { Name = "offset" },
+					new QueryArgument<StringGraphType> { Name = "sortColumn" },
+					new QueryArgument<StringGraphType> { Name = "sortOrder" },
+					new QueryArgument<IntGraphType> { Name = "yearStart" },
+					new QueryArgument<IntGraphType> { Name = "yearEnd" },
+					new QueryArgument<StringGraphType> { Name = "location" },
+					new QueryArgument<StringGraphType> { Name = "surname" },
+					new QueryArgument<IntGraphType> { Name = "mincm" }
+ 
+
+				),
+				resolve: context =>
+				{
+					ClaimsPrincipal currentUser = null;
+
+					try
+					{
+						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+					}
+					catch (Exception e)
+					{
+
+					}
+
+					var obj = new Dictionary<string, string>();
+
+					var query = context.GetArgument<string>("query");
+					var limit = context.GetArgument<int>("limit");
+					var offset = context.GetArgument<int>("offset");
+
+					var sortColumn = context.GetArgument<string>("sortColumn");
+					var sortOrder = context.GetArgument<string>("sortOrder");
+
+
+
+					var yearStart = context.GetArgument<int>("yearStart");
+					var yearEnd = context.GetArgument<int>("yearEnd");
+
+					var refArg = context.GetArgument<string>("ref");
+					var desc = context.GetArgument<string>("desc");
+					var place = context.GetArgument<string>("place");
+					var surname = context.GetArgument<string>("surname");
+
+
+					var pobj = new DNASearchParamObj();
+
+					pobj.User = currentUser;
+					pobj.Limit = limit;
+					pobj.Offset = offset;
+					pobj.SortColumn = sortColumn;
+					pobj.SortOrder = sortOrder;
+					pobj.YearEnd = yearEnd;
+					pobj.YearStart = yearStart;				 
+					pobj.Surname = surname;
+
+
+
+					return service.PersonOfInterestList(pobj);
+				}
+			);
+
+            #endregion
+
+            #region treerecsearch
+            FieldAsync<TreeRecResult, Results<TreeRec>>(
+				"treerecsearch",
+				arguments: new QueryArguments(
+					new QueryArgument<StringGraphType> { Name = "query" },
+					new QueryArgument<IntGraphType> { Name = "limit" },
+					new QueryArgument<IntGraphType> { Name = "offset" },
+					new QueryArgument<StringGraphType> { Name = "sortColumn" },
+					new QueryArgument<StringGraphType> { Name = "sortOrder" }				 
+				),
+				resolve: context =>
+				{
+					ClaimsPrincipal currentUser = null;
+
+					try
+					{
+						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+					}
+					catch (Exception e)
+					{
+
+					}
+
+					var obj = new Dictionary<string, string>();
+
+					var query = context.GetArgument<string>("query");
+					var limit = context.GetArgument<int>("limit");
+					var offset = context.GetArgument<int>("offset");
+
+					var sortColumn = context.GetArgument<string>("sortColumn");
+					var sortOrder = context.GetArgument<string>("sortOrder");
+					 
+					var pobj = new DNASearchParamObj();
+
+					pobj.User = currentUser;
+					pobj.Limit = limit;
+					pobj.Offset = offset;
+					pobj.SortColumn = sortColumn;
+					pobj.SortOrder = sortOrder;
+		 
+					return service.TreeList(pobj);
+				}
+			);
+
+			#endregion
 		}
 	}
 }

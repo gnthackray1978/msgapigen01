@@ -6,8 +6,24 @@ using System.Threading.Tasks;
 
 namespace Api.Types
 {
-	   
-	public class ParamObject
+    public class DNASearchParamObj
+    {
+        public string Location { get; set; }
+
+        public string Surname { get; set; }
+        public int Limit { get; set; }
+        public int Offset { get; set; }
+        public ClaimsPrincipal User { get; set; }
+        public string SortColumn { get; set; }
+        public string SortOrder { get; set; }
+
+        public int YearStart { get; set; }
+        public int YearEnd { get; set; }
+
+        public int MinCM { get; set; }
+
+    }
+    public class WillSearchParamObj
     {
         public string RefArg { get; set; }
 
