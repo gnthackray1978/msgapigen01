@@ -23,25 +23,27 @@ namespace GqlMovies.Api.Services
         {
             if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
             {
-                if (columnName == "Surname")
+                columnName = columnName.ToLower();
+
+                if (columnName == "surname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
 
-                if (columnName == "Ident")
+                if (columnName == "ident")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Ident) : source.OrderByDescending(z => z.Ident);
 
-                if (columnName == "Origin")
+                if (columnName == "origin")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
 
-                if (columnName == "BirthYearFrom")
+                if (columnName == "birthyearfrom")
                     return columnOrder == "asc" ? source.OrderBy(z => z.YearFrom) : source.OrderByDescending(z => z.YearFrom);
 
-                if (columnName == "BirthYearTo")
+                if (columnName == "birthyearto")
                     return columnOrder == "asc" ? source.OrderBy(z => z.YearTo) : source.OrderByDescending(z => z.YearTo);
 
-                if (columnName == "Location")
+                if (columnName == "location")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
 
-                if (columnName == "FirstName")
+                if (columnName == "firstname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.FirstName) : source.OrderByDescending(z => z.FirstName);
             }
 
@@ -55,46 +57,48 @@ namespace GqlMovies.Api.Services
         {
             if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
             {
-                if (columnName == "FirstName")
+                columnName = columnName.ToLower();
+
+                if (columnName == "firstname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.FirstName) : source.OrderByDescending(z => z.FirstName);
 
-                if (columnName == "Surname")
+                if (columnName == "surname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
               
-                if (columnName == "Origin")
+                if (columnName == "origin")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
 
-                if (columnName == "Location")
+                if (columnName == "location")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
 
 
 
-                if (columnName == "AltLat")
+                if (columnName == "altlat")
                     return columnOrder == "asc" ? source.OrderBy(z => z.AltLat) : source.OrderByDescending(z => z.AltLat);
               
-                if (columnName == "AltLong")
+                if (columnName == "altlong")
                     return columnOrder == "asc" ? source.OrderBy(z => z.AltLong) : source.OrderByDescending(z => z.AltLong);
 
-                if (columnName == "AltLocation")
+                if (columnName == "altlocation")
                     return columnOrder == "asc" ? source.OrderBy(z => z.AltLocation) : source.OrderByDescending(z => z.AltLocation);
 
-                if (columnName == "AltLocationDesc")
+                if (columnName == "altlocationdesc")
                     return columnOrder == "asc" ? source.OrderBy(z => z.AltLocationDesc) : source.OrderByDescending(z => z.AltLocationDesc);
 
 
             
-                if (columnName == "YearFrom")
+                if (columnName == "yearfrom")
                     return columnOrder == "asc" ? source.OrderBy(z => z.YearFrom) : source.OrderByDescending(z => z.YearFrom);
 
-                if (columnName == "YearTo")
+                if (columnName == "yeato")
                     return columnOrder == "asc" ? source.OrderBy(z => z.YearTo) : source.OrderByDescending(z => z.YearTo);
 
 
               
-                if (columnName == "BirthLong")
+                if (columnName == "birthlong")
                     return columnOrder == "asc" ? source.OrderBy(z => z.BirthLong) : source.OrderByDescending(z => z.BirthLong);
 
-                if (columnName == "BirthLat")
+                if (columnName == "birthlat")
                     return columnOrder == "asc" ? source.OrderBy(z => z.BirthLat) : source.OrderByDescending(z => z.BirthLat);
 
             }
@@ -111,34 +115,36 @@ namespace GqlMovies.Api.Services
         {
             if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
             {
-                if (columnName == "Surname")
+                columnName = columnName.ToLower();
+
+                if (columnName == "surname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
 
-                if (columnName == "Location")
+                if (columnName == "location")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
 
-                if (columnName == "Memory")
+                if (columnName == "memory")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Memory) : source.OrderByDescending(z => z.Memory);
 
-                if (columnName == "Name")
+                if (columnName == "name")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Name) : source.OrderByDescending(z => z.Name);
 
-                if (columnName == "RootsEntry")
+                if (columnName == "rootsentry")
                     return columnOrder == "asc" ? source.OrderBy(z => z.RootsEntry) : source.OrderByDescending(z => z.RootsEntry);
 
-                if (columnName == "SharedCentimorgans")
+                if (columnName == "sharedcentimorgans")
                     return columnOrder == "asc" ? source.OrderBy(z => z.SharedCentimorgans) : source.OrderByDescending(z => z.SharedCentimorgans);
 
-                if (columnName == "TestAdminDisplayName")
+                if (columnName == "testadmindisplayname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.TestAdminDisplayName) : source.OrderByDescending(z => z.TestAdminDisplayName);
 
-                if (columnName == "TestDisplayName")
+                if (columnName == "testdisplayname")
                     return columnOrder == "asc" ? source.OrderBy(z => z.TestDisplayName) : source.OrderByDescending(z => z.TestDisplayName);
 
-                if (columnName == "TreeUrl")
+                if (columnName == "treeurl")
                     return columnOrder == "asc" ? source.OrderBy(z => z.TreeUrl) : source.OrderByDescending(z => z.TreeUrl);
 
-                if (columnName == "Year")
+                if (columnName == "year")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Year) : source.OrderByDescending(z => z.Year);
 
                 
@@ -156,16 +162,18 @@ namespace GqlMovies.Api.Services
         {
             if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
             {
-                if (columnName == "CM")
+                columnName = columnName.ToLower();
+
+                if (columnName == "cm")
                     return columnOrder == "asc" ? source.OrderBy(z => z.CM) : source.OrderByDescending(z => z.CM);
 
-                if (columnName == "Located")
+                if (columnName == "located")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Located) : source.OrderByDescending(z => z.Located);
 
-                if (columnName == "Name")
+                if (columnName == "name")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Name) : source.OrderByDescending(z => z.Name);
 
-                if (columnName == "Origin")
+                if (columnName == "origin")
                     return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
 
               
@@ -259,7 +267,7 @@ namespace GqlMovies.Api.Services
 
 
 
-                var unpaged = a.FTMPersonView
+                var unpaged = a.FTMPersonView.Where(w=>w.FirstName!="")
                     .WhereIfSurname(searchParams.Surname)
                     .WhereIfLocation(searchParams.Location)
                     .WhereIfYearsBetween(searchParams.YearStart,searchParams.YearEnd)
@@ -274,16 +282,16 @@ namespace GqlMovies.Api.Services
                         Id = app.Id,
                         FirstName = app.FirstName ?? "",
                         Surname = app.Surname ?? "",
-                        AltLocation = app.AltLocation,
+                        AltLocation = app.AltLocation ?? "",
                         AltLat = app.AltLat.GetValueOrDefault(),
-                        AltLocationDesc = app.AltLocationDesc,
+                        AltLocationDesc = app.AltLocationDesc ?? "",
                         AltLong = app.AltLong.GetValueOrDefault(),
-                        BirthFrom = app.YearFrom,
-                        BirthTo = app.YearTo,
+                        YearFrom = app.YearFrom,
+                        YearTo = app.YearTo,
                         BirthLat = app.BirthLat.GetValueOrDefault(),
-                        BirthLocation = app.Location,
+                        Location = app.Location ?? "",
                         BirthLong =app.BirthLong.GetValueOrDefault(),
-                        Origin = app.Origin,
+                        Origin = app.Origin ?? "",
                         PersonId = app.PersonId
                        
 
