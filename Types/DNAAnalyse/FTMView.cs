@@ -15,10 +15,10 @@ namespace Api.Types.DNAAnalyse
             Field(m => m.FirstName);
             Field(m => m.Surname);        
             Field(m => m.Origin);
-            Field(m => m.BirthFrom);
-            Field(m => m.BirthTo);
+            Field(m => m.YearFrom);
+            Field(m => m.YearTo);
 
-            Field(m => m.BirthLocation);
+            Field(m => m.Location);
             Field(m => m.BirthLat);
             Field(m => m.BirthLong);
 
@@ -38,10 +38,10 @@ namespace Api.Types.DNAAnalyse
         public string FirstName { get; set; }
         public string Surname { get; set; }
 
-        public int BirthFrom { get; set; }
-        public int BirthTo { get; set; }
+        public int YearFrom { get; set; }
+        public int YearTo { get; set; }
 
-        public string BirthLocation { get; set; }
+        public string Location { get; set; }
         public double BirthLat { get; set; }
         public double BirthLong { get; set; }
 
