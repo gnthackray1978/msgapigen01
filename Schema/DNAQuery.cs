@@ -116,9 +116,9 @@ namespace GqlMovies.Api.Schemas
 					var yearStart = context.GetArgument<int>("yearStart");
 					var yearEnd = context.GetArgument<int>("yearEnd");
 
-					var refArg = context.GetArgument<string>("ref");
-					var desc = context.GetArgument<string>("desc");
-					var place = context.GetArgument<string>("place");
+				//	var refArg = context.GetArgument<string>("ref");
+					//var desc = context.GetArgument<string>("desc");
+					var place = context.GetArgument<string>("location");
 					var surname = context.GetArgument<string>("surname");
 
 
@@ -131,7 +131,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.SortOrder = sortOrder;
 					pobj.YearEnd = yearEnd;
 					pobj.YearStart = yearStart;
-				 
+					pobj.Location = place;
 					pobj.Surname = surname;
 
 
@@ -156,8 +156,8 @@ namespace GqlMovies.Api.Schemas
 					new QueryArgument<IntGraphType> { Name = "yearEnd" },
 					new QueryArgument<StringGraphType> { Name = "location" },
 					new QueryArgument<StringGraphType> { Name = "surname" },
-					new QueryArgument<IntGraphType> { Name = "mincm" }
- 
+					new QueryArgument<IntGraphType> { Name = "mincm" },
+					new QueryArgument<StringGraphType> { Name = "country" }
 
 				),
 				resolve: context =>
@@ -178,20 +178,14 @@ namespace GqlMovies.Api.Schemas
 					var query = context.GetArgument<string>("query");
 					var limit = context.GetArgument<int>("limit");
 					var offset = context.GetArgument<int>("offset");
-
 					var sortColumn = context.GetArgument<string>("sortColumn");
 					var sortOrder = context.GetArgument<string>("sortOrder");
-
-
-
 					var yearStart = context.GetArgument<int>("yearStart");
 					var yearEnd = context.GetArgument<int>("yearEnd");
-
-					var refArg = context.GetArgument<string>("ref");
-					var desc = context.GetArgument<string>("desc");
-					var place = context.GetArgument<string>("place");
+					var location = context.GetArgument<string>("location");
+					var mincm = context.GetArgument<int>("mincm"); 
 					var surname = context.GetArgument<string>("surname");
-
+					var country = context.GetArgument<string>("country");
 
 					var pobj = new DNASearchParamObj();
 
@@ -203,7 +197,8 @@ namespace GqlMovies.Api.Schemas
 					pobj.YearEnd = yearEnd;
 					pobj.YearStart = yearStart;				 
 					pobj.Surname = surname;
-
+					pobj.Country = country;
+					pobj.MinCM = mincm;
 
 
 					return service.PersonOfInterestList(pobj);
