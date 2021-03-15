@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AzureContext.Models
 {
-    public partial class PersonsOfInterest : ISingleYear, IName, Ilocation, IShardCMs
+    public partial class PersonsOfInterest : ISingleYear, IName, Ilocation, IShardCMs, ITesterName
     {
         public long Id { get; set; }
         public long PersonId { get; set; }

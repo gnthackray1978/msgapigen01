@@ -22,6 +22,7 @@ namespace Api.Types
 
         public int MinCM { get; set; }
 
+        public string Name { get; set; }
         public string Country { get; set; }
     }
     public class WillSearchParamObj

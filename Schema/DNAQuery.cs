@@ -157,7 +157,8 @@ namespace GqlMovies.Api.Schemas
 					new QueryArgument<StringGraphType> { Name = "location" },
 					new QueryArgument<StringGraphType> { Name = "surname" },
 					new QueryArgument<IntGraphType> { Name = "mincm" },
-					new QueryArgument<StringGraphType> { Name = "country" }
+					new QueryArgument<StringGraphType> { Name = "country" },
+					new QueryArgument<StringGraphType> { Name = "name" }
 
 				),
 				resolve: context =>
@@ -186,6 +187,7 @@ namespace GqlMovies.Api.Schemas
 					var mincm = context.GetArgument<int>("mincm"); 
 					var surname = context.GetArgument<string>("surname");
 					var country = context.GetArgument<string>("country");
+					var name = context.GetArgument<string>("name");
 
 					var pobj = new DNASearchParamObj();
 
@@ -199,7 +201,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.Surname = surname;
 					pobj.Country = country;
 					pobj.MinCM = mincm;
-
+					pobj.Name = name;
 
 					return service.PersonOfInterestList(pobj);
 				}

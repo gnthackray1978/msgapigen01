@@ -267,7 +267,7 @@ namespace GqlMovies.Api.Services
 
 
 
-                var unpaged = a.FTMPersonView.Where(w=>w.FirstName!="")
+                var unpaged = a.FTMPersonView.Where(w=>w.Surname!="")
                     .WhereIfSurname(searchParams.Surname)
                     .WhereIfLocation(searchParams.Location)
                     .WhereIfYearsBetween(searchParams.YearStart,searchParams.YearEnd)
@@ -328,6 +328,7 @@ namespace GqlMovies.Api.Services
                 var a = new AzureDBContext();
 
                 var unpaged = a.PersonsOfInterest
+                    .WhereIfTesterName(searchParams.Name)
                     .WhereIfSurname(searchParams.Surname)
                     .WhereIfLocation(searchParams.Location)
                     .WhereIfMinCM(searchParams.MinCM)

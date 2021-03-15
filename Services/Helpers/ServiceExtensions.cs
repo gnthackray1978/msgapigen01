@@ -14,6 +14,11 @@ namespace GqlMovies.Api.Services
         public string Surname { get; set; }
     }
 
+    public interface ITesterName
+    {
+        public string Name { get; set; }
+    }
+
     public interface Ilocation
     {
         public string Location { get; set; }
@@ -65,6 +70,25 @@ namespace GqlMovies.Api.Services
                 return source.Where(w => w.SharedCentimorgans > minCM);
             else
                 return source;
+        }
+
+        //IShardCMs
+        public static IQueryable<T> WhereIfTesterName<T>(
+                    this IQueryable<T> source,
+                    string testerNames) where T : ITesterName
+        {
+
+
+            if (testerNames.Length > 0)
+            {
+                var names = testerNames.ToUpper().Split(' ');
+
+                return source.Where(w => names.Contains(w.Name));
+            }
+            else
+            {
+                return source;
+            }
         }
 
 
