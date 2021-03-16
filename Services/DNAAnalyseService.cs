@@ -181,7 +181,7 @@ namespace GqlMovies.Api.Services
             }
 
 
-            return source.OrderBy(o => o.ID);
+            return source.OrderByDescending(o => o.CM);
         }
     }
 
@@ -395,7 +395,7 @@ namespace GqlMovies.Api.Services
             {
                 var a = new AzureDBContext();
 
-                var unpaged = a.TreeRecord.TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
+                var unpaged = a.TreeRecord.WhereIfOrigin(searchParams.Origin).TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
 

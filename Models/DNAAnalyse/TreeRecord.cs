@@ -1,6 +1,8 @@
-﻿namespace AzureContext.Models
+﻿using GqlMovies.Api.Services;
+
+namespace AzureContext.Models
 {
-    public partial class TreeRecord
+    public partial class TreeRecord : IOrigin
     {
         public int ID { get; set; }
         public string Name { get; set; } 

@@ -14,6 +14,11 @@ namespace GqlMovies.Api.Services
         public string Surname { get; set; }
     }
 
+    public interface IOrigin
+    {
+        public string Origin { get; set; }
+    }
+
     public interface ITesterName
     {
         public string Name { get; set; }
@@ -98,6 +103,16 @@ namespace GqlMovies.Api.Services
         {
             if (!string.IsNullOrEmpty(surname))
                 return source.Where(w=>w.Surname.ToLower().Contains(surname));
+            else
+                return source;
+        }
+
+        public static IQueryable<T> WhereIfOrigin<T>(
+                    this IQueryable<T> source,
+                    string origin) where T : IOrigin
+        {
+            if (!string.IsNullOrEmpty(origin))
+                return source.Where(w => w.Origin.ToLower().Contains(origin));
             else
                 return source;
         }
