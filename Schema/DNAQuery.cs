@@ -202,6 +202,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.Country = country;
 					pobj.MinCM = mincm;
 					pobj.Name = name;
+					pobj.Location = location;
 
 					return service.PersonOfInterestList(pobj);
 				}
