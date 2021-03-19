@@ -40,7 +40,8 @@ namespace GqlMovies.Api.Services
                     Name = f.Name,
                     Description = f.Description,
                     PageName = page.Name,
-                    PageTitle = page.Title
+                    PageTitle = page.Title,
+                    ApplicationId = f.ApplicationId.GetValueOrDefault()
                 }; 
             }
             catch (Exception e)
@@ -72,7 +73,8 @@ namespace GqlMovies.Api.Services
                         Name = f.Name,
                         Description = f.Description,
                         PageName = page.Name,
-                        PageTitle = page.Title
+                        PageTitle = page.Title,
+                        ApplicationId = applicationId
                     };
 
                     _sites.Add(siteFunction);
@@ -114,7 +116,8 @@ namespace GqlMovies.Api.Services
                         Name = f.Name,
                         Description = f.Description,
                         PageName = page.Name,
-                        PageTitle = page.Title
+                        PageTitle = page.Title,
+                        ApplicationId = f.ApplicationId.GetValueOrDefault()
                     };
 
                     _sites.Add(siteFunction);

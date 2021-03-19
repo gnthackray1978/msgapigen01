@@ -12,6 +12,7 @@ namespace GqlMovies.Api.Types
 			Field(m => m.Description);
 			Field(m => m.PageName);
 			Field(m => m.PageTitle);
+			Field(m => m.ApplicationId);
 		}
 	}
 
