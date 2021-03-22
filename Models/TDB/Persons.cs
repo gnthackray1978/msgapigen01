@@ -5,7 +5,7 @@ namespace AzureContext.Models
 {
     public partial class Persons
     {
-        public Guid PersonId { get; set; }
+        public int Id { get; set; }         
         public int? MotherId { get; set; }
         public int? FatherId { get; set; }
         public bool? IsMale { get; set; }

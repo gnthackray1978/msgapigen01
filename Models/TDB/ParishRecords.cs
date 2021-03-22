@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace AzureContext.Models
 {
-    public partial class MissingRecords
+    public partial class ParishRecords
     {
-        public int MissingRecordId { get; set; }
-        public Guid? ParishId { get; set; }
+        public int Id { get; set; }
+        public int? ParishId { get; set; }         
         public int? DataTypeId { get; set; }
         public int? Year { get; set; }
         public string RecordType { get; set; }

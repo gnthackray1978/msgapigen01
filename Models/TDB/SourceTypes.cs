@@ -5,7 +5,7 @@ namespace AzureContext.Models
 {
     public partial class SourceTypes
     {
-        public int SourceTypeId { get; set; }
+        public int Id { get; set; }
         public string SourceTypeDesc { get; set; }
         public string SourceDateAdded { get; set; }
     }

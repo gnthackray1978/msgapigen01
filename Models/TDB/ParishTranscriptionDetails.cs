@@ -5,8 +5,8 @@ namespace AzureContext.Models
 {
     public partial class ParishTranscriptionDetails
     {
-        public int ParishTranscriptionId { get; set; }
-        public Guid? ParishId { get; set; }
+        public int Id { get; set; }
+        public int ParishId { get; set; }
         public string ParishDataString { get; set; }
     }
 }

@@ -1,9 +1,38 @@
-﻿using System;
+﻿using GraphQL.Types;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AzureContext.Models
+namespace Api.Types.ADB
 {
-    public partial class Marriages
+ 
+    public class MarriageSearchResultType : ObjectGraphType<MarriageSearchResult>
+    {
+        public MarriageSearchResultType()
+        {
+            //Field(m => m.Id);
+            //Field(m => m.PersonId);
+            //Field(m => m.FirstName);
+            //Field(m => m.Surname);
+            //Field(m => m.Origin);
+            //Field(m => m.YearFrom);
+            //Field(m => m.YearTo);
+
+            //Field(m => m.Location);
+            //Field(m => m.BirthLat);
+            //Field(m => m.BirthLong);
+
+            //Field(m => m.AltLocationDesc);
+            //Field(m => m.AltLocation);
+
+            //Field(m => m.AltLat);
+            //Field(m => m.AltLong);
+
+        }
+    }
+
+    public class MarriageSearchResult
     {
         public Guid MarriageId { get; set; }
         public string MaleCname { get; set; }

@@ -5,7 +5,7 @@ namespace AzureContext.Models
 {
     public partial class Sources
     {
-        public Guid SourceId { get; set; }
+        public int Id { get; set; }
         public string SourceRef { get; set; }
         public int? SourceDate { get; set; }
         public int? SourceDateTo { get; set; }
