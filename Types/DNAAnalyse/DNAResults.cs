@@ -3,6 +3,7 @@ using GraphQL.Types;
 
 namespace Api.Types.DNAAnalyse
 {
+
     public class DNAResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>>
         where GraphT : IGraphType
     {
