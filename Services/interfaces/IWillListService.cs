@@ -18,4 +18,4 @@ namespace Api.Services.interfaces
 
     }
 
-    }
+}

@@ -2,9 +2,9 @@
 
 namespace Api.Types.ADB
 {
-    public class SourceTypesSearchResultType : ObjectGraphType<SourceTypesSearchResult>
+    public class ADBISourceType : ObjectGraphType<ADBInternalSourceType>
     {
-        public SourceTypesSearchResultType()
+        public ADBISourceType()
         {
             Field(m => m.Id);
             Field(m => m.SourceTypeDesc);
@@ -12,7 +12,7 @@ namespace Api.Types.ADB
         }
     }
 
-    public class SourceTypesSearchResult
+    public class ADBInternalSourceType
     {
         public int Id { get; set; }
         public string SourceTypeDesc { get; set; }

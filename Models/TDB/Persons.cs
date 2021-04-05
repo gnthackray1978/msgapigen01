@@ -1,13 +1,19 @@
-﻿using System;
+﻿using GqlMovies.Api.Services;
+using System;
 using System.Collections.Generic;
 
 namespace AzureContext.Models
 {
-    public partial class Persons
+
+
+    public partial class Persons : IPersonYears, IName, 
+        IFirstName, IBirthLocation,IDeathLocation,IFatherChristianName,
+        IFatherOccupation,IFatherSurname,IMotherChristianName,IMotherSurname,ISource,
+        IDeathCounty,IBirthCounty,IOccupation,ISpouseName,ISpouseSurname
     {
         public int Id { get; set; }         
-        public int MotherId { get; set; }
-        public int FatherId { get; set; }
+        //public int MotherId { get; set; }
+        //public int FatherId { get; set; }
         public bool IsMale { get; set; }
         public string ChristianName { get; set; }
         public string Surname { get; set; }

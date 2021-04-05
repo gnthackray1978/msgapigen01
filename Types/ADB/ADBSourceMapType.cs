@@ -3,9 +3,9 @@ using System;
 
 namespace Api.Types.ADB
 {
-    public class SourceMappingsSearchResultType : ObjectGraphType<SourceMappingsSearchResult>
+    public class ADBSourceMapType : ObjectGraphType<ADBSourceMap>
     {
-        public SourceMappingsSearchResultType()
+        public ADBSourceMapType()
         {
             Field(m => m.Id);
             Field(m => m.SourceId);
@@ -15,7 +15,7 @@ namespace Api.Types.ADB
             Field(m => m.MapTypeId);
         }
     }
-    public class SourceMappingsSearchResult
+    public class ADBSourceMap
     {
         public int Id { get; set; }
         public int? SourceId { get; set; }

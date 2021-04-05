@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Api.Types.ADB
 {
-    public class SourceSearchResultType : ObjectGraphType<SourceSearchResult>
+    public class ADBSourceType : ObjectGraphType<ADBSource>
     {
-        public SourceSearchResultType()
+        public ADBSourceType()
         {
             Field(m => m.Id);
             Field(m => m.SourceRef);
@@ -29,7 +29,10 @@ namespace Api.Types.ADB
     }
 
 
-    public class SourceSearchResult
+
+
+
+    public class ADBSource
     {
         public int Id { get; set; }
         public string SourceRef { get; set; }

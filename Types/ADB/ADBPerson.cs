@@ -8,9 +8,9 @@ namespace Api.Types.ADB
 {
 
 
-    public class PersonSearchResultType : ObjectGraphType<PersonSearchResult>
+    public class ADBPersonType : ObjectGraphType<ADBPerson>
     {
-        public PersonSearchResultType()
+        public ADBPersonType()
         {
             Field(m => m.Id);
             Field(m => m.MotherId);
@@ -58,7 +58,7 @@ namespace Api.Types.ADB
         }
     }
 
-    public class PersonSearchResult
+    public class ADBPerson
     {
         public int Id { get; set; }
         public int MotherId { get; set; }

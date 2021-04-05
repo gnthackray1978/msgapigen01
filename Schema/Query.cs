@@ -1,3 +1,4 @@
+using Api.Schema;
 using GraphQL.Types;
 
 namespace GqlMovies.Api.Schemas
@@ -17,6 +18,8 @@ namespace GqlMovies.Api.Schemas
 			Field<WillQuery>("will", resolve: context => new { });
 
 			Field<DNAQuery>("dna", resolve: context => new { });
+
+			Field<ADBQuery>("adb", resolve: context => new { });
 		}
 	}
 }

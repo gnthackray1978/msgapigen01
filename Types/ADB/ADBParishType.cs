@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Api.Types.ADB
 {
-    public class ParishSearchResultType : ObjectGraphType<ParishSearchResult>
+    public class ADBParishType : ObjectGraphType<ADBParish>
     {
-        public ParishSearchResultType() {
+        public ADBParishType() {
             
             Field(m => m.Id);
 
@@ -25,7 +25,7 @@ namespace Api.Types.ADB
 
     }
 
-    public class ParishSearchResult
+    public class ADBParish
     {
         public int Id { get; set; }
         public string ParishName { get; set; }

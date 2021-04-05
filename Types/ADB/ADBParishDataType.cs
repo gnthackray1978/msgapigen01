@@ -2,9 +2,9 @@
 
 namespace Api.Types.ADB
 {
-    public class ParishTranscriptionDetailsSearchResultType : ObjectGraphType<ParishTranscriptionDetailsSearchResult>
+    public class ADBParishDataType : ObjectGraphType<ADBParishData>
     {
-        public ParishTranscriptionDetailsSearchResultType()
+        public ADBParishDataType()
         {
             Field(m => m.Id);
             Field(m => m.ParishId);
@@ -12,7 +12,7 @@ namespace Api.Types.ADB
         }
     }
 
-    public class ParishTranscriptionDetailsSearchResult
+    public class ADBParishData
     {
         public int Id { get; set; }
         public int ParishId { get; set; }

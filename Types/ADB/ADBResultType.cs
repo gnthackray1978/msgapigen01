@@ -1,4 +1,5 @@
-﻿using GqlMovies.Api.Models;
+﻿using Api.Types.ADB;
+using GqlMovies.Api.Models;
 using GraphQL.Types;
 
 namespace Api.Types.DNAAnalyse
@@ -22,6 +23,12 @@ namespace Api.Types.DNAAnalyse
         }
     }
 
- //   public class DupeResult : ADBResultType<DupeType, Dupe> { }
+    public class MarriageSearchResult : ADBResultType<ADBMarriageType, ADBMarriage> { }
+
+    public class PersonSearchResult : ADBResultType<ADBPersonType, ADBPerson> { }
+
+    public class ParishSearchResult : ADBResultType<ADBParishType, ADBParish> { }
+
+    public class SourceSearchResult : ADBResultType<ADBSourceType, ADBSource> { }
 
 }

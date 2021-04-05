@@ -2,9 +2,9 @@
 
 namespace Api.Types.ADB
 {
-    public class ParishRecordSourceSearchResultType : ObjectGraphType<ParishRecordSourceSearchResult>
+    public class ADBRecSourceType : ObjectGraphType<ADBRecSource>
     {
-        public ParishRecordSourceSearchResultType() {
+        public ADBRecSourceType() {
             Field(m => m.Id);
             Field(m => m.RecordTypeName);
             Field(m => m.RecordTypeDescription);
@@ -12,7 +12,7 @@ namespace Api.Types.ADB
     }
 
 
-    public class ParishRecordSourceSearchResult
+    public class ADBRecSource
     {
         public int Id { get; set; }
         public string RecordTypeName { get; set; }

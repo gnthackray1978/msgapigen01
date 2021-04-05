@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Api.Types.ADB
 {
  
-    public class MarriageSearchResultType : ObjectGraphType<MarriageSearchResult>
+    public class ADBMarriageType : ObjectGraphType<ADBMarriage>
     {
-        public MarriageSearchResultType()
+        public ADBMarriageType()
         {
             Field(m => m.Id);
             Field(m => m.MaleCname);
@@ -46,7 +46,7 @@ namespace Api.Types.ADB
         }
     }
 
-    public class MarriageSearchResult
+    public class ADBMarriage
     {
         public int Id { get; set; }
         public string MaleCname { get; set; }

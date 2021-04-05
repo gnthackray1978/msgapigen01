@@ -14,6 +14,8 @@ using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
 using Api.Services.interfaces;
 using Api.Types.DNAAnalyse;
+using Api.Schema;
+using Api.Types.ADB;
 
 namespace Api
 {
@@ -63,7 +65,8 @@ namespace Api
                         .AllowAnyMethod();
                 });
             });
- 
+
+          //  services.AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 
             services.AddSingleton(s => new MainSchema( new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
 
@@ -73,39 +76,54 @@ namespace Api
             services.AddHttpClient<IFunctionListService, SiteFunctionService>();
             services.AddHttpClient<IWillListService, WillListService>();
             services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
+            services.AddHttpClient<IADBService, ADBService>();
 
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
             services.AddSingleton<SiteFunctionQuery>();
             services.AddSingleton<WillQuery>();
             services.AddSingleton<DNAQuery>();
-
+            services.AddSingleton<ADBQuery>();
 
             services.AddSingleton<MSGClaimType>();
             services.AddSingleton<SiteType>();
             services.AddSingleton<SiteFunctionType>();
             services.AddSingleton<WillType>();
 
+
             services.AddSingleton<FTMViewType>();
             services.AddSingleton<TreeRecType>();
             services.AddSingleton<PersonOfInterestType>();
             services.AddSingleton<DupeType>();
 
+            services.AddSingleton<ADBMarriageType>();
+            services.AddSingleton<ADBPersonType>();
+            services.AddSingleton<ADBSourceType>();
+            services.AddSingleton<ADBParishType>();
+            services.AddSingleton<ADBISourceType>();
 
             services.AddSingleton<WillResultType<WillType, Will>>();
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
+ 
+
 
             services.AddSingleton<DupeResult>();
             services.AddSingleton<FTMViewResult>();
             services.AddSingleton<PersonOfInterestResult>();
             services.AddSingleton<TreeRecResult>();
-          
+            services.AddSingleton<MarriageSearchResult>();
+            services.AddSingleton<PersonSearchResult>();
+            services.AddSingleton<ParishSearchResult>();
+            services.AddSingleton<SourceSearchResult>();
 
             services.AddSingleton<MainSchema>();
             
             services.AddControllers().AddNewtonsoftJson();
+
+            
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -126,6 +144,7 @@ namespace Api
             app.UseWebSockets();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" });
             app.UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/voyager" });
+
             app.UseRouting();
             app.UseAuthorization();
 

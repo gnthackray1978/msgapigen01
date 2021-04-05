@@ -4,11 +4,89 @@ using System.Linq.Expressions;
 
 namespace GqlMovies.Api.Services
 {
+    //
+    public interface IBirthLocation { 
+        public string BirthLocation { get; set; } 
+    }
+    //
+    public interface IDeathLocation {
+        public string DeathLocation { get; set; } 
+    }
+    //
+    public interface IFatherChristianName { 
+        public string FatherChristianName { get; set; } 
+    }
+    //
+    public interface IFatherSurname { 
+        public string FatherSurname { get; set; } 
+    }
+    //
+    public interface IMotherChristianName { 
+        public string MotherChristianName { get; set; } 
+    }
+    //
+    public interface IMotherSurname { 
+        public string MotherSurname { get; set; } 
+    }
+    //
+    public interface ISource { 
+        public string Source { get; set; } 
+    }
+    //
+    public interface IDeathCounty { 
+        public string DeathCounty { get; set; } 
+    }
+    //
+    public interface IBirthCounty { 
+        public string BirthCounty { get; set; }
+    }
+    //
+    public interface IOccupation { 
+        public string Occupation { get; set; } 
+    }
+    //
+    public interface ISpouseName {
+        public string SpouseName { get; set; }
+    }
+    //
+    public interface ISpouseSurname { 
+        public string SpouseSurname { get; set; } 
+    }
+    //
+    public interface IFatherOccupation {
+        public string FatherOccupation { get; set; }
+    }
+
+ 
+
+    public interface IPersonYears
+    {
+        public int BirthInt { get; set; }
+        public int BapInt { get; set; }
+        public int DeathInt { get; set; }
+
+        public int EstBirthYearInt { get; set; }
+    }
+
+    public interface ICounty {
+        public string County { get; set; }
+    }
+
+    public interface IParishName
+    {
+        public string Name { get; set; }
+
+    }
+
     public interface IShardCMs
     {
         public double SharedCentimorgans { get; set; }
     }
 
+    public interface IFirstName
+    {
+        public string ChristianName { get; set; }
+    }
     public interface IName
     {
         public string Surname { get; set; }
@@ -40,33 +118,328 @@ namespace GqlMovies.Api.Services
         public int YearTo { get; set; }
     }
 
+    public interface IMarriageParticipants
+    {
+        public string MaleCname { get; set; }
+        public string MaleSname { get; set; }
+        public string FemaleCname { get; set; }
+        public string FemaleSname { get; set; }
+    }
+
+    //public string SourceRef { get; set; }
+   
+
+    public interface ISourceRef
+    {
+        public string SourceRef { get; set; }
+    }
+
+
  
 
 
     public static class ServiceExtensions
     {
-        public static IQueryable<TSource> WhereIf<TSource>(
-                            this IQueryable<TSource> source,
-                            bool condition,
-                            Expression<Func<TSource, bool>> predicate)
-                            {
-                                if (condition)
-                                    return source.Where(predicate);
-                                else
-                                    return source;
-                            }
-
-        public static IQueryable<T> WhereIfLocation<T>(
-                    this IQueryable<T> source,
-                    string location) where T : Ilocation
+        #region sources
+        public static IQueryable<T> WhereIfSourceRef<T>(
+            this IQueryable<T> source, string location) where T : ISourceRef
         {
+
             if (!string.IsNullOrEmpty(location))
-                return source.Where(w => w.Location.ToLower().Contains(location));
+            {
+                return source.Where(w => w.SourceRef.ToLower().Contains(location));
+            }
             else
+            {
+
                 return source;
+            }
+        }
+        #endregion
+
+
+        #region persons
+        public static IQueryable<T> WhereIfBirthLocation<T>(
+            this IQueryable<T> source, string location) where T : IBirthLocation
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w=>w.BirthLocation.ToLower().Contains(location));
+            }
+            else
+            {
+              
+                return source;
+            }
         }
 
-        //IShardCMs
+        public static IQueryable<T> WhereIfDeathLocation<T>(
+            this IQueryable<T> source, string location) where T : IDeathLocation
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w=>w.DeathLocation.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfFatherChristianName<T>(
+            this IQueryable<T> source, string location) where T : IFatherChristianName
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.FatherChristianName.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfFatherSurname<T>(
+            this IQueryable<T> source, string location) where T : IFatherSurname
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.FatherSurname.ToLower().Contains(location));                
+            }
+            else
+            {
+                return source;
+            }
+        }
+        public static IQueryable<T> WhereIfMotherChristianName<T>(
+            this IQueryable<T> source, string location) where T : IMotherChristianName
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.MotherChristianName.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfMotheSurname<T>(
+            this IQueryable<T> source, string location) where T : IMotherSurname
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.MotherSurname.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfSource<T>(
+            this IQueryable<T> source, string location) where T : ISource
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.Source.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfDeathCounty<T>(
+            this IQueryable<T> source, string location) where T : IDeathCounty
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.DeathCounty.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfBirthCounty<T>(
+            this IQueryable<T> source, string location) where T : IBirthCounty
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.BirthCounty.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfOccupation<T>(
+            this IQueryable<T> source, string location) where T : IOccupation
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.Occupation.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfSpouseName<T>(
+            this IQueryable<T> source, string location) where T : ISpouseName
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.SpouseName.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfSpouseSurname<T>(
+            this IQueryable<T> source, string location) where T : ISpouseSurname
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.SpouseSurname.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfFatherOccupation<T>(
+            this IQueryable<T> source, string location) where T : IFatherOccupation
+        {
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                return source.Where(w => w.FatherOccupation.ToLower().Contains(location));
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        public static IQueryable<T> WhereIfPersonWithinYears<T>(
+          this IQueryable<T> source, int yearFrom, int yearTo) where T : IPersonYears
+        {            
+            if (yearFrom!= 0 && yearTo!=0)
+            {
+                return source.Where(w => (w.EstBirthYearInt <= yearTo && w.EstBirthYearInt >= yearFrom) || w.DeathInt <= yearTo && w.DeathInt >= yearFrom);
+            }
+            else
+            {
+
+                return source;
+            }
+        }
+
+        #endregion
+
+        #region marriages
+
+        //IMarriageParticipants
+        public static IQueryable<T> WhereIfMatchParticipants<T>(
+                    this IQueryable<T> source,
+                    string maleSName, string femaleSName) where T : IMarriageParticipants
+        {
+
+            if (!string.IsNullOrEmpty(maleSName) && string.IsNullOrEmpty(femaleSName))
+            {
+                return source.Where(w=>w.FemaleSname.ToLower().Contains(femaleSName)
+                                                && w.MaleCname.ToLower().Contains(maleSName));
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(maleSName))
+                {
+                    return source.Where(w =>  w.MaleCname.ToLower().Contains(maleSName));
+                }
+
+                if (!string.IsNullOrEmpty(femaleSName))
+                {
+                    return source.Where(w => w.FemaleSname.ToLower().Contains(femaleSName));
+                }
+
+                return source;
+            }
+        }
+
+
+        #endregion
+
+        #region parish 
+
+        public static IQueryable<T> WhereIfMatchParishName<T>(
+                    this IQueryable<T> source,
+                    string name) where T : IParishName
+        {
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                return source.Where(w => w.Name.ToLower().Contains(name));
+            }
+            else
+            {               
+                return source;
+            }
+        }
+
+
+        public static IQueryable<T> WhereIfMatchParishCounty<T>(
+            this IQueryable<T> source,
+            string name) where T : ICounty
+        {
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                return source.Where(w => w.County.ToLower().Contains(name));
+            }
+            else
+            {
+                return source;
+            }
+        }
+
+
+        #endregion
+
+
+
+        #region ancestry matches
+
         public static IQueryable<T> WhereIfMinCM<T>(
                     this IQueryable<T> source,
                     double minCM) where T : IShardCMs
@@ -77,7 +450,7 @@ namespace GqlMovies.Api.Services
                 return source;
         }
 
-        //IShardCMs
+      
         public static IQueryable<T> WhereIfTesterName<T>(
                     this IQueryable<T> source,
                     string testerNames) where T : ITesterName
@@ -96,6 +469,38 @@ namespace GqlMovies.Api.Services
             }
         }
 
+        public static IQueryable<T> WhereIfOrigin<T>(
+            this IQueryable<T> source,
+            string origin) where T : IOrigin
+        {
+            if (!string.IsNullOrEmpty(origin))
+                return source.Where(w => w.Origin.ToLower().Contains(origin));
+            else
+                return source;
+        }
+
+        #endregion
+
+        public static IQueryable<TSource> WhereIf<TSource>(
+                    this IQueryable<TSource> source,
+                    bool condition,
+                    Expression<Func<TSource, bool>> predicate)
+        {
+            if (condition)
+                return source.Where(predicate);
+            else
+                return source;
+        }
+
+        public static IQueryable<T> WhereIfLocation<T>(
+                    this IQueryable<T> source,
+                    string location) where T : Ilocation
+        {
+            if (!string.IsNullOrEmpty(location))
+                return source.Where(w => w.Location.ToLower().Contains(location));
+            else
+                return source;
+        }
 
         public static IQueryable<T> WhereIfSurname<T>(
                             this IQueryable<T> source,
@@ -107,12 +512,13 @@ namespace GqlMovies.Api.Services
                 return source;
         }
 
-        public static IQueryable<T> WhereIfOrigin<T>(
+
+        public static IQueryable<T> WhereIfFirstName<T>(
                     this IQueryable<T> source,
-                    string origin) where T : IOrigin
+                    string surname) where T : IFirstName
         {
-            if (!string.IsNullOrEmpty(origin))
-                return source.Where(w => w.Origin.ToLower().Contains(origin));
+            if (!string.IsNullOrEmpty(surname))
+                return source.Where(w => w.ChristianName.ToLower().Contains(surname));
             else
                 return source;
         }
