@@ -7,20 +7,22 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Api.Models;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
     public class SiteFunctionService : IFunctionListService
     {
         private List<SiteFunction> _sites = new List<SiteFunction>();
-
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
         public SiteFunctionService(HttpClient client,
-            IConfiguration config)
+            IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
             _client = client;
+            _imsConfigHelper = imsConfigHelper;
         }
   
         public async Task<SiteFunction> GetAsync(int id)
@@ -29,7 +31,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var f = a.Msgfunctions.FirstOrDefault(fi => fi.Id == id);
                 var page = pageList.FirstOrDefault(p => p.Id == f.Page);
@@ -58,7 +60,7 @@ namespace GqlMovies.Api.Services
             _sites = new List<SiteFunction>();
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions.Where(fi => fi.ApplicationId == applicationId);
                 
@@ -102,7 +104,7 @@ namespace GqlMovies.Api.Services
             _sites = new List<SiteFunction>();
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions;
 

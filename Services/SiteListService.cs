@@ -10,21 +10,22 @@ using Microsoft.AspNetCore.WebUtilities;
 using GqlMovies.Api.Types;
 using System.Security.Claims;
 using Api.Models;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
 
     public class SiteListService  : ISiteListService
     {
-       
 
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public SiteListService(HttpClient client, IConfiguration config)
+        public SiteListService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
             _client = client;
- 
+            _imsConfigHelper = imsConfigHelper;
         }
 
         public async Task<Site> GetAsync(int id)
@@ -33,7 +34,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var pageList = a.MsgPages.ToList();
 
@@ -72,7 +73,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
 
                 foreach (var app in a.Msgapplications)

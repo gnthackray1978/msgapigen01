@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System;
 using Api.Models;
 using AzureContext.Models;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
@@ -188,14 +189,14 @@ namespace GqlMovies.Api.Services
 
     public class DNAAnalyseService : IDNAAnalyseListService
     {
-
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public DNAAnalyseService(HttpClient client, IConfiguration config)
+        public DNAAnalyseService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
             _client = client;
-
+            _imsConfigHelper = imsConfigHelper;
         }
 
 
@@ -209,8 +210,8 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
-                 
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+
 
                 var unpaged = a.DupeEntries
                     .WhereIfSurname(searchParams.Surname)                    
@@ -263,7 +264,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
 
 
@@ -325,7 +326,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.PersonsOfInterest
                     .WhereIfTesterName(searchParams.Name)
@@ -393,7 +394,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.TreeRecord.WhereIfOrigin(searchParams.Origin).TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
 

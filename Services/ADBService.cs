@@ -10,17 +10,20 @@ using System.Linq;
 using AzureContext.Models;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
     public class ADBService : IADBService
     {
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public ADBService(HttpClient client, IConfiguration config)
+        public ADBService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
             _client = client;
+            _imsConfigHelper = imsConfigHelper;
 
         }
 
@@ -35,7 +38,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Marriages.WhereIfMatchParticipants(searchParams.MaleSurname, searchParams.FemaleSurname)
                     .WhereIfLocation(searchParams.Location)
@@ -111,7 +114,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Parishs
                     .WhereIfMatchParishCounty(searchParams.County)
@@ -169,7 +172,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Persons.WhereIfBirthCounty(searchParams.BirthCounty)
                     .WhereIfBirthLocation(searchParams.BirthLocation)
@@ -269,7 +272,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Sources.WhereIfLocation(searchParams.Location)
                     .WhereIfSourceRef(searchParams.SourceRef)
@@ -331,7 +334,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.SourceTypes.OrderBy(o => o.Id);
 
@@ -380,7 +383,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.ParishTranscriptionDetails.Where(w=>w.ParishId == parishId);
 
@@ -421,7 +424,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.ParishRecords.Where(w => w.ParishId == parishId);
 

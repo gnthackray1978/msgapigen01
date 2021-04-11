@@ -6,19 +6,21 @@ using GqlMovies.Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
     public class ClaimListService : IClaimsListService
     {
         private List<MSGClaim> _sites = new List<MSGClaim>();
-
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
         public ClaimListService(HttpClient client, 
-            IConfiguration config)
+            IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
+            _imsConfigHelper = imsConfigHelper;
             _client = client;        
         }
 

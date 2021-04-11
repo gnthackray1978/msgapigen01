@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Collections.Generic;
 using System;
+using Api;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Controllers
 {
@@ -32,9 +34,12 @@ namespace GqlMovies.Api.Controllers
 	{
 		private MainSchema _schema;
 
-		public GraphQLController(MainSchema schema)
+		private readonly IMSGConfigHelper _iMSGConfigHelper;
+
+		public GraphQLController(MainSchema schema, IMSGConfigHelper iMSGConfigHelper)
 		{
 			_schema = schema;
+			_iMSGConfigHelper = iMSGConfigHelper;
 		}
 
 		[HttpPost]

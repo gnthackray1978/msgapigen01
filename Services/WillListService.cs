@@ -9,6 +9,7 @@ using Api.Models;
 using Api.Services.interfaces;
 using Api.Types;
 using AzureContext.Models;
+using ConfigHelper;
 
 namespace GqlMovies.Api.Services
 {
@@ -66,14 +67,14 @@ namespace GqlMovies.Api.Services
     public class WillListService : IWillListService
     {
 
-
+        private readonly IMSGConfigHelper _imsConfigHelper;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public WillListService(HttpClient client, IConfiguration config)
+        public WillListService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
         {
             _client = client;
-
+            _imsConfigHelper = imsConfigHelper;
         }
 
         public async Task<Will> GetAsync(int id)
@@ -82,8 +83,8 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
-            
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+
                 var app = a.LincsWills.FirstOrDefault(fi => fi.Id == id);
 
                 will = new Will()
@@ -122,7 +123,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 //searchParams.First
 
@@ -194,7 +195,7 @@ namespace GqlMovies.Api.Services
 
             try
             {
-                var a = new AzureDBContext();
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 //searchParams.First
 

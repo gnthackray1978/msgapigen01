@@ -17,6 +17,9 @@ using Api.Types.DNAAnalyse;
 using Api.Schema;
 using Api.Types.ADB;
 
+using System;
+using ConfigHelper;
+
 namespace Api
 {
     public class Startup
@@ -31,6 +34,8 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+       
+             
             //services.AddTransient()
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -40,7 +45,7 @@ namespace Api
                 .AddNewtonsoftJson();
 
           
-            var msgConfigHelper = new MSGConfigHelper(Configuration);
+            var msgConfigHelper = new MSGConfigHelper();
 
             services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
 
