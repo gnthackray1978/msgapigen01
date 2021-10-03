@@ -152,7 +152,7 @@ namespace GqlMovies.Api.Services
             }
 
 
-            return source.OrderBy(o => o.Id);
+            return source.OrderBy(o => o.Surname);
         }
 
 
@@ -254,6 +254,96 @@ namespace GqlMovies.Api.Services
             return results;
         }
 
+        public async Task<Results<FTMPersonLocation>> FTMLocSearch(DNASearchParamObj searchParams)
+        {
+            var dupeList = new List<FTMPersonLocation>();
+
+            var results = new Results<FTMPersonLocation>();
+
+            int totalRecs = 0;
+
+            try
+            {
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+
+
+
+                var unpaged = a.FTMPersonView.Where(w => w.Surname != "")
+                    .WhereIfOrigin(searchParams.Origin)
+                    .WhereIfSurname(searchParams.Surname)
+                    .WhereIfLocation(searchParams.Location)
+                    .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd).Select(s =>
+                    new
+                    {
+                        s.BirthLat,
+                        s.BirthLong,
+                        blongStr = s.BirthLong.ToString() ,
+                        blatStr = s.BirthLat.ToString(),
+                        s.FirstName,
+                        s.Id,
+                        s.Location,
+                        s.Origin,
+                        s.PersonId,
+                        s.Surname,
+                        s.YearFrom,
+                        s.YearTo
+                    }).ToList();
+
+                totalRecs = unpaged.Count();
+
+                foreach (var app in unpaged.GroupBy(x => new { x.blongStr, x.blatStr }))
+                {
+                    var personList = new List<FTMPersonSummary>();
+                    double blat = 0;
+                    double blong = 0;
+                    string location = "";
+
+                    foreach(var person in app)
+                    {
+                        personList.Add(new FTMPersonSummary()
+                        {
+                            FirstName = person.FirstName,
+                            Surname = person.Surname,
+                            TreeName = person.Origin,
+                            Id = person.Id,
+                            YearFrom = person.YearFrom,
+                            YearTo = person.YearTo
+                        });
+
+                         blat = person.BirthLat.GetValueOrDefault();
+                         blong = person.BirthLong.GetValueOrDefault();
+                         location = person.Location;
+                    }
+
+                    dupeList.Add(new FTMPersonLocation()
+                    {
+                         BirthLat = blat,
+                         BirthLong = blong,
+                         LocationName = location,
+                         FTMPersonSummary = personList
+
+
+                    });
+                }
+
+
+            }
+            catch (Exception e)
+            {
+
+                results.Error = e.Message;
+            }
+
+
+
+            results.results = dupeList;
+            results.Page = 0;
+            results.total_pages = 1;
+            results.total_results = totalRecs;
+
+            return results;
+        }
+
         public async Task<Results<FTMView>> FTMViewList(DNASearchParamObj searchParams)
         {
             var dupeList = new List<FTMView>();
@@ -269,6 +359,7 @@ namespace GqlMovies.Api.Services
 
 
                 var unpaged = a.FTMPersonView.Where(w=>w.Surname!="")
+                    .WhereIfOrigin(searchParams.Origin)
                     .WhereIfSurname(searchParams.Surname)
                     .WhereIfLocation(searchParams.Location)
                     .WhereIfYearsBetween(searchParams.YearStart,searchParams.YearEnd)
@@ -317,6 +408,66 @@ namespace GqlMovies.Api.Services
             return results;
         }
 
+        public async Task<Results<FTMView>> FTMViewPlaces(DNASearchParamObj searchParams)
+        {
+            var dupeList = new List<FTMView>();
+
+            var results = new Results<FTMView>();
+
+            int totalRecs = 0;
+
+            try
+            {
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+
+
+
+                var unpaged = a.FTMPersonView.WhereIfOrigin(searchParams.Origin)
+                    .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd);
+
+                totalRecs = unpaged.Count();
+
+                foreach (var app in unpaged.Skip(searchParams.Offset).Take(searchParams.Limit))
+                {
+                    dupeList.Add(new FTMView()
+                    {
+                        Id = app.Id,
+                        FirstName = app.FirstName ?? "",
+                        Surname = app.Surname ?? "",
+                        AltLocation = app.AltLocation ?? "",
+                        AltLat = app.AltLat.GetValueOrDefault(),
+                        AltLocationDesc = app.AltLocationDesc ?? "",
+                        AltLong = app.AltLong.GetValueOrDefault(),
+                        YearFrom = app.YearFrom,
+                        YearTo = app.YearTo,
+                        BirthLat = app.BirthLat.GetValueOrDefault(),
+                        Location = app.Location ?? "",
+                        BirthLong = app.BirthLong.GetValueOrDefault(),
+                        Origin = app.Origin ?? "",
+                        PersonId = app.PersonId
+
+
+                    });
+                }
+
+
+            }
+            catch (Exception e)
+            {
+
+                results.Error = e.Message;
+            }
+
+
+
+            results.results = dupeList;
+            results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
+            results.total_pages = totalRecs / searchParams.Limit;
+            results.total_results = totalRecs;
+
+            return results;
+        }
+
         public async Task<Results<PersonOfInterestSubset>> PersonOfInterestList(DNASearchParamObj searchParams)
         {
             var dupeList = new List<PersonOfInterestSubset>();
@@ -330,7 +481,7 @@ namespace GqlMovies.Api.Services
 
                 var unpaged = a.PersonsOfInterest
                     .WhereIfTesterName(searchParams.Name)
-                    .WhereIfSurname(searchParams.Surname)
+                    .WhereIfSurnameBegins(searchParams.Surname)
                     .WhereIfLocation(searchParams.Location)
                     .WhereIfMinCM(searchParams.MinCM)
                     .WhereIfYearBetween(searchParams.YearStart, searchParams.YearEnd)

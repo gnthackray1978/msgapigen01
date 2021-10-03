@@ -73,7 +73,62 @@ namespace GqlMovies.Api.Schemas
 
 			#endregion
 
- 
+			#region loc search
+
+			FieldAsync<FTMPersonLocationResult, Results<FTMPersonLocation>>(
+				"ftmlocsearch",
+				arguments: new QueryArguments(
+					new QueryArgument<StringGraphType> { Name = "query" },
+					new QueryArgument<IntGraphType> { Name = "yearStart" },
+					new QueryArgument<IntGraphType> { Name = "yearEnd" },
+					new QueryArgument<StringGraphType> { Name = "location" },
+					new QueryArgument<StringGraphType> { Name = "surname" },
+					new QueryArgument<StringGraphType> { Name = "origin" }
+
+
+				),
+				resolve: context =>
+				{
+					ClaimsPrincipal currentUser = null;
+
+					try
+					{
+						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+					}
+					catch (Exception e)
+					{
+
+					}
+
+					var obj = new Dictionary<string, string>();
+
+					var query = context.GetArgument<string>("query");
+	
+
+					var yearStart = context.GetArgument<int>("yearStart");
+					var yearEnd = context.GetArgument<int>("yearEnd");
+					var origin = context.GetArgument<string>("origin");
+					var place = context.GetArgument<string>("location");
+					var surname = context.GetArgument<string>("surname");
+
+
+					var pobj = new DNASearchParamObj();
+
+					pobj.User = currentUser;
+		
+					pobj.YearEnd = yearEnd;
+					pobj.YearStart = yearStart;
+					pobj.Location = place;
+					pobj.Surname = surname;
+					pobj.Origin = origin;
+
+
+					return service.FTMLocSearch(pobj);
+				}
+			);
+
+			#endregion
+
 			#region ftmviewsearch
 
 			FieldAsync<FTMViewResult, Results<FTMView>>(
@@ -87,7 +142,8 @@ namespace GqlMovies.Api.Schemas
 					new QueryArgument<IntGraphType> { Name = "yearStart" },
 					new QueryArgument<IntGraphType> { Name = "yearEnd" },			 
 					new QueryArgument<StringGraphType> { Name = "location" },
-					new QueryArgument<StringGraphType> { Name = "surname" }
+					new QueryArgument<StringGraphType> { Name = "surname" },
+					new QueryArgument<StringGraphType> { Name = "origin" }
 
 
 				),
@@ -115,9 +171,7 @@ namespace GqlMovies.Api.Schemas
 
 					var yearStart = context.GetArgument<int>("yearStart");
 					var yearEnd = context.GetArgument<int>("yearEnd");
-
-				//	var refArg = context.GetArgument<string>("ref");
-					//var desc = context.GetArgument<string>("desc");
+					var origin = context.GetArgument<string>("origin");
 					var place = context.GetArgument<string>("location");
 					var surname = context.GetArgument<string>("surname");
 
@@ -133,7 +187,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.YearStart = yearStart;
 					pobj.Location = place;
 					pobj.Surname = surname;
-
+					pobj.Origin = origin;
 
 
 					return service.FTMViewList(pobj);

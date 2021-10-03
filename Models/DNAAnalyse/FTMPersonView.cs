@@ -2,7 +2,7 @@
 
 namespace AzureContext.Models
 {
-    public partial class FTMPersonView : IYearRange, IName, Ilocation
+    public partial class FTMPersonView : IYearRange, IName, Ilocation, IOrigin
     {
         public int Id { get; set; }
 

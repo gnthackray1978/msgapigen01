@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System.Linq; 
 using System;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace GqlMovies.Api.Services
 {
@@ -473,10 +474,20 @@ namespace GqlMovies.Api.Services
             this IQueryable<T> source,
             string origin) where T : IOrigin
         {
-            if (!string.IsNullOrEmpty(origin))
-                return source.Where(w => w.Origin.ToLower().Contains(origin));
-            else
+            if (string.IsNullOrEmpty(origin))
                 return source;
+
+            if (origin.Contains(' '))
+            {
+                var locations = origin.Split(' ');
+
+                return source.Where(w => locations.Contains(w.Origin));
+            }
+            else
+            {
+                return source.Where(w => w.Origin.ToLower().Contains(origin));
+            }
+            
         }
 
         #endregion
@@ -492,9 +503,11 @@ namespace GqlMovies.Api.Services
                 return source;
         }
 
+        
+
         public static IQueryable<T> WhereIfLocation<T>(
-                    this IQueryable<T> source,
-                    string location) where T : Ilocation
+            this IQueryable<T> source,
+            string location) where T : Ilocation
         {
             if (!string.IsNullOrEmpty(location))
                 return source.Where(w => w.Location.ToLower().Contains(location));
@@ -507,11 +520,21 @@ namespace GqlMovies.Api.Services
                             string surname) where T : IName
         {
             if (!string.IsNullOrEmpty(surname))
-                return source.Where(w=>w.Surname.ToLower().Contains(surname));
+                //return source.Where(w=>w.Surname.ToLower().Contains(surname));
+                return source.Where(w => EF.Functions.Like(w.Surname, surname));
             else
                 return source;
         }
 
+        public static IQueryable<T> WhereIfSurnameBegins<T>(
+                    this IQueryable<T> source,
+                    string surname) where T : IName
+        {
+            if (!string.IsNullOrEmpty(surname))
+                return source.Where(w => w.Surname.ToLower().StartsWith(surname));
+            else
+                return source;
+        }
 
         public static IQueryable<T> WhereIfFirstName<T>(
                     this IQueryable<T> source,

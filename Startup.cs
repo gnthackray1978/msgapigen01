@@ -83,6 +83,7 @@ namespace Api
             services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
             services.AddHttpClient<IADBService, ADBService>();
 
+
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
             services.AddSingleton<SiteFunctionQuery>();
@@ -95,6 +96,8 @@ namespace Api
             services.AddSingleton<SiteFunctionType>();
             services.AddSingleton<WillType>();
 
+            services.AddSingleton<FTMPersonLocationType>();
+            services.AddSingleton<FTMPersonSummaryType>();
 
             services.AddSingleton<FTMViewType>();
             services.AddSingleton<TreeRecType>();
@@ -116,6 +119,8 @@ namespace Api
 
             services.AddSingleton<DupeResult>();
             services.AddSingleton<FTMViewResult>();
+            
+            services.AddSingleton<FTMPersonLocationResult>();
             services.AddSingleton<PersonOfInterestResult>();
             services.AddSingleton<TreeRecResult>();
             services.AddSingleton<MarriageSearchResult>();

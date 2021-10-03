@@ -27,6 +27,9 @@ namespace Api.Types.DNAAnalyse
 
     public class FTMViewResult : DNAResultType<FTMViewType, FTMView> {}
 
+    public class FTMPersonLocationResult : DNAResultType<FTMPersonLocationType, FTMPersonLocation> { }
+
+
     public class PersonOfInterestResult : DNAResultType<PersonOfInterestType, PersonOfInterestSubset>  {}
 
     public class TreeRecResult : DNAResultType<TreeRecType, TreeRec>  {}
