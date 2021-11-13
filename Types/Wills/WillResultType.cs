@@ -19,6 +19,7 @@ namespace GqlMovies.Api.Types
             Field(r => r.TotalResults);
             Field(r => r.TotalPages);
             Field(r => r.Error);
+            Field(r => r.LoginInfo);
         }
     }
 }
