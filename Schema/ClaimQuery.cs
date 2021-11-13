@@ -13,7 +13,7 @@ namespace GqlMovies.Api.Schemas
 
     public class ClaimQuery : ObjectGraphType
 	{
-		public ClaimQuery(IClaimsListService service)
+		public ClaimQuery(IClaimService service)
 		{
 
 			Name = "Claim";
@@ -38,7 +38,7 @@ namespace GqlMovies.Api.Schemas
 
 					//
 					var id = context.GetArgument<int>("id");
-					return service.GetAsync(id);
+					return service.GetClaim(id);
 				}
 			);
 
@@ -68,7 +68,7 @@ namespace GqlMovies.Api.Schemas
 
 				if (query != null) obj.Add("query", query);
 
-				return service.ListAsync(obj, currentUser);
+				return service.ListUserClaims(obj, currentUser);
 			}
 		);
 		}
