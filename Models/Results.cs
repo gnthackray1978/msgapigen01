@@ -15,5 +15,7 @@ namespace GqlMovies.Api.Models
 
         public string Error { get; set; }
 
+        public string LoginInfo { get; set; }
+
     }
 }
