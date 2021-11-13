@@ -76,7 +76,7 @@ namespace Api
             services.AddSingleton(s => new MainSchema( new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
 
 
-            services.AddHttpClient<IClaimsListService, ClaimListService>();
+            services.AddHttpClient<IClaimService, ClaimService>();
             services.AddHttpClient<ISiteListService, SiteListService>();
             services.AddHttpClient<IFunctionListService, SiteFunctionService>();
             services.AddHttpClient<IWillListService, WillListService>();

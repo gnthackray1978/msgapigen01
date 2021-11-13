@@ -6,6 +6,27 @@ using System.Threading.Tasks;
 
 namespace Api.Types
 {
+
+    public class MetaData {
+        public ClaimsPrincipal User { get; set; }
+
+        public Exception ClaimsException { get; set; }
+
+        public string LoginInfo { get; set; }
+
+
+        public string Error { get; set; }
+    }
+
+
+    public class SiteParamObj {
+        public ClaimsPrincipal User { get; set; }
+
+        public Exception ClaimsException { get; set; }
+
+        public int GroupId { get; set; }
+    }
+
     public class DNASearchParamObj
     {
         public string Location { get; set; }
@@ -26,9 +47,13 @@ namespace Api.Types
         public string Country { get; set; }
 
         public string Origin { get; set; }
+
+        public int GroupNumber { get; set; }
     }
     public class WillSearchParamObj
     {
+        public MetaData Meta { get; set; } = new MetaData();
+
         public string RefArg { get; set; }
 
         public string Desc { get; set; }
@@ -38,7 +63,7 @@ namespace Api.Types
         public string Surname { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
-        public ClaimsPrincipal User { get; set; }
+
         public string SortColumn { get; set; }
         public string SortOrder { get; set; }
 

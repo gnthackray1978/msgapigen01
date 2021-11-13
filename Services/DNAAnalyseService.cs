@@ -260,6 +260,30 @@ namespace GqlMovies.Api.Services
 
             var results = new Results<FTMPersonLocation>();
 
+            Func<double?, double?, string> mergeDoublesToString = ( m,  a) => {
+                
+                if (a.Value == 0 && m.Value != 0)
+                    return m.ToString();
+                
+                return a.ToString();
+            };
+
+            Func<double?, double?, double> mergeDoubles = (m, a) => {
+
+                if (a.Value == 0 && m.Value != 0)
+                    return m.Value;
+
+                return a.Value;
+            };
+
+            Func<string, string, string> mergeLocations = (m, a) => {
+
+                if (!string.IsNullOrEmpty(m) && string.IsNullOrEmpty(a))
+                    return m.ToString();
+
+                return a ?? "";
+            };
+
             int totalRecs = 0;
 
             try
@@ -275,13 +299,15 @@ namespace GqlMovies.Api.Services
                     .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd).Select(s =>
                     new
                     {
+                        s.AltLat,
+                        s.AltLong,
                         s.BirthLat,
                         s.BirthLong,
-                        blongStr = s.BirthLong.ToString() ,
-                        blatStr = s.BirthLat.ToString(),
+                        blongStr = mergeDoublesToString(s.BirthLong,s.AltLong),
+                        blatStr = mergeDoublesToString(s.BirthLat, s.AltLat),
                         s.FirstName,
                         s.Id,
-                        s.Location,
+                        locat = mergeLocations(s.Location,s.AltLocation),
                         s.Origin,
                         s.PersonId,
                         s.Surname,
@@ -290,13 +316,14 @@ namespace GqlMovies.Api.Services
                     }).ToList();
 
                 totalRecs = unpaged.Count();
+                int id = 0;
 
                 foreach (var app in unpaged.GroupBy(x => new { x.blongStr, x.blatStr }))
                 {
                     var personList = new List<FTMPersonSummary>();
                     double blat = 0;
                     double blong = 0;
-                    string location = "";
+                    string location = "xx";
 
                     foreach(var person in app)
                     {
@@ -310,20 +337,23 @@ namespace GqlMovies.Api.Services
                             YearTo = person.YearTo
                         });
 
-                         blat = person.BirthLat.GetValueOrDefault();
-                         blong = person.BirthLong.GetValueOrDefault();
-                         location = person.Location;
+                        blat = mergeDoubles(person.BirthLat, person.AltLat);
+                        blong = mergeDoubles(person.BirthLong, person.AltLong);
+                        location = person.locat;
                     }
+
 
                     dupeList.Add(new FTMPersonLocation()
                     {
-                         BirthLat = blat,
-                         BirthLong = blong,
-                         LocationName = location,
-                         FTMPersonSummary = personList
+                        BirthLat = blat,
+                        BirthLong = blong,
+                        LocationName = location.Replace("England", "").Replace('/',' ').Trim(),
+                        FTMPersonSummary = personList.OrderBy(o => o.TreeName).ToList(),
+                        Id = id
 
+                    }); ;
 
-                    });
+                    id++;
                 }
 
 
@@ -361,9 +391,11 @@ namespace GqlMovies.Api.Services
                 var unpaged = a.FTMPersonView.Where(w=>w.Surname!="")
                     .WhereIfOrigin(searchParams.Origin)
                     .WhereIfSurname(searchParams.Surname)
-                    .WhereIfLocation(searchParams.Location)
+                    
                     .WhereIfYearsBetween(searchParams.YearStart,searchParams.YearEnd)
-                      .FTMViewSortIf(searchParams.SortColumn, searchParams.SortOrder);
+                    .WhereIfLocationPrecise(searchParams.Location)
+                      .FTMViewSortIf(searchParams.SortColumn, searchParams.SortOrder)
+                      ;
 
                 totalRecs = unpaged.Count();
 
@@ -375,14 +407,14 @@ namespace GqlMovies.Api.Services
                         FirstName = app.FirstName ?? "",
                         Surname = app.Surname ?? "",
                         AltLocation = app.AltLocation ?? "",
-                        AltLat = app.AltLat.GetValueOrDefault(),
+                        AltLat = app.AltLat,
                         AltLocationDesc = app.AltLocationDesc ?? "",
-                        AltLong = app.AltLong.GetValueOrDefault(),
+                        AltLong = app.AltLong,
                         YearFrom = app.YearFrom,
                         YearTo = app.YearTo,
-                        BirthLat = app.BirthLat.GetValueOrDefault(),
+                        BirthLat = app.BirthLat,
                         Location = app.Location ?? "",
-                        BirthLong =app.BirthLong.GetValueOrDefault(),
+                        BirthLong =app.BirthLong,
                         Origin = app.Origin ?? "",
                         PersonId = app.PersonId
                        
@@ -435,14 +467,14 @@ namespace GqlMovies.Api.Services
                         FirstName = app.FirstName ?? "",
                         Surname = app.Surname ?? "",
                         AltLocation = app.AltLocation ?? "",
-                        AltLat = app.AltLat.GetValueOrDefault(),
+                        AltLat = app.AltLat,
                         AltLocationDesc = app.AltLocationDesc ?? "",
-                        AltLong = app.AltLong.GetValueOrDefault(),
+                        AltLong = app.AltLong,
                         YearFrom = app.YearFrom,
                         YearTo = app.YearTo,
-                        BirthLat = app.BirthLat.GetValueOrDefault(),
+                        BirthLat = app.BirthLat,
                         Location = app.Location ?? "",
-                        BirthLong = app.BirthLong.GetValueOrDefault(),
+                        BirthLong = app.BirthLong,
                         Origin = app.Origin ?? "",
                         PersonId = app.PersonId
 
@@ -547,7 +579,9 @@ namespace GqlMovies.Api.Services
             {
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
-                var unpaged = a.TreeRecord.WhereIfOrigin(searchParams.Origin).TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
+                var unpaged = a.TreeRecord.WhereIfOrigin(searchParams.Origin)
+                    .WhereIfGroupId(searchParams.GroupNumber)
+                    .TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
 
@@ -560,6 +594,7 @@ namespace GqlMovies.Api.Services
                         Located = app.Located,
                         Origin = app.Origin ?? "",
                         PersonCount = app.PersonCount,
+                        GroupNumber = app.GroupNumber,
                         Name = app.Name
                     });
                 }

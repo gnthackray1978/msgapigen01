@@ -174,7 +174,8 @@ namespace GqlMovies.Api.Services
             }
 
 
-
+            results.LoginInfo = searchParams.Meta.LoginInfo;
+            results.Error += Environment.NewLine + searchParams.Meta.Error;
             results.results = _wills;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs/ searchParams.Limit;
@@ -192,6 +193,8 @@ namespace GqlMovies.Api.Services
             var results = new Results<Will>();
 
             int totalRecs = 0;
+
+            results.Error = "";
 
             try
             {
@@ -245,9 +248,11 @@ namespace GqlMovies.Api.Services
                 results.Error = e.Message;
             }
 
-
+            
 
             results.results = _wills;
+            results.LoginInfo = searchParams.Meta.LoginInfo;
+            results.Error += Environment.NewLine + searchParams.Meta.Error;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
             results.total_results = totalRecs;

@@ -11,6 +11,7 @@ using GqlMovies.Api.Types;
 using System.Security.Claims;
 using Api.Models;
 using ConfigHelper;
+using Api.Types;
 
 namespace GqlMovies.Api.Services
 {
@@ -28,7 +29,7 @@ namespace GqlMovies.Api.Services
             _imsConfigHelper = imsConfigHelper;
         }
 
-        public async Task<Site> GetAsync(int id)
+        public async Task<Site> GetSite(int id)
         {
             var site = new Site();
 
@@ -64,8 +65,7 @@ namespace GqlMovies.Api.Services
 
         }
  
-        public async Task<Results<Site>> ListAsync(Dictionary<string, string> query,
-            ClaimsPrincipal user)
+        public async Task<Results<Site>> ListSites(SiteParamObj siteParamObj)
         {
             List<Site> _sites = new List<Site>();
 
@@ -76,18 +76,29 @@ namespace GqlMovies.Api.Services
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
 
+
+
+                //filter application by group id
+                var validAppList = a.MsgapplicationMapGroup.Where(w => w.GroupId == siteParamObj.GroupId).Select(s=>s.ApplicationId).ToList();
+
+
+
                 foreach (var app in a.Msgapplications)
                 {
-                    var page = pageList.FirstOrDefault(p => p.Id == app.DefaultPage);
-
-                    _sites.Add(new Site()
+                    if (validAppList.Contains(app.Id))
                     {
-                        Id = app.Id,
-                        Name = app.ApplicationName,
-                        Description = app.Description,
-                        DefaultPageName = page.Name,
-                        DefaultPageTitle = page.Title
-                    });
+                        var page = pageList.FirstOrDefault(p => p.Id == app.DefaultPage);
+
+                        _sites.Add(new Site()
+                        {
+                            Id = app.Id,
+                            Name = app.ApplicationName,
+                            Description = app.Description,
+                            DefaultPageName = page.Name,
+                            DefaultPageTitle = page.Title
+                        });
+
+                    }
                 }
 
 

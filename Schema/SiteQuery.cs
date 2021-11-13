@@ -7,6 +7,7 @@ using System.Reflection;
 using GraphQL;
 using System.Security.Claims;
 using System;
+using Api.Types;
 
 namespace GqlMovies.Api.Schemas
 {
@@ -14,7 +15,7 @@ namespace GqlMovies.Api.Schemas
 	{
 		
 
-		public SiteQuery(ISiteListService service)
+		public SiteQuery(ISiteListService service, IClaimService claimService)
 		{
 			Name = "Site";
 
@@ -37,7 +38,7 @@ namespace GqlMovies.Api.Schemas
 
 					//
 					var id = context.GetArgument<int>("id");
-					return service.GetAsync(id);
+					return service.GetSite(id);
 				}
 			);
 
@@ -50,24 +51,37 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser =null;
-
+					int groupId=0;
+					Exception claimException = null;
 					try
 					{
 						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+
+						groupId=claimService.GetUserGroupId(currentUser);
 					}
 					catch (Exception e)
 					{
-
+						claimException = e;
 					}
 
-					var obj = new Dictionary<string, string>();
-					
-					var query = context.GetArgument<string>("query");
-                    var page = context.GetArgument<string>("page");
+					//var obj = new Dictionary<string, string>();
 
-					if (query != null) obj.Add("query", query);
+					//var query = context.GetArgument<string>("query");
+					//               var page = context.GetArgument<string>("page");
 
-					return service.ListAsync(obj, currentUser);
+					///if (query != null) obj.Add("query", query);
+					///
+					var siteParamObj = new SiteParamObj(); 
+
+					siteParamObj.GroupId = groupId;
+
+					var tp= service.ListSites(siteParamObj);
+
+
+					if(claimException!=null)
+						tp.Result.Error += Environment.NewLine + claimException.Message;
+
+					return tp;
 				}
 			);
 

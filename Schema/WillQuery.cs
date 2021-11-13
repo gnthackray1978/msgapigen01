@@ -7,12 +7,14 @@ using System.Security.Claims;
 using System;
 using Api.Services.interfaces;
 using Api.Types;
+using GqlMovies.Api.Services;
+using System.Threading.Tasks;
 
 namespace GqlMovies.Api.Schemas
 {
     public class WillQuery : ObjectGraphType
 	{
-		public WillQuery(IWillListService service)
+		public WillQuery(IWillListService service, IClaimService claimService)
 		{
 			Name = "Will";
 
@@ -60,6 +62,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -67,7 +70,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -86,11 +89,24 @@ namespace GqlMovies.Api.Schemas
 					var desc = context.GetArgument<string>("desc");
 					var place = context.GetArgument<string>("place");
 					var surname = context.GetArgument<string>("surname");
-					  
+
+					if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+					{
+						var r = new Task<Results<Will>>(() =>
+						{
+							return new Results<Will>()
+							{
+								Error = ce.Message,
+								LoginInfo = claimService.GetClaimDebugString(currentUser)
+							};
+						});
+
+						return r;
+					}
 
 					var pobj = new WillSearchParamObj();
 
-					pobj.User = currentUser;
+					pobj.Meta.User = currentUser;
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
@@ -102,7 +118,8 @@ namespace GqlMovies.Api.Schemas
 					pobj.Place = place;
 					pobj.Surname = surname;
 
-
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.LincolnshireWillsList(pobj);
 				}
@@ -128,6 +145,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -135,7 +153,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -156,22 +174,39 @@ namespace GqlMovies.Api.Schemas
 					var surname = context.GetArgument<string>("surname");
 
 
-					var pobj = new WillSearchParamObj();
+					if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+					{
+						var r = new Task<Results<Will>>(() =>
+						{
+							return new Results<Will>()
+							{
+								Error = ce.Message,
+								LoginInfo = claimService.GetClaimDebugString(currentUser)
+							};
+						});
 
-					pobj.User = currentUser;
-					pobj.Limit = limit;
-					pobj.Offset = offset;
-					pobj.SortColumn = sortColumn;
-					pobj.SortOrder = sortOrder;
-					pobj.YearEnd = yearEnd;
-					pobj.YearStart = yearStart;
-					pobj.RefArg = refArg;
-					pobj.Desc = desc;
-					pobj.Place = place;
-					pobj.Surname = surname;
+						return r;
+					}
 
+					var pobj = new WillSearchParamObj
+					{
+						Limit = limit,
+						Offset = offset,
+						SortColumn = sortColumn,
+						SortOrder = sortOrder,
+						YearEnd = yearEnd,
+						YearStart = yearStart,
+						RefArg = refArg,
+						Desc = desc,
+						Place = place,
+						Surname = surname
+						
+					};
 
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
+				 
 					return service.NorfolkWillsList(pobj);
 				}
 			);
