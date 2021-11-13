@@ -16,6 +16,7 @@ namespace Api.Types.DNAAnalyse
             Field(m => m.PersonCount);
             Field(m => m.CM);
             Field(m => m.Located);
+            Field(m => m.GroupNumber);
         }
     }
 
@@ -25,6 +26,9 @@ namespace Api.Types.DNAAnalyse
         public string Name { get; set; }
         public string Origin { get; set; }
         public int PersonCount { get; set; }
+
+        public int GroupNumber { get; set; }
+
         public int CM { get; set; }
         public bool Located { get; set; }
     }
