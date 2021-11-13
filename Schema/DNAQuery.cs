@@ -273,7 +273,8 @@ namespace GqlMovies.Api.Schemas
 					new QueryArgument<IntGraphType> { Name = "offset" },
 					new QueryArgument<StringGraphType> { Name = "sortColumn" },
 					new QueryArgument<StringGraphType> { Name = "sortOrder" },
-					new QueryArgument<StringGraphType> { Name = "origin" }
+					new QueryArgument<StringGraphType> { Name = "origin" },
+					new QueryArgument<IntGraphType> { Name = "groupNumber" }
 				),
 				resolve: context =>
 				{
@@ -298,6 +299,7 @@ namespace GqlMovies.Api.Schemas
 					var sortOrder = context.GetArgument<string>("sortOrder");
 
 					var origin = context.GetArgument<string>("origin");
+					var groupNumber = context.GetArgument<int>("groupNumber");
 
 					var pobj = new DNASearchParamObj();
 
@@ -307,6 +309,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.SortColumn = sortColumn;
 					pobj.SortOrder = sortOrder;
 					pobj.Origin = origin;
+					pobj.GroupNumber = groupNumber;
 
 					return service.TreeList(pobj);
 				}
