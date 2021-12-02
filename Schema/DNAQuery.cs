@@ -8,12 +8,14 @@ using System;
 using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.DNAAnalyse;
+using GqlMovies.Api.Services;
+using System.Threading.Tasks;
 
 namespace GqlMovies.Api.Schemas
 {
     public class DNAQuery : ObjectGraphType
 	{
-		public DNAQuery(IDNAAnalyseListService service)
+		public DNAQuery(IDNAAnalyseListService service, IClaimService claimService)
 		{
 			Name = "Dna";
 
@@ -32,6 +34,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -39,7 +42,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -53,10 +56,14 @@ namespace GqlMovies.Api.Schemas
 					 
 					var surname = context.GetArgument<string>("surname");
 
+					if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					{						 
+						return ErrorHandler.Error<Dupe>(ce, claimService.GetClaimDebugString(currentUser));
+					}
+
 
 					var pobj = new DNASearchParamObj();
-
-					pobj.User = currentUser;
+					 
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
@@ -65,7 +72,9 @@ namespace GqlMovies.Api.Schemas
 			 
 					pobj.Surname = surname;
 
-
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.DupeList(pobj);
 				}
@@ -90,6 +99,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -97,7 +107,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -111,10 +121,14 @@ namespace GqlMovies.Api.Schemas
 					var place = context.GetArgument<string>("location");
 					var surname = context.GetArgument<string>("surname");
 
+					if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					{					
+						return ErrorHandler.Error<FTMPersonLocation>(ce, claimService.GetClaimDebugString(currentUser));
+					}
 
 					var pobj = new DNASearchParamObj();
 
-					pobj.User = currentUser;
+				 
 		
 					pobj.YearEnd = yearEnd;
 					pobj.YearStart = yearStart;
@@ -122,6 +136,9 @@ namespace GqlMovies.Api.Schemas
 					pobj.Surname = surname;
 					pobj.Origin = origin;
 
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.FTMLocSearch(pobj);
 				}
@@ -150,6 +167,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -157,7 +175,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -175,10 +193,15 @@ namespace GqlMovies.Api.Schemas
 					var place = context.GetArgument<string>("location");
 					var surname = context.GetArgument<string>("surname");
 
+					if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					{					 
+						return ErrorHandler.Error<FTMView>(ce, claimService.GetClaimDebugString(currentUser));
+					}
+
+
 
 					var pobj = new DNASearchParamObj();
-
-					pobj.User = currentUser;
+ 
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
@@ -189,6 +212,9 @@ namespace GqlMovies.Api.Schemas
 					pobj.Surname = surname;
 					pobj.Origin = origin;
 
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.FTMViewList(pobj);
 				}
@@ -218,6 +244,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -225,7 +252,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -243,9 +270,15 @@ namespace GqlMovies.Api.Schemas
 					var country = context.GetArgument<string>("country");
 					var name = context.GetArgument<string>("name");
 
-					var pobj = new DNASearchParamObj();
 
-					pobj.User = currentUser;
+					if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					{ 
+						return ErrorHandler.Error<PersonOfInterestSubset>(ce, claimService.GetClaimDebugString(currentUser));
+					}
+
+
+					var pobj = new DNASearchParamObj();
+					 
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
@@ -257,6 +290,10 @@ namespace GqlMovies.Api.Schemas
 					pobj.MinCM = mincm;
 					pobj.Name = name;
 					pobj.Location = location;
+
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.PersonOfInterestList(pobj);
 				}
@@ -279,6 +316,7 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
 
 					try
 					{
@@ -286,7 +324,7 @@ namespace GqlMovies.Api.Schemas
 					}
 					catch (Exception e)
 					{
-
+						ce = e;
 					}
 
 					var obj = new Dictionary<string, string>();
@@ -301,15 +339,25 @@ namespace GqlMovies.Api.Schemas
 					var origin = context.GetArgument<string>("origin");
 					var groupNumber = context.GetArgument<int>("groupNumber");
 
+
+					if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					{						 
+						return ErrorHandler.Error<TreeRec>(ce, claimService.GetClaimDebugString(currentUser));
+					}
+
 					var pobj = new DNASearchParamObj();
 
-					pobj.User = currentUser;
+					 
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
 					pobj.SortOrder = sortOrder;
 					pobj.Origin = origin;
 					pobj.GroupNumber = groupNumber;
+
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
 					return service.TreeList(pobj);
 				}

@@ -51,31 +51,28 @@ namespace GqlMovies.Api.Schemas
 				resolve: context =>
 				{
 					ClaimsPrincipal currentUser =null;
-					int groupId=0;
+					int groupId=2;
 					Exception claimException = null;
 					try
 					{
 						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-
-						groupId=claimService.GetUserGroupId(currentUser);
 					}
 					catch (Exception e)
 					{
 						claimException = e;
 					}
 
-					//var obj = new Dictionary<string, string>();
 
-					//var query = context.GetArgument<string>("query");
-					//               var page = context.GetArgument<string>("page");
 
-					///if (query != null) obj.Add("query", query);
-					///
-					var siteParamObj = new SiteParamObj(); 
+					if (currentUser != null)
+						groupId = claimService.GetUserGroupId(currentUser, 2);
 
-					siteParamObj.GroupId = groupId;
+					var siteParamObj = new SiteParamObj
+                    {
+                        GroupId = groupId
+                    };
 
-					var tp= service.ListSites(siteParamObj);
+                    var tp= service.ListSites(siteParamObj);
 
 
 					if(claimException!=null)

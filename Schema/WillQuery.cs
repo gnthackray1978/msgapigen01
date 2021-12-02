@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 
 namespace GqlMovies.Api.Schemas
 {
+
     public class WillQuery : ObjectGraphType
 	{
+
 		public WillQuery(IWillListService service, IClaimService claimService)
 		{
 			Name = "Will";
@@ -91,22 +93,13 @@ namespace GqlMovies.Api.Schemas
 					var surname = context.GetArgument<string>("surname");
 
 					if (!claimService.UserValid(currentUser, MSGApplications.Wills))
-					{
-						var r = new Task<Results<Will>>(() =>
-						{
-							return new Results<Will>()
-							{
-								Error = ce.Message,
-								LoginInfo = claimService.GetClaimDebugString(currentUser)
-							};
-						});
-
-						return r;
+					{					
+						return ErrorHandler.Error<Will>(ce, claimService.GetClaimDebugString(currentUser));
 					}
 
 					var pobj = new WillSearchParamObj();
 
-					pobj.Meta.User = currentUser;
+					
 					pobj.Limit = limit;
 					pobj.Offset = offset;
 					pobj.SortColumn = sortColumn;
@@ -118,6 +111,7 @@ namespace GqlMovies.Api.Schemas
 					pobj.Place = place;
 					pobj.Surname = surname;
 
+					pobj.Meta.User = currentUser;
 					pobj.Meta.Error = ce?.Message;
 					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
@@ -173,22 +167,14 @@ namespace GqlMovies.Api.Schemas
 					var place = context.GetArgument<string>("place");
 					var surname = context.GetArgument<string>("surname");
 
+					 
+                    if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+                    {				 
+						return ErrorHandler.Error<Will>(ce,claimService.GetClaimDebugString(currentUser));
+                     
+                    }
 
-					if (!claimService.UserValid(currentUser, MSGApplications.Wills))
-					{
-						var r = new Task<Results<Will>>(() =>
-						{
-							return new Results<Will>()
-							{
-								Error = ce.Message,
-								LoginInfo = claimService.GetClaimDebugString(currentUser)
-							};
-						});
-
-						return r;
-					}
-
-					var pobj = new WillSearchParamObj
+                    var pobj = new WillSearchParamObj
 					{
 						Limit = limit,
 						Offset = offset,
@@ -202,7 +188,7 @@ namespace GqlMovies.Api.Schemas
 						Surname = surname
 						
 					};
-
+					pobj.Meta.User = currentUser;
 					pobj.Meta.Error = ce?.Message;
 					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
