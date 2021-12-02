@@ -9,7 +9,7 @@ namespace GqlMovies.Api.Services
     {
         Task<MSGClaim> GetClaim(int id);
 
-        int GetUserGroupId(ClaimsPrincipal user);
+        int GetUserGroupId(ClaimsPrincipal user, int defaultGroupId);
 
         bool UserValid(ClaimsPrincipal user, MSGApplications mSGApplications);
 

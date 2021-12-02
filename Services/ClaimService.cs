@@ -45,8 +45,8 @@ namespace GqlMovies.Api.Services
 
         public bool UserValid(ClaimsPrincipal user, MSGApplications mSGApplications) {
 
-            int groupId = 0;
-            
+            int groupId = 2;// if we dont have a user default to this group.
+
             //1   Front Page  0
             //2   Diagrams    0   Diagram creation
             //4   Thackray DB 0   Thackray surname DB
@@ -55,31 +55,37 @@ namespace GqlMovies.Api.Services
             //8   Family History Photos   0   Old pictures
             //9   Wills   0   Wills DB
 
+       
             int value = (int)mSGApplications;
 
             try
             {
                 int idx = 0;
-                string userId = "";
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
-                foreach (var n in user.Claims)
+                if (user != null)
                 {
-                    if (n.Type.Contains("email"))
+                    string userId = "";
+
+                    foreach (var n in user.Claims)
                     {
-                        userId = n.Value;
+                        if (n.Type.Contains("email"))
+                        {
+                            userId = n.Value;
+                        }
+                    }
+                    var group = a.MsggroupMapUser.FirstOrDefault(fd => fd.UserId == userId);
+
+                    if (group != null)
+                    {
+                        groupId = group.GroupId.GetValueOrDefault();
                     }
                 }
 
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
-                var group = a.MsggroupMapUser.FirstOrDefault(fd => fd.UserId == userId);
-
-                if (group != null)
-                {
-                    groupId = group.GroupId.GetValueOrDefault();
-                }
                 //applications in group
-                var appList = a.MsgapplicationMapGroup.Where(w => w.GroupId == groupId).Select(s=>s.ApplicationId).ToList();
+                var appList = a.MsgapplicationMapGroup.Where(w => w.GroupId == groupId)
+                    .Select(s=>s.ApplicationId).ToList();
 
                 if (appList.Contains(value))
                     return true;
@@ -96,9 +102,9 @@ namespace GqlMovies.Api.Services
             return false;
         }
 
-        public int GetUserGroupId(ClaimsPrincipal user) 
+        public int GetUserGroupId(ClaimsPrincipal user, int defaultGroupId) 
         {
-            int groupId = 0;  
+            int groupId = defaultGroupId;  
 
             try
             {
