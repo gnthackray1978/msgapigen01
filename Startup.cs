@@ -19,6 +19,7 @@ using Api.Types.ADB;
 
 using System;
 using ConfigHelper;
+using Api.Types.Images;
 
 namespace Api
 {
@@ -82,6 +83,7 @@ namespace Api
             services.AddHttpClient<IWillListService, WillListService>();
             services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
             services.AddHttpClient<IADBService, ADBService>();
+            services.AddHttpClient<IPhotoListService, PhotoListService>();
 
 
             services.AddSingleton<ClaimQuery>();
@@ -90,6 +92,10 @@ namespace Api
             services.AddSingleton<WillQuery>();
             services.AddSingleton<DNAQuery>();
             services.AddSingleton<ADBQuery>();
+            services.AddSingleton<ImageQuery>();
+
+            services.AddSingleton<ApiImagesType>();
+            services.AddSingleton<ApiParentImagesType>();
 
             services.AddSingleton<MSGClaimType>();
             services.AddSingleton<SiteType>();
@@ -110,13 +116,21 @@ namespace Api
             services.AddSingleton<ADBParishType>();
             services.AddSingleton<ADBISourceType>();
 
+
+            services.AddSingleton<ADBISourceType>();
+
+         
+
+
             services.AddSingleton<WillResultType<WillType, Will>>();
+
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
- 
 
 
+            services.AddSingleton<ApiParentImagesResult>();
+            services.AddSingleton<ApiImagesResult>();
             services.AddSingleton<DupeResult>();
             services.AddSingleton<FTMViewResult>();
             

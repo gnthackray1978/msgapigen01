@@ -2,6 +2,11 @@
 
 namespace GqlMovies.Api.Models
 {
+
+
+
+
+
     public class WillType : ObjectGraphType<Will>
     {
         public WillType()

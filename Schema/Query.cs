@@ -20,6 +20,8 @@ namespace GqlMovies.Api.Schemas
 			Field<DNAQuery>("dna", resolve: context => new { });
 
 			Field<ADBQuery>("adb", resolve: context => new { });
+
+			Field<ImageQuery>("image", resolve: context => new { });
 		}
 	}
 }

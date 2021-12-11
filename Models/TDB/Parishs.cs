@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace AzureContext.Models
 {
+
+
     public partial class Parishs : ICounty, IParishName
     {
         public int Id { get; set; }
