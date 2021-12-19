@@ -20,12 +20,15 @@ namespace Api.Types.DNAAnalyse
             Field(r => r.TotalResults);
             Field(r => r.TotalPages);
             Field(r => r.Error);
+            Field(r => r.LoginInfo);
         }
     }
 
     public class DupeResult : DNAResultType<DupeType, Dupe> {}
 
     public class FTMViewResult : DNAResultType<FTMViewType, FTMView> {}
+
+    public class FTMLatLngResult : DNAResultType<FTMLatLngType, FTMLatLng> { }
 
     public class FTMPersonLocationResult : DNAResultType<FTMPersonLocationType, FTMPersonLocation> { }
 
