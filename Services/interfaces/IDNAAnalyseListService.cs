@@ -11,6 +11,8 @@ namespace Api.Services.interfaces
 
         Task<Results<FTMView>> FTMViewList(DNASearchParamObj searchParams);
 
+        Task<Results<FTMLatLng>> FTMLatLngList(DNASearchParamObj searchParams);
+
         Task<Results<FTMPersonLocation>> FTMLocSearch(DNASearchParamObj searchParams);
 
         Task<Results<FTMView>> FTMViewPlaces(DNASearchParamObj searchParams);

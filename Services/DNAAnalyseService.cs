@@ -199,6 +199,34 @@ namespace GqlMovies.Api.Services
             _imsConfigHelper = imsConfigHelper;
         }
 
+        public async Task<Results<FTMLatLng>> FTMLatLngList(DNASearchParamObj searchParams) {
+
+            var dupeList = new List<FTMLatLng>();
+
+            var results = new Results<FTMLatLng>();
+
+            int totalRecs = 0;
+
+            results.Error = "none";
+
+            try
+            {
+                dupeList = AzureDBContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams.YearStart, searchParams.YearEnd);
+                 
+            }
+            catch (Exception e)
+            {
+                results.Error = e.Message;
+            }
+
+            results.LoginInfo = _imsConfigHelper.Check();
+            results.results = dupeList;
+            results.Page = 0;
+            results.total_pages = totalRecs;
+            results.total_results = dupeList.Count();
+
+            return results;
+        }
 
         public async Task<Results<Dupe>> DupeList(DNASearchParamObj searchParams)
         {
