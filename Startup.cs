@@ -104,7 +104,7 @@ namespace Api
 
             services.AddSingleton<FTMPersonLocationType>();
             services.AddSingleton<FTMPersonSummaryType>();
-
+            services.AddSingleton<FTMLatLngType>();
             services.AddSingleton<FTMViewType>();
             services.AddSingleton<TreeRecType>();
             services.AddSingleton<PersonOfInterestType>();
@@ -133,7 +133,8 @@ namespace Api
             services.AddSingleton<ApiImagesResult>();
             services.AddSingleton<DupeResult>();
             services.AddSingleton<FTMViewResult>();
-            
+            services.AddSingleton<FTMLatLngResult>();
+
             services.AddSingleton<FTMPersonLocationResult>();
             services.AddSingleton<PersonOfInterestResult>();
             services.AddSingleton<TreeRecResult>();
