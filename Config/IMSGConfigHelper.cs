@@ -8,7 +8,6 @@
 
         string MSGGenDB01 { get; set; }
 
-        string Check();
     }
 
 
