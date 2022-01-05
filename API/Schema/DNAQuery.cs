@@ -146,6 +146,57 @@ namespace GqlMovies.Api.Schemas
 
 			#endregion
 
+			#region ftmlatlngsearch
+
+			FieldAsync<FTMLatLngResult, Results<FTMLatLng>>(
+				"ftmlatlngsearch",
+				arguments: new QueryArguments( 
+					new QueryArgument<IntGraphType> { Name = "yearStart" },
+					new QueryArgument<IntGraphType> { Name = "yearEnd" }, 
+					new QueryArgument<StringGraphType> { Name = "origin" }
+				),
+				resolve: context =>
+				{
+					ClaimsPrincipal currentUser = null;
+					Exception ce = null;
+
+					try
+					{
+						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+					}
+					catch (Exception e)
+					{
+						ce = e;
+					}
+
+					var obj = new Dictionary<string, string>();
+
+				 	var yearStart = context.GetArgument<int>("yearStart");
+					var yearEnd = context.GetArgument<int>("yearEnd");
+					var origin = context.GetArgument<string>("origin"); 
+
+					//if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+					//{
+					//	return ErrorHandler.Error<FTMLatLng>(ce, claimService.GetClaimDebugString(currentUser));
+					//}
+
+
+
+					var pobj = new DNASearchParamObj(); 
+					pobj.YearEnd = yearEnd;
+					pobj.YearStart = yearStart; 
+					pobj.Origin = origin;
+
+					pobj.Meta.User = currentUser;
+					pobj.Meta.Error = ce?.Message;
+					pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
+
+					return service.FTMLatLngList(pobj);
+				}
+			);
+
+			#endregion
+
 			#region ftmviewsearch
 
 			FieldAsync<FTMViewResult, Results<FTMView>>(

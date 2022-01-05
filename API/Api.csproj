@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConfigHelper\ConfigHelper.csproj" />
+    <ProjectReference Include="..\Config\ConfigHelper.csproj" />
   </ItemGroup>
 
 </Project>

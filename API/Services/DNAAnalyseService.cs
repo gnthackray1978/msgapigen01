@@ -219,7 +219,7 @@ namespace GqlMovies.Api.Services
                 results.Error = e.Message;
             }
 
-            results.LoginInfo = _imsConfigHelper.Check();
+            results.LoginInfo = "";
             results.results = dupeList;
             results.Page = 0;
             results.total_pages = totalRecs;
