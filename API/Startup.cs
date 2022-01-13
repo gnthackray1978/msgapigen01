@@ -60,17 +60,24 @@ namespace Api
                     options.Audience = "api1";
                 });
 
+            string[] o = { msgConfigHelper.ClientURLs };
+
+            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
+                o = msgConfigHelper.ClientURLs.Split(' ');
+
             //5003 was the client
             services.AddCors(options =>
             {
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins(msgConfigHelper.TestClientUrl)
+                    policy.WithOrigins(o)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
             });
+
+
 
           //  services.AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 

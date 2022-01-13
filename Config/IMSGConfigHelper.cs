@@ -2,7 +2,7 @@
 {
     public interface IMSGConfigHelper
     {
-        string TestClientUrl { get; set; }
+        string ClientURLs { get; set; }
         string AuthServerUrl { get; set; }
         string MSGApiGenUrl { get; set; }
 

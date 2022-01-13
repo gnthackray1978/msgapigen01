@@ -9,7 +9,7 @@ namespace ConfigHelper
 
     public class MSGConfigHelper : IMSGConfigHelper
     {
-        public string TestClientUrl { get; set; }
+        public string ClientURLs { get; set; }
 
         public string AuthServerUrl { get; set; }
 
@@ -38,17 +38,17 @@ namespace ConfigHelper
             var client = new SecretClient(new Uri(keyVaultUrl), credential);
 
 
-            var TCUSecret = client.GetSecret("TestClientUrl");
-            TestClientUrl = TCUSecret.Value.Value;// configuration["TestClientUrl"];
+            var TCUSecret = client.GetSecret("ClientURLs");
+            ClientURLs = TCUSecret.Value.Value;
 
             var ASUSecret = client.GetSecret("AuthServerUrl");
-            AuthServerUrl = ASUSecret.Value.Value; // configuration["AuthServerUrl"];
+            AuthServerUrl = ASUSecret.Value.Value;
 
             var MSGApiGenUrlSecret = client.GetSecret("MSGApiGenUrl");
-            MSGApiGenUrl = MSGApiGenUrlSecret.Value.Value; // configuration["MSGApiGenUrl"];
+            MSGApiGenUrl = MSGApiGenUrlSecret.Value.Value; 
 
             var MSGGenDB01Secret = client.GetSecret("MSGGenDB01");
-            MSGGenDB01 = MSGGenDB01Secret.Value.Value; //configuration["MSGGenDB01"];
+            MSGGenDB01 = MSGGenDB01Secret.Value.Value;
         }
 
     }
