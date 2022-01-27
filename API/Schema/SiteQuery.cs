@@ -12,9 +12,7 @@ using Api.Types;
 namespace GqlMovies.Api.Schemas
 {
     public class SiteQuery : ObjectGraphType
-	{
-		
-
+	{		
 		public SiteQuery(ISiteListService service, IClaimService claimService)
 		{
 			Name = "Site";

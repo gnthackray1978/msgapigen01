@@ -17,5 +17,4 @@ namespace Api.Services.interfaces
         Task<Results<Will>> NorfolkWillsList(WillSearchParamObj searchParams);
 
     }
-
 }

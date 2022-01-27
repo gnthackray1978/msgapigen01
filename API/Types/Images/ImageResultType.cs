@@ -3,10 +3,10 @@ using GraphQL.Types;
 
 namespace GqlMovies.Api.Types
 {
-    public class WillResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>> 
-        where GraphT : IGraphType
+    public class ImageResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>>
+      where GraphT : IGraphType
     {
-        public WillResultType()
+        public ImageResultType()
         {
             Field<ListGraphType<GraphT>>(
                 "results",

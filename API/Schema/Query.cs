@@ -22,6 +22,8 @@ namespace GqlMovies.Api.Schemas
 			Field<ADBQuery>("adb", resolve: context => new { });
 
 			Field<ImageQuery>("image", resolve: context => new { });
+
+			Field<DiagramQuery>("diagram", resolve: context => new { });
 		}
 	}
 }

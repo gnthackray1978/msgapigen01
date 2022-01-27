@@ -30,6 +30,7 @@ namespace GqlMovies.Api.Models
 
         }
     }
+
     public class Will
     {
         public int Id { get; set; }

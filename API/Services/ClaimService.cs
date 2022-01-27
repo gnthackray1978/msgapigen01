@@ -55,11 +55,19 @@ namespace GqlMovies.Api.Services
             //8   Family History Photos   0   Old pictures
             //9   Wills   0   Wills DB
 
-       
+            //for testing purposes!!!
+            if (mSGApplications == MSGApplications.Diagrams)
+                return true;
+
+
             int value = (int)mSGApplications;
 
             try
             {
+             
+
+
+
                 int idx = 0;
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 

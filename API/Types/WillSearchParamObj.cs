@@ -71,6 +71,11 @@ namespace Api.Types
 
     }
 
+    public class DiagramParamObj
+    {
+
+    }
+
     public class ADBPersonParamObj {
 
         public MetaData Meta { get; set; } = new MetaData();

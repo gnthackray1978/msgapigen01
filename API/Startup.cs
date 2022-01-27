@@ -20,6 +20,7 @@ using Api.Types.ADB;
 using System;
 using ConfigHelper;
 using Api.Types.Images;
+using Api.Types.Diagrams;
 
 namespace Api
 {
@@ -134,7 +135,9 @@ namespace Api
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
-
+            //
+            services.AddSingleton<AncestorResult>();
+            services.AddSingleton<DescendantResult>();
 
             services.AddSingleton<ApiParentImagesResult>();
             services.AddSingleton<ApiImagesResult>();

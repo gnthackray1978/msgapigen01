@@ -1,12 +1,16 @@
 ﻿using GqlMovies.Api.Models;
 using GraphQL.Types;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace GqlMovies.Api.Types
+namespace Api.Types.Diagrams
 {
-    public class WillResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>> 
+    public class DiagramResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>>
         where GraphT : IGraphType
     {
-        public WillResultType()
+        public DiagramResultType()
         {
             Field<ListGraphType<GraphT>>(
                 "results",
@@ -22,4 +26,8 @@ namespace GqlMovies.Api.Types
             Field(r => r.LoginInfo);
         }
     }
+
+    public class AncestorResult : DiagramResultType<AncestorNodeType, AncestorNode> { }
+
+    public class DescendantResult : DiagramResultType<DescendantNodeType, DescendantNode> { }
 }
