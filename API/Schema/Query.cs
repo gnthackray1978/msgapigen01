@@ -1,9 +1,9 @@
 using Api.Schema;
 using GraphQL.Types;
 
-namespace GqlMovies.Api.Schemas
+namespace Api.Schemas
 {
-	public class Query : ObjectGraphType
+    public class Query : ObjectGraphType
 	{
 		public Query()
 		{

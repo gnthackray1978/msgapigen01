@@ -2,18 +2,18 @@ using System.Linq;
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.WebUtilities;
-using GqlMovies.Api.Types;
+using Api.Types;
 using System.Security.Claims;
 using Api.Models;
 using ConfigHelper;
 using Api.Types;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
 
     public class SiteListService  : ISiteListService

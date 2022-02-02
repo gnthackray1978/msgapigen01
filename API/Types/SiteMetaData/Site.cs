@@ -1,4 +1,4 @@
-namespace GqlMovies.Api.Models
+namespace Api.Models
 {
     public class Site
 	{

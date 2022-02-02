@@ -1,9 +1,9 @@
-﻿using GqlMovies.Api.Models;
+﻿using Api.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 { 
     public interface IClaimService 
     {

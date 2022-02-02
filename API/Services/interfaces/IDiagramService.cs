@@ -1,6 +1,6 @@
 ﻿using Api.Types;
 using Api.Types.Diagrams;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 
 namespace Api.Services.interfaces

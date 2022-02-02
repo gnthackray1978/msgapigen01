@@ -3,7 +3,7 @@ using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.Diagrams;
 using ConfigHelper;
-using GqlMovies.Api.Models;
+using Api.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

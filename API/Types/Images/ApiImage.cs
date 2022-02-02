@@ -1,6 +1,6 @@
 ﻿using GraphQL.Types;
 
-namespace GqlMovies.Api.Models
+namespace Api.Models
 {
 
     public class ApiImagesType : ObjectGraphType<ApiImage>

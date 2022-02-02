@@ -2,14 +2,14 @@
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using ConfigHelper;
 using Api.Models;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public enum MSGApplications
     {

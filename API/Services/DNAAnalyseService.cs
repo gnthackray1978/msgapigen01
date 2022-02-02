@@ -1,7 +1,7 @@
 ﻿using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.DNAAnalyse;
-using GqlMovies.Api.Models;
+using Api.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using Api.Models;
 using AzureContext.Models;
 using ConfigHelper;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public static class DNAAnalyseLinqExtensions
     {

@@ -1,5 +1,5 @@
-﻿using GqlMovies.Api.Models;
-using GqlMovies.Api.Types;
+﻿using Api.Models;
+using Api.Types;
 using GraphQL.Types;
 using System.Collections.Generic;
 using GraphQL;
@@ -7,92 +7,92 @@ using System.Security.Claims;
 using System;
 using Api.Services.interfaces;
 using Api.Types;
-using GqlMovies.Api.Services;
+using Api.Services;
 using Api.Types.Images;
 
-namespace GqlMovies.Api.Schemas
+namespace Api.Schema
 {
     public class ImageQuery : ObjectGraphType
-	{
+    {
 
-		public ImageQuery(IPhotoListService service, IClaimService claimService)
-		{
-			Name = "Image";
+        public ImageQuery(IPhotoListService service, IClaimService claimService)
+        {
+            Name = "Image";
 
-		 
 
-			FieldAsync<ApiImagesResult, Results<ApiImage>>(
-				"imagesearch",
-				arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
-				resolve: context =>
-				{
-					ClaimsPrincipal currentUser = null;
-					Exception ce = null;
 
-					try
-					{
-						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-					}
-					catch (Exception e)
-					{
-						ce = e;
-					}
+            FieldAsync<ApiImagesResult, Results<ApiImage>>(
+                "imagesearch",
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
+                resolve: context =>
+                {
+                    ClaimsPrincipal currentUser = null;
+                    Exception ce = null;
 
-					var obj = new Dictionary<string, string>();
+                    try
+                    {
+                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+                    }
+                    catch (Exception e)
+                    {
+                        ce = e;
+                    }
 
-					var query = context.GetArgument<string>("page");
+                    var obj = new Dictionary<string, string>();
 
-					var results = service.ImagesList("",query);
-					results.Result.Error = "None";
-					results.Result.LoginInfo = query;
+                    var query = context.GetArgument<string>("page");
 
-					if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
-					{
-						results.Result.LoginInfo = "No User";
-						results.Result.Error += Environment.NewLine + "No Valid User found";
-					//	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
-					}
+                    var results = service.ImagesList("", query);
+                    results.Result.Error = "None";
+                    results.Result.LoginInfo = query;
 
-					
+                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
+                    {
+                        results.Result.LoginInfo = "No User";
+                        results.Result.Error += Environment.NewLine + "No Valid User found";
+                        //	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
+                    }
 
-					return results;
-				}
-			);
 
-			FieldAsync<ApiParentImagesResult, Results<ApiParentImages>>(
-				"imageparentsearch",
-				arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
-				resolve: context =>
-				{
-					ClaimsPrincipal currentUser = null;
-					Exception ce = null;
 
-					try
-					{
-						currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-					}
-					catch (Exception e)
-					{
-						ce = e;
-					}
-					
+                    return results;
+                }
+            );
 
-					var query = context.GetArgument<string>("page");
+            FieldAsync<ApiParentImagesResult, Results<ApiParentImages>>(
+                "imageparentsearch",
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
+                resolve: context =>
+                {
+                    ClaimsPrincipal currentUser = null;
+                    Exception ce = null;
 
-					var results = service.ParentImagesList("", query);
+                    try
+                    {
+                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
+                    }
+                    catch (Exception e)
+                    {
+                        ce = e;
+                    }
 
-					results.Result.LoginInfo = query;
 
-					if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
-					{
-						results.Result.LoginInfo = query;
-						results.Result.Error += Environment.NewLine + "No Valid User found";
-						//	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
-					}
+                    var query = context.GetArgument<string>("page");
 
-					return results;
-				}
-			);
-		}
-	}
+                    var results = service.ParentImagesList("", query);
+
+                    results.Result.LoginInfo = query;
+
+                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
+                    {
+                        results.Result.LoginInfo = query;
+                        results.Result.Error += Environment.NewLine + "No Valid User found";
+                        //	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
+                    }
+
+                    return results;
+                }
+            );
+        }
+    }
 }

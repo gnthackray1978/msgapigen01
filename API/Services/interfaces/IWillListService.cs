@@ -1,5 +1,5 @@
 ﻿using Api.Types;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

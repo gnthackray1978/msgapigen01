@@ -2,7 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Api.Models;
@@ -11,7 +11,7 @@ using Api.Types;
 using AzureContext.Models;
 using ConfigHelper;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public static class WillsLinqExtensions {
  

@@ -1,5 +1,5 @@
-﻿using GqlMovies.Api.Models;
-using GqlMovies.Api.Types;
+﻿using Api.Models;
+using Api.Types;
 using GraphQL.Types;
 using System.Collections.Generic;
 using GraphQL;
@@ -7,14 +7,13 @@ using System.Security.Claims;
 using System;
 using Api.Services.interfaces;
 using Api.Types;
-using GqlMovies.Api.Services;
+using Api.Services;
 using System.Threading.Tasks;
-using GqlMovies.Api.Schemas;
 using Api.Types.Diagrams;
 
 namespace Api.Schema
 {
-	public class DiagramQuery : ObjectGraphType
+    public class DiagramQuery : ObjectGraphType
 	{
 		public DiagramQuery(IDiagramService service, IClaimService claimService)
 		{

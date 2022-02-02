@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Api.Models;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     //
     public interface IBirthLocation { 

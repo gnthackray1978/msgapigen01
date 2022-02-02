@@ -1,5 +1,5 @@
 ﻿using Api.Types.ADB;
-using GqlMovies.Api.Models;
+using Api.Models;
 using GraphQL.Types;
 
 namespace Api.Types.DNAAnalyse

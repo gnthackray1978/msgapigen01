@@ -1,5 +1,5 @@
 ﻿using Api.Types.Images;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 
 namespace Api.Services.interfaces

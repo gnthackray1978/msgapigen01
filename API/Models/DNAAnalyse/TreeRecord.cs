@@ -1,4 +1,4 @@
-﻿using GqlMovies.Api.Services;
+﻿using Api.Services;
 
 namespace AzureContext.Models
 {

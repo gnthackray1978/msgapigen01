@@ -2,14 +2,14 @@
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Api.Models;
 using ConfigHelper;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public class SiteFunctionService : IFunctionListService
     {

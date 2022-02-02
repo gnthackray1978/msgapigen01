@@ -1,5 +1,5 @@
 ﻿using System;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Api.Services.interfaces;
 using Api.Types;
@@ -12,7 +12,7 @@ using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using ConfigHelper;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public class ADBService : IADBService
     {

@@ -2,9 +2,8 @@
 using Api.Types;
 using Api.Types.ADB;
 using Api.Types.DNAAnalyse;
-using GqlMovies.Api.Models;
-using GqlMovies.Api.Schemas;
-using GqlMovies.Api.Services;
+using Api.Models;
+using Api.Services;
 using GraphQL;
 using GraphQL.Types;
 using System;

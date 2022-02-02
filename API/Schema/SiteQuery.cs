@@ -1,15 +1,14 @@
-using GqlMovies.Api.Models;
-using GqlMovies.Api.Types;
-using GqlMovies.Api.Services;
+using Api.Models;
+using Api.Types;
+using Api.Services;
 using GraphQL.Types;
 using System.Collections.Generic;
 using System.Reflection;
 using GraphQL;
 using System.Security.Claims;
 using System;
-using Api.Types;
 
-namespace GqlMovies.Api.Schemas
+namespace Api.Schemas
 {
     public class SiteQuery : ObjectGraphType
 	{		

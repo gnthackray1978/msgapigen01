@@ -1,7 +1,7 @@
-﻿using GqlMovies.Api.Models;
+﻿using Api.Models;
 using GraphQL.Types;
 
-namespace GqlMovies.Api.Types
+namespace Api.Types
 {
     public class ClaimResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>> where GraphT : IGraphType
     {

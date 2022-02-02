@@ -2,7 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using GqlMovies.Api.Models;
+using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Api.Models;
@@ -10,7 +10,7 @@ using Api.Services.interfaces;
 using ConfigHelper;
 using Api.Types.Images;
 
-namespace GqlMovies.Api.Services
+namespace Api.Services
 {
     public class PhotoListService : IPhotoListService
     {

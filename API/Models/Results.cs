@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GqlMovies.Api.Models
+namespace Api.Models
 {
     public class Results<T>
     {

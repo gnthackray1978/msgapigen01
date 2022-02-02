@@ -1,5 +1,5 @@
-﻿using GqlMovies.Api.Models;
-using GqlMovies.Api.Types;
+﻿using Api.Models;
+using Api.Types;
 using GraphQL.Types;
 using System.Collections.Generic;
 using GraphQL;
@@ -8,10 +8,11 @@ using System;
 using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.DNAAnalyse;
-using GqlMovies.Api.Services;
+using Api.Services;
 using System.Threading.Tasks;
+using Api.Schema;
 
-namespace GqlMovies.Api.Schemas
+namespace Api.Schemas
 {
     public class DNAQuery : ObjectGraphType
 	{

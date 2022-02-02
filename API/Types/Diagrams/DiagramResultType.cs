@@ -1,4 +1,4 @@
-﻿using GqlMovies.Api.Models;
+﻿using Api.Models;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;

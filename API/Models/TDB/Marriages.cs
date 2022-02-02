@@ -1,4 +1,4 @@
-﻿using GqlMovies.Api.Services;
+﻿using Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
