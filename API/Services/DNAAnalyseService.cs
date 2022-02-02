@@ -444,7 +444,7 @@ namespace GqlMovies.Api.Services
                         Location = app.Location ?? "",
                         BirthLong =app.BirthLong,
                         Origin = app.Origin ?? "",
-                        PersonId = app.PersonId
+                        PersonId = app.PersonId.GetValueOrDefault()
                        
 
                     });
@@ -504,7 +504,7 @@ namespace GqlMovies.Api.Services
                         Location = app.Location ?? "",
                         BirthLong = app.BirthLong,
                         Origin = app.Origin ?? "",
-                        PersonId = app.PersonId
+                        PersonId = app.PersonId.GetValueOrDefault()
 
 
                     });

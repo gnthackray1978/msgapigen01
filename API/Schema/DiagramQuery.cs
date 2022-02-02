@@ -24,7 +24,8 @@ namespace Api.Schema
 			FieldAsync<AncestorResult, Results<AncestorNode>>(
 				   "ancestorsearch",
 				   arguments: new QueryArguments(
-					   new QueryArgument<StringGraphType> { Name = "args" }
+					   new QueryArgument<IntGraphType> { Name = "personId" },
+					   new QueryArgument<StringGraphType> { Name = "origin" }
 				   ),
 				   resolve: context =>
 				   {
@@ -42,15 +43,19 @@ namespace Api.Schema
 
 					   var obj = new Dictionary<string, string>();
 
-					   var query = context.GetArgument<string>("args");
-					 
-					
+					   var origin = context.GetArgument<string>("origin", "");
+					   var personId = context.GetArgument<int>("personId", 0);
+
+
 					   if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
 					   {
 						   return ErrorHandler.Error<AncestorNode>(ce, claimService.GetClaimDebugString(currentUser));
 					   }
 
-					   var pobj = new DiagramParamObj();
+					   var pobj = new DiagramParamObj() {
+						   Origin = origin,
+						   PersonId = personId 
+					   };
 
 					   return service.GetAncestors(pobj);
 				   }
@@ -59,7 +64,8 @@ namespace Api.Schema
 			FieldAsync<DescendantResult, Results<DescendantNode>>(
 			   "descendantsearch",
 			   arguments: new QueryArguments(
-				   new QueryArgument<StringGraphType> { Name = "args" }
+				   new QueryArgument<IntGraphType> { Name = "personId" },
+					   new QueryArgument<StringGraphType> { Name = "origin" }
 			   ),
 			   resolve: context =>
 			   {
@@ -77,15 +83,19 @@ namespace Api.Schema
 
 				   var obj = new Dictionary<string, string>();
 
-				   var query = context.GetArgument<string>("args");
-
+				   var origin = context.GetArgument<string>("origin", "");
+				   var personId = context.GetArgument<int>("personId", 0);
 
 				   if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
 				   {
 					   return ErrorHandler.Error<DescendantNode>(ce, claimService.GetClaimDebugString(currentUser));
 				   }
 
-				   var pobj = new DiagramParamObj();
+				   var pobj = new DiagramParamObj()
+				   {
+					   Origin = origin,
+					   PersonId = personId
+				   };
 
 				   return service.GetDescendants(pobj);
 			   }

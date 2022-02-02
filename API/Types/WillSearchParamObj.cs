@@ -73,7 +73,9 @@ namespace Api.Types
 
     public class DiagramParamObj
     {
+        public string Origin { get; set; }
 
+        public int PersonId { get; set; }
     }
 
     public class ADBPersonParamObj {

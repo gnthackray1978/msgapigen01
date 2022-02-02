@@ -21,6 +21,7 @@ using System;
 using ConfigHelper;
 using Api.Types.Images;
 using Api.Types.Diagrams;
+using Api.Services;
 
 namespace Api
 {
@@ -92,7 +93,7 @@ namespace Api
             services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
             services.AddHttpClient<IADBService, ADBService>();
             services.AddHttpClient<IPhotoListService, PhotoListService>();
-
+            services.AddHttpClient<IDiagramService, DiagramService>();
 
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
@@ -101,6 +102,7 @@ namespace Api
             services.AddSingleton<DNAQuery>();
             services.AddSingleton<ADBQuery>();
             services.AddSingleton<ImageQuery>();
+            services.AddSingleton<DiagramQuery>();
 
             services.AddSingleton<ApiImagesType>();
             services.AddSingleton<ApiParentImagesType>();
@@ -127,8 +129,8 @@ namespace Api
 
             services.AddSingleton<ADBISourceType>();
 
-         
-
+            services.AddSingleton<AncestorNodeType>();
+            services.AddSingleton<DescendantNodeType>();
 
             services.AddSingleton<WillResultType<WillType, Will>>();
 

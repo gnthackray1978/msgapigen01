@@ -13,40 +13,38 @@ namespace Api.Types.Diagrams
             Field(m => m.Id);
             Field(m => m.GenerationIdx);
             Field(m => m.Index);
-            Field(m => m.RecordLink);
             Field(m => m.ChildCount);
-            Field(m => m.ChildIdx);
+            Field<ListGraphType<IntGraphType>>("ChildIdxLst", "Child Idx List");
 
-            Field(m => m.ChildIdxLst);
-            Field(m => m.ChildLst);
-            Field(m => m.Children);
+            Field<ListGraphType<IntGraphType>>("ChildLst", "Child List");
+
+
             Field(m => m.DescendantCount);
-            Field(m => m.Father);
             Field(m => m.FatherId);
             Field(m => m.FatherIdx);
-            Field(m => m.GenerationIdx);
-            Field(m => m.Index);
             Field(m => m.IsDisplayed);
             Field(m => m.IsFamilyEnd);
             Field(m => m.IsFamilyStart);
             Field(m => m.IsHtmlLink);
             Field(m => m.IsParentalLink);
-            Field(m => m.Mother);
             Field(m => m.MotherId);
             Field(m => m.MotherIdx);
             Field(m => m.PersonId);
             Field(m => m.RelationType);
-            Field(m => m.SpouseIdxLst);
-            Field(m => m.SpouseIdLst);
-            Field(m => m.Spouses);     
+
+            Field<ListGraphType<IntGraphType>>("SpouseIdxLst", "Spouse Idx Lst");
+
+            Field<ListGraphType<IntGraphType>>("SpouseIdLst", "Spouse Id Lst");
+
             Field(m => m.ChristianName);
             Field(m => m.Surname);
             Field(m => m.BirthLocation);
             Field(m => m.DOB);
-    }
+        }
     }
 
-
+    //todo lots of this isn't used. need to work out which bits are and arent used.
+    //then delete accordingly.
     public class AncestorNode
     {
         public int Id { get; set; }

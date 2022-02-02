@@ -22,6 +22,10 @@ namespace AzureContext.Models
         public double AltLong { get; set; }
 
         public string Origin { get; set; }
-        public int PersonId { get; set; }
+        public int? PersonId { get; set; }
+
+        public int? FatherId { get; set; }
+
+        public int? MotherId { get; set; }
     }
 }
