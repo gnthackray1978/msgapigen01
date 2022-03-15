@@ -17,7 +17,7 @@ namespace Api.Types.Diagrams
             Field<ListGraphType<IntGraphType>>("ChildIdxLst", "Child Idx List");
 
             Field<ListGraphType<IntGraphType>>("ChildLst", "Child List");
-
+            Field<ListGraphType<IntGraphType>>("Children", "Child List2");
 
             Field(m => m.DescendantCount);
             Field(m => m.FatherId);
@@ -40,6 +40,7 @@ namespace Api.Types.Diagrams
             Field(m => m.Surname);
             Field(m => m.BirthLocation);
             Field(m => m.DOB);
+            Field(m => m.ChildIdx);
         }
     }
 
@@ -54,7 +55,7 @@ namespace Api.Types.Diagrams
 
         public List<int> ChildIdxLst { get; set; }
         public List<int> ChildLst { get; set; }
-        public List<object> Children { get; set; }
+        public List<int> Children { get; set; }
         public int DescendantCount { get; set; }
         public object Father { get; set; }
         public int FatherId { get; set; }

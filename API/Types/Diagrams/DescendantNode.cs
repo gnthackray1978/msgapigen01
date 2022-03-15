@@ -19,7 +19,10 @@ namespace Api.Types.Diagrams
 
             Field<ListGraphType<IntGraphType>>("ChildLst", "Child List");
 
-          
+            Field(m => m.ChildIdx);//hack. used with ancestry diagrams . its on here because 
+            // in the client the code that receives the data is the same for both
+            // ancestry and descendant diagrams
+
             Field(m => m.DescendantCount); 
             Field(m => m.FatherId);
             Field(m => m.FatherIdx);
@@ -31,6 +34,8 @@ namespace Api.Types.Diagrams
             Field(m => m.MotherId);
             Field(m => m.MotherIdx);
             Field(m => m.PersonId);
+
+            Field(m => m.RelationType);
 
             Field<ListGraphType<IntGraphType>>("SpouseIdxLst", "Spouse Idx Lst");
 
@@ -51,6 +56,9 @@ namespace Api.Types.Diagrams
         public int Id { get; set; }
         public int ChildCount { get; set; }
         public List<int> ChildIdxLst { get; set; }
+
+        public int ChildIdx { get; set; }
+
         public List<int> ChildLst { get; set; }
         public List<object> Children { get; set; }
         public int DescendantCount { get; set; }
@@ -72,6 +80,8 @@ namespace Api.Types.Diagrams
         public string ChristianName { get; set; }
         public string Surname { get; set; }
         public string BirthLocation { get; set; }
-        public string DOB { get; set; }        
+        public string DOB { get; set; }
+
+        public int RelationType { get; set; }
     }
 }

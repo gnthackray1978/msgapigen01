@@ -7,9 +7,9 @@ namespace Api.Services.interfaces
 {
     public interface IDiagramService
     {      
-        Task<Results<AncestorNode>> GetAncestors(DiagramParamObj searchParams);
+        Task<DiagramResults<AncestorNode>> GetAncestors(DiagramParamObj searchParams);
 
-        Task<Results<DescendantNode>> GetDescendants(DiagramParamObj searchParams);
+        Task<DiagramResults<DescendantNode>> GetDescendants(DiagramParamObj searchParams);
 
     }
 }

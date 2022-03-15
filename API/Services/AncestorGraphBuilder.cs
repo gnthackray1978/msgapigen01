@@ -50,7 +50,7 @@ namespace Api.Services
             results.Last().Add(new AncestorNode()
             {
                 PersonId = startPerson.PersonId.GetValueOrDefault(),
-                BirthLocation = startPerson.Location,
+                BirthLocation = startPerson.Location ??"",
                 ChristianName = startPerson.FirstName,
                 Surname = startPerson.Surname,
                 DOB = startPerson.YearFrom.ToString(),
@@ -73,23 +73,62 @@ namespace Api.Services
             //
 
             List<AncestorNode> flattenedResults = new List<AncestorNode>();
-
+            int id = 0;
             foreach (var gp in results)
             {
                 var idx = 0;
                 foreach (var p in gp)
                 {
                     p.Index = idx;
+                    p.Id = id;
+                    //populate children indexs
+                     
+
                     idx++;
+                    id++;
                     flattenedResults.Add(p);
                 }
             }
 
 
+            foreach(var f in flattenedResults)
+            {
+                
+                foreach(var c in f.ChildLst)
+                {
+                    var child = flattenedResults.FirstOrDefault(child => child.PersonId == c);
+
+                    if (child != null)
+                        f.ChildIdxLst.Add(child.Index);
+                }
+
+                if (f.ChildIdxLst.Count > 0)
+                {
+                    f.ChildIdx = f.ChildIdxLst.First();
+                }
+
+                var father = flattenedResults.FirstOrDefault(pf => pf.PersonId == f.FatherId);
+
+                if(father != null)
+                {
+                    f.FatherIdx = father.Index;
+                }
+
+                var mother = flattenedResults.FirstOrDefault(pf => pf.PersonId == f.MotherId);
+
+                if (mother != null)
+                {
+                    f.MotherIdx = mother.Index;
+                }
+
+            }
+
             return flattenedResults;
         }
 
-
+        //private int findIndex(List<AncestorNode> results) { 
+        
+        //}
 
 
         private void fillParents(AncestorNode child,
@@ -128,7 +167,7 @@ namespace Api.Services
                 newFather = new AncestorNode()
                 {
                     PersonId = father.PersonId.GetValueOrDefault(),
-                    BirthLocation = father.Location,
+                    BirthLocation = father.Location ??"",
                     ChristianName = father.FirstName,
                     Surname = father.Surname,
                     DOB = father.YearFrom.ToString(),
@@ -136,6 +175,7 @@ namespace Api.Services
                     MotherId = father.MotherId.GetValueOrDefault(),
                     ChildIdxLst = new List<int>(),
                     ChildLst = new List<int>() { child.PersonId },
+                    Children = new List<int>(),
                     SpouseIdxLst = new List<int>(),
                     SpouseIdLst = new List<int>(),
                     GenerationIdx = currentGeneration,
@@ -151,7 +191,7 @@ namespace Api.Services
                 newMother = new AncestorNode()
                 {
                     PersonId = mother.PersonId.GetValueOrDefault(),
-                    BirthLocation = mother.Location,
+                    BirthLocation = mother.Location ??"",
                     ChristianName = mother.FirstName,
                     Surname = mother.Surname,
                     DOB = mother.YearFrom.ToString(),
@@ -159,6 +199,7 @@ namespace Api.Services
                     MotherId = mother.MotherId.GetValueOrDefault(),
                     ChildIdxLst = new List<int>(),
                     ChildLst = new List<int>() { child.PersonId },
+                    Children = new List<int>(),
                     SpouseIdxLst = new List<int>(),
                     SpouseIdLst = new List<int>(),
                     GenerationIdx = currentGeneration,

@@ -4,6 +4,19 @@ namespace AzureContext.Models
 {
     public partial class FTMPersonView : IYearRange, IName, IPreciseLocation, IOrigin
     {
+        public static FTMPersonView CreateUnknownPerson(int id, int personId, string origin)
+        {
+            return new FTMPersonView()
+            {
+                FirstName = "",
+                Surname = "",
+                Origin = origin,
+                Id = id, 
+                PersonId = personId
+                
+            };
+        }
+
         public int Id { get; set; }
 
         public string FirstName { get; set; }

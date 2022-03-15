@@ -20,7 +20,7 @@ namespace Api.Schema
 
 			Name = "Diagram";
 
-			FieldAsync<AncestorResult, Results<AncestorNode>>(
+			FieldAsync<AncestorResult, DiagramResults<AncestorNode>>(
 				   "ancestorsearch",
 				   arguments: new QueryArguments(
 					   new QueryArgument<IntGraphType> { Name = "personId" },
@@ -48,7 +48,7 @@ namespace Api.Schema
 
 					   if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
 					   {
-						   return ErrorHandler.Error<AncestorNode>(ce, claimService.GetClaimDebugString(currentUser));
+						   return ErrorHandler.DiagramError<AncestorNode>(ce, claimService.GetClaimDebugString(currentUser));
 					   }
 
 					   var pobj = new DiagramParamObj() {
@@ -60,7 +60,7 @@ namespace Api.Schema
 				   }
 			   );
 
-			FieldAsync<DescendantResult, Results<DescendantNode>>(
+			FieldAsync<DescendantResult, DiagramResults<DescendantNode>>(
 			   "descendantsearch",
 			   arguments: new QueryArguments(
 				   new QueryArgument<IntGraphType> { Name = "personId" },
@@ -87,7 +87,7 @@ namespace Api.Schema
 
 				   if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
 				   {
-					   return ErrorHandler.Error<DescendantNode>(ce, claimService.GetClaimDebugString(currentUser));
+					   return ErrorHandler.DiagramError<DescendantNode>(ce, claimService.GetClaimDebugString(currentUser));
 				   }
 
 				   var pobj = new DiagramParamObj()

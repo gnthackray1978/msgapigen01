@@ -28,48 +28,67 @@ namespace Api.Services
         }
 
 
-        public async Task<Results<AncestorNode>> GetAncestors(DiagramParamObj searchParams)
+        public async Task<DiagramResults<AncestorNode>> GetAncestors(DiagramParamObj searchParams)
         {
             var _wills = new List<AncestorNode>();
 
-            var results = new Results<AncestorNode>();
+            var results = new DiagramResults<AncestorNode>();
 
-            int totalRecs = 0;
+          
 
             results.Error = "";
 
 
             results.LoginInfo = searchParams.PersonId.ToString();
-            results.Page = 1;
 
+            List<AncestorNode> gag = new List<AncestorNode>();
             try
             {
-
                 var c = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var a = new AncestorGraphBuilder(c);
 
-                results.results = a.GenerateAncestorGraph(searchParams.Origin, searchParams.PersonId);
+                gag = a.GenerateAncestorGraph(searchParams.Origin, searchParams.PersonId);                
             }
             catch (Exception e)
             {
                 results.Error = e.Message;
             }
 
+            results.results = gag;
+
+            if (gag.Count > 0)
+            {
+                results.TotalResults = gag.Count;
+                int genNumber = 0;
+                int genNodeNumber = 0;
+                foreach(var n in gag)
+                {
+                    if (n.GenerationIdx > genNumber)
+                        genNumber = n.GenerationIdx;
+
+                    if (n.Index > genNodeNumber)
+                        genNodeNumber = n.Index;
+                }
+
+                results.GenerationsCount = genNumber+1;
+                results.MaxGenerationLength = genNodeNumber+1;
+            }
 
             return results;
         }
 
-        public async Task<Results<DescendantNode>> GetDescendants(DiagramParamObj searchParams)
+        public async Task<DiagramResults<DescendantNode>> GetDescendants(DiagramParamObj searchParams)
         {
             var _wills = new List<DescendantNode>();
 
-            var results = new Results<DescendantNode>();
+            var results = new DiagramResults<DescendantNode>();
 
             results.Error ="none";
 
             results.LoginInfo = searchParams.PersonId.ToString();
-            results.Page = 1;
+
+            List<DescendantNode> gag = new List<DescendantNode>();
 
             try
             {
@@ -78,14 +97,34 @@ namespace Api.Services
 
                 var d = new DescendantGraphBuilder(a);
 
-                results.results = d.GenerateDescendantGraph(searchParams.PersonId, searchParams.Origin);
+
+                gag= d.GenerateDescendantGraph(searchParams.PersonId, searchParams.Origin);
+                 
             }
             catch(Exception e)
             {
                 results.Error = e.Message;
             }
 
+            results.results = gag;
 
+            if (gag.Count > 0)
+            {
+                results.TotalResults = gag.Count;
+                int genNumber = 0;
+                int genNodeNumber = 0;
+                foreach (var n in gag)
+                {
+                    if (n.GenerationIdx > genNumber)
+                        genNumber = n.GenerationIdx;
+
+                    if (n.Index > genNodeNumber)
+                        genNodeNumber = n.Index;
+                }
+
+                results.GenerationsCount = genNumber+1;
+                results.MaxGenerationLength = genNodeNumber+1;
+            }
 
             return results;
         }

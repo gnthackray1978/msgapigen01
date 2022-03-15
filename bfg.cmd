@@ -1,0 +1,1 @@
+@java -jar C:\Users\GeorgePickworth\source\repos\MSGAPI\bfg-1.13.0.jar %*

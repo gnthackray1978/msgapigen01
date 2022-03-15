@@ -40,6 +40,40 @@ namespace Api.Services
 
                 _persons = _azureDbContext.FTMPersonView.Where(w => w.Origin == origin).ToList();
 
+                
+
+                var missingFathers = _persons.Where(w => w.FatherId == 0 && w.MotherId != 0).ToList();
+
+                var missingMothers = _persons.Where(w => w.FatherId != 0 && w.MotherId == 0).ToList();
+
+                var newPersonId = _persons.Max(p => p.PersonId)+1;
+                var newId = _persons.Count + 1;
+
+                foreach(var person in missingFathers)
+                {
+                    //create father 
+                     
+                    _persons[_persons.FindIndex(a=>a.Id == person.Id)].FatherId = newPersonId;
+
+                    _persons.Add(FTMPersonView.CreateUnknownPerson(newId, newPersonId.GetValueOrDefault(), origin));
+
+                    newPersonId++;
+                    newId++;
+                }
+
+                foreach (var person in missingMothers)
+                {
+                    //create father 
+                     
+                    _persons[_persons.FindIndex(a => a.Id == person.Id)].MotherId = newPersonId;
+                    _persons.Add(FTMPersonView.CreateUnknownPerson(newId, newPersonId.GetValueOrDefault(), origin));
+
+                    newPersonId++;
+                    newId++;
+                }
+
+
+
                 _graphMarriages = new List<GraphMarriage>();
 
                 var g = _persons.GroupBy(d => new { d.FatherId, d.MotherId })
@@ -57,11 +91,14 @@ namespace Api.Services
 
                 var child = _persons.FirstOrDefault(r => r.PersonId == result);
 
+                var spouseList = makeSpouse(child.PersonId.GetValueOrDefault(), 0);
+
+
                 results.Add(new List<DescendantNode>());
                 results.Last().Add(new DescendantNode()
                 {
                     PersonId = child.PersonId.GetValueOrDefault(),
-                    BirthLocation = child.Location,
+                    BirthLocation = child.Location??"",
                     ChristianName = child.FirstName,
                     Surname = child.Surname,
                     DOB = child.YearFrom.ToString(),
@@ -75,17 +112,74 @@ namespace Api.Services
                 }
                 );
 
+                results.Last().AddRange(spouseList);
+
                 int currentGeneration = 0;
 
                 fillChildGenerations(result, ref results, ref currentGeneration);
 
+                var idx = 0;
+                foreach (var gp in results)
+                {
+                   
+                    foreach (var p in gp)
+                    {
+                       
+                        var groomSpouses = _graphMarriages.Where(w => w.FatherId == p.PersonId).Select(s=>s.MotherId).ToList();
+                        var brideSpouses = _graphMarriages.Where(w => w.MotherId == p.PersonId).Select(s => s.FatherId).ToList();
+
+                        var spouseIdxList = new List<int>();
+
+                        int personIdx = 0;
+
+                        if (groomSpouses.Count> 0)
+                        {
+                            foreach(var person in results[idx])
+                            {
+                                if(groomSpouses.Exists(a=>a == person.PersonId))
+                                {
+                                    spouseIdxList.Add(personIdx);
+                                    break;
+                                }
+
+                                personIdx++;
+                            }
+
+                            p.SpouseIdLst.AddRange(groomSpouses);
+                        }
+
+                        if (brideSpouses.Count > 0)
+                        {
+                            foreach (var person in results[idx])
+                            {
+                                if (brideSpouses.Exists(a => a == person.PersonId))
+                                {
+                                    spouseIdxList.Add(personIdx);
+                                    break;
+                                }
+
+                                personIdx++;
+                            }
+
+                            p.SpouseIdLst.AddRange(brideSpouses);
+                        }
+                        p.SpouseIdxLst.AddRange(spouseIdxList);
+
+                    }
+                    idx++;
+                }
+
+
                 List<DescendantNode> flattenedResults = new List<DescendantNode>();
+
+
+
 
                 int id = 0;
 
                 foreach (var gp in results)
                 {
-                    var idx = 0;
+                     idx = 0;
                     foreach (var p in gp)
                     {
                         p.Index = idx;
@@ -153,8 +247,8 @@ namespace Api.Services
                 {
 
 
-                    int fatherIdx = -1;
-                    int motherIdx = -1;
+                    int fatherIdx = -2;
+                    int motherIdx = -2;
 
                     if (currentGeneration > 0)
                     {
@@ -169,7 +263,7 @@ namespace Api.Services
 
                         IsFamilyStart = childIdx == 0,
                         PersonId = child.PersonId.GetValueOrDefault(),
-                        BirthLocation = child.Location,
+                        BirthLocation = child.Location??"",
                         ChristianName = child.FirstName,
                         Surname = child.Surname,
                         DOB = child.YearFrom.ToString(),
@@ -188,23 +282,23 @@ namespace Api.Services
 
                     var spouseList = makeSpouse(child.PersonId.GetValueOrDefault(), currentGeneration);
 
-                    if (workingCopy.Count > 0)
-                    {
-                        var lastAdded = workingCopy.Last();
+                    //if (workingCopy.Count > 0)
+                    //{
+                    //    var lastAdded = workingCopy.Last();
 
-                        var lastIdx = workingCopy.Count;
+                    //    var lastIdx = workingCopy.Count;
 
-                        var spouseIdx = 0;
+                    //    var spouseIdx = 0;
 
-                        //populate spouseIdxList
-                        while (spouseIdx < spouseList.Count)
-                        {
-                            lastAdded.SpouseIdxLst.Add(lastIdx);
-                            lastAdded.SpouseIdLst.Add(spouseList[spouseIdx].PersonId);
-                            lastIdx++;
-                            spouseIdx++;
-                        }
-                    }
+                    //    //populate spouseIdxList
+                    //    while (spouseIdx < spouseList.Count)
+                    //    {
+                    //        lastAdded.SpouseIdxLst.Add(lastIdx);
+                    //        lastAdded.SpouseIdLst.Add(spouseList[spouseIdx].PersonId);
+                    //        lastIdx++;
+                    //        spouseIdx++;
+                    //    }
+                    //}
 
 
 
@@ -290,7 +384,7 @@ namespace Api.Services
                 {
                     spouses.Add(new DescendantNode()
                     {
-                        BirthLocation = person.Location,
+                        BirthLocation = person.Location??"",
                         ChristianName = person.FirstName,
                         DOB = person.YearFrom.ToString(),
                         FatherId = person.FatherId.GetValueOrDefault(),
@@ -301,7 +395,8 @@ namespace Api.Services
                         ChildIdxLst = new List<int>(),
                         ChildLst = new List<int>(),
                         SpouseIdxLst = new List<int>(),
-                        SpouseIdLst = new List<int>()
+                        SpouseIdLst = new List<int>(),
+                        IsHtmlLink = true
                     });
                 }
 
