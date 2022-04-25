@@ -86,6 +86,11 @@ namespace Api.Models
         public virtual DbSet<Tokens> Tokens { get; set; }
 
         public virtual DbSet<FTMPersonView> FTMPersonView { get; set; }
+
+      
+
+        public virtual DbSet<Relationships> Relationships { get; set; }
+
         public virtual DbSet<DupeEntry> DupeEntries { get; set; }
         public virtual DbSet<MsgPages> MsgPages { get; set; }
 
@@ -725,6 +730,21 @@ namespace Api.Models
                 entity.Property(e => e.YearTo).HasColumnName("BirthTo");
 
                 entity.Property(e => e.Location).HasColumnName("BirthLocation");
+
+            });
+
+
+            modelBuilder.Entity<Relationships>(entity =>
+            {
+                entity.ToTable("Relationships", "DNA");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Notes).HasMaxLength(2000);
+
+                entity.Property(e => e.DateStr).HasMaxLength(500);
+
+                entity.Property(e => e.Origin).HasMaxLength(500);  
 
             });
 

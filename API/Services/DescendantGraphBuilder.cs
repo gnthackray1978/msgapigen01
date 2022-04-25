@@ -19,7 +19,8 @@ namespace Api.Services
         {
             private readonly AzureDBContext _azureDbContext;
             private List<FTMPersonView> _persons;
-            private List<GraphMarriage> _graphMarriages;
+          //  private List<GraphMarriage> _graphMarriages;
+            private List<Relationships> _relationships;
 
             public DescendantGraphBuilder(AzureDBContext azureDbContext)
             {
@@ -40,7 +41,7 @@ namespace Api.Services
 
                 _persons = _azureDbContext.FTMPersonView.Where(w => w.Origin == origin).ToList();
 
-                
+                _relationships = _azureDbContext.Relationships.Where(w => w.Origin == origin).ToList();
 
                 var missingFathers = _persons.Where(w => w.FatherId == 0 && w.MotherId != 0).ToList();
 
@@ -74,15 +75,15 @@ namespace Api.Services
 
 
 
-                _graphMarriages = new List<GraphMarriage>();
+                //_graphMarriages = new List<GraphMarriage>();
 
-                var g = _persons.GroupBy(d => new { d.FatherId, d.MotherId })
-                    .Select(m => new { m.Key.FatherId, m.Key.MotherId });
+                //var g = _persons.GroupBy(d => new { d.FatherId, d.MotherId })
+                //    .Select(m => new { m.Key.FatherId, m.Key.MotherId });
 
-                foreach (var group in g)
-                {
-                    _graphMarriages.Add(new GraphMarriage() { FatherId = group.FatherId.GetValueOrDefault(), MotherId = group.MotherId.GetValueOrDefault() });
-                }
+                //foreach (var group in g)
+                //{
+                //    _graphMarriages.Add(new GraphMarriage() { FatherId = group.FatherId.GetValueOrDefault(), MotherId = group.MotherId.GetValueOrDefault() });
+                //}
 
 
                 var startPerson = _persons.FirstOrDefault(fd => fd.PersonId == personId);
@@ -125,8 +126,8 @@ namespace Api.Services
                     foreach (var p in gp)
                     {
                        
-                        var groomSpouses = _graphMarriages.Where(w => w.FatherId == p.PersonId).Select(s=>s.MotherId).ToList();
-                        var brideSpouses = _graphMarriages.Where(w => w.MotherId == p.PersonId).Select(s => s.FatherId).ToList();
+                        var groomSpouses = _relationships.Where(w => w.GroomId == p.PersonId).Select(s=>s.BrideId).ToList();
+                        var brideSpouses = _relationships.Where(w => w.BrideId == p.PersonId).Select(s => s.GroomId).ToList();
 
                         var spouseIdxList = new List<int>();
 
@@ -368,14 +369,14 @@ namespace Api.Services
 
             private List<DescendantNode> makeSpouse(int personId, int generationNumber)
             {
-                var marriages = _graphMarriages.Where(w => w.FatherId == personId || w.MotherId == personId).ToList();
+                var marriages = _relationships.Where(w => w.GroomId == personId || w.BrideId == personId).ToList();
                 List<int> spouseIdList = new List<int>();
                 List<DescendantNode> spouses = new List<DescendantNode>();
 
                 foreach (var m in marriages)
                 {
-                    if (m.FatherId == personId) spouseIdList.Add(m.MotherId);
-                    if (m.MotherId == personId) spouseIdList.Add(m.FatherId);
+                    if (m.GroomId == personId) spouseIdList.Add(m.BrideId);
+                    if (m.BrideId == personId) spouseIdList.Add(m.GroomId);
                 }
 
                 var persons = _persons.Where(w => spouseIdList.Contains(w.PersonId.GetValueOrDefault()));
