@@ -2,15 +2,15 @@
 
 namespace Api.Types.ADB
 {
-    public class ADBParishDataType : ObjectGraphType<ADBParishData>
-    {
-        public ADBParishDataType()
-        {
-            Field(m => m.Id);
-            Field(m => m.ParishId);
-            Field(m => m.ParishDataString);
-        }
-    }
+    //public class ADBParishDataType : ObjectGraphType<ADBParishData>
+    //{
+    //    public ADBParishDataType()
+    //    {
+    //        Field(m => m.Id);
+    //        Field(m => m.ParishId);
+    //        Field(m => m.ParishDataString);
+    //    }
+    //}
 
     public class ADBParishData
     {

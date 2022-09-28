@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Api.Models;
 using System.Security.Claims;
+using Api.Schema;
 
 namespace Api.Services
 {

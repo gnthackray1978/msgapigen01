@@ -27,7 +27,7 @@ namespace Api.Types.DNAAnalyse
         public string Origin { get; set; }
         public int PersonCount { get; set; }
 
-        public int GroupNumber { get; set; }
+        public string GroupNumber { get; set; }
 
         public int CM { get; set; }
         public bool Located { get; set; }

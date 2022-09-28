@@ -1,16 +1,16 @@
 ﻿using System;
-using Api.Models;
 using System.Threading.Tasks;
 using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.ADB;
-using Api.Models;
 using System.Collections.Generic;
 using System.Linq;
 using AzureContext.Models;
 using System.Net.Http;
+using Api.DB;
 using Microsoft.Extensions.Configuration;
 using ConfigHelper;
+using Api.Schema;
 
 namespace Api.Services
 {

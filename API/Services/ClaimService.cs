@@ -6,8 +6,9 @@ using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using Api.DB;
 using ConfigHelper;
-using Api.Models;
+using Api.Schema;
 
 namespace Api.Services
 {

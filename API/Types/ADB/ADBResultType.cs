@@ -1,6 +1,6 @@
 ﻿using Api.Types.ADB;
-using Api.Models;
 using GraphQL.Types;
+using Api.Schema;
 
 namespace Api.Types.DNAAnalyse
 {

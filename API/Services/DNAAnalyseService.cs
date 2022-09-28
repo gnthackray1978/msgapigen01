@@ -1,16 +1,16 @@
 ﻿using Api.Services.interfaces;
 using Api.Types;
 using Api.Types.DNAAnalyse;
-using Api.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System;
-using Api.Models;
 using AzureContext.Models;
 using ConfigHelper;
+using Api.DB;
+using Api.Schema;
 
 namespace Api.Services
 {
@@ -444,8 +444,8 @@ namespace Api.Services
                         Location = app.Location ?? "",
                         BirthLong =app.BirthLong,
                         Origin = app.Origin ?? "",
-                        PersonId = app.PersonId.GetValueOrDefault()
-                       
+                        PersonId = app.PersonId.GetValueOrDefault(),
+                        DirectAncestor = app.DirectAncestor
 
                     });
                 }
@@ -504,8 +504,8 @@ namespace Api.Services
                         Location = app.Location ?? "",
                         BirthLong = app.BirthLong,
                         Origin = app.Origin ?? "",
-                        PersonId = app.PersonId.GetValueOrDefault()
-
+                        PersonId = app.PersonId.GetValueOrDefault(),
+                        DirectAncestor = app.DirectAncestor
 
                     });
                 }

@@ -29,7 +29,7 @@ namespace ConfigHelper
             opts.TenantId = "86373050-6f1c-4736-8823-7a15f7517604";
 
 
-           // var credential = new VisualStudioCredential(opts);
+        //    var credential = new VisualStudioCredential(opts);
 
 
             var credential = new DefaultAzureCredential();

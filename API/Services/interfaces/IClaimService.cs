@@ -1,10 +1,11 @@
 ﻿using Api.Models;
+using Api.Schema;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Api.Services
-{ 
+{
     public interface IClaimService 
     {
         Task<MSGClaim> GetClaim(int id);

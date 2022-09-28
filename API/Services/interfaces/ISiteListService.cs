@@ -4,8 +4,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Api.Models;
 using System.Security.Claims;
-using Api.Models;
 using Api.Types;
+using Api.Schema;
 
 namespace Api.Services
 {

@@ -9,9 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.WebUtilities;
 using Api.Types;
 using System.Security.Claims;
-using Api.Models;
+using Api.DB;
 using ConfigHelper;
 using Api.Types;
+using Api.Schema;
 
 namespace Api.Services
 {

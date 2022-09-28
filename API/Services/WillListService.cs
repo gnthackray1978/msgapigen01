@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Api.Models;
 using Api.Services.interfaces;
 using Api.Types;
-using AzureContext.Models;
 using ConfigHelper;
+using Api.Entities.Wills;
+using Api.Schema;
+using Api.DB;
 
 namespace Api.Services
 {

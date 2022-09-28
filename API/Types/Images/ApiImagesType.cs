@@ -1,4 +1,5 @@
-﻿using Api.Types.Images;
+﻿using Api.Schema;
+using Api.Types.Images;
 using GraphQL.Types;
 
 namespace Api.Models

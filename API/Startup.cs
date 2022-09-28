@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using GraphQL;
 using Api.Services;
-using Api.Schemas;
 using Api.Types;
 using Api.Models;
 using GraphQL.Server.Ui.Playground;
@@ -22,6 +21,8 @@ using ConfigHelper;
 using Api.Types.Images;
 using Api.Types.Diagrams;
 using Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.Schema.SubQueries;
 
 namespace Api
 {
@@ -52,15 +53,18 @@ namespace Api
 
             services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
 
-            //5000 was the auth server
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = msgConfigHelper.AuthServerUrl;
-                    options.RequireHttpsMetadata = false;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-                    options.Audience = "api1";
-                });
+            })
+            .AddJwtBearer(o =>
+            {
+                o.SecurityTokenValidators.Clear();
+                o.SecurityTokenValidators.Add(new GoogleTokenValidator());
+            });
 
             string[] o = { msgConfigHelper.ClientURLs };
 

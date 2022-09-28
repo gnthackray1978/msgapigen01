@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Api.Models;
+using Api.Schema;
 using GraphQL.Types;
 
 namespace Api.Types

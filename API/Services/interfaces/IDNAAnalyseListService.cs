@@ -1,7 +1,7 @@
 ﻿using Api.Types;
 using Api.Types.DNAAnalyse;
-using Api.Models;
 using System.Threading.Tasks;
+using Api.Schema;
 
 namespace Api.Services.interfaces
 {

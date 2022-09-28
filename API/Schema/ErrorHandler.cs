@@ -1,5 +1,4 @@
-﻿using Api.Models;
-using Api.Types.Diagrams;
+﻿using Api.Types.Diagrams;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

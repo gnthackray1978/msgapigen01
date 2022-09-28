@@ -1,4 +1,4 @@
-﻿using Api.Models;
+﻿using Api.Schema;
 using GraphQL.Types;
 
 namespace Api.Types.DNAAnalyse

@@ -47,7 +47,7 @@ namespace Api.Types
 
         public string Origin { get; set; }
 
-        public int GroupNumber { get; set; }
+        public string GroupNumber { get; set; }
     }
     public class WillSearchParamObj
     {

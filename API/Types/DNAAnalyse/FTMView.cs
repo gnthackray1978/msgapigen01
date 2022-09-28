@@ -1,7 +1,4 @@
 ﻿using GraphQL.Types;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Types.DNAAnalyse
 {
@@ -26,7 +23,7 @@ namespace Api.Types.DNAAnalyse
 
             Field(m => m.AltLat);
             Field(m => m.AltLong);
-             
+            Field(m => m.DirectAncestor);
         }
     }
 
@@ -52,5 +49,7 @@ namespace Api.Types.DNAAnalyse
 
         public string Origin { get; set; }
         public int PersonId { get; set; }
+
+        public bool DirectAncestor { get; set; }
     }
 }

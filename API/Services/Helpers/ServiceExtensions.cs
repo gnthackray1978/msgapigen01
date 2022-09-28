@@ -1,8 +1,8 @@
-﻿using System.Linq; 
+﻿using System.Linq;
 using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Api.Models;
+using Api.DB;
 
 namespace Api.Services
 {
@@ -101,7 +101,7 @@ namespace Api.Services
 
     public interface IGroupNumber
     {
-        public int GroupNumber { get; set; }
+        public string GroupNumber { get; set; }
     }
 
     public interface ITesterName
@@ -504,9 +504,9 @@ namespace Api.Services
 
         public static IQueryable<T> WhereIfGroupId<T>(
            this IQueryable<T> source,
-           int groupId) where T : IGroupNumber
+           string groupId) where T : IGroupNumber
         {
-            if (groupId==-1)
+            if (groupId== string.Empty)
                 return source;
 
          

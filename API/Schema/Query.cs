@@ -1,4 +1,4 @@
-using Api.Schema;
+using Api.Schema.SubQueries;
 using GraphQL.Types;
 
 namespace Api.Schemas

@@ -4,11 +4,12 @@ using System.Net.Http;
 using System.Collections.Generic;
 using Api.Models;
 using System.Threading.Tasks;
+using Api.DB;
 using Microsoft.Extensions.Configuration;
-using Api.Models;
 using Api.Services.interfaces;
 using ConfigHelper;
 using Api.Types.Images;
+using Api.Schema;
 
 namespace Api.Services
 {
