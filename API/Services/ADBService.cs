@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Api.Services.interfaces;
-using Api.Types;
 using Api.Types.ADB;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +9,8 @@ using Api.DB;
 using Microsoft.Extensions.Configuration;
 using ConfigHelper;
 using Api.Schema;
+using Api.Types.RequestQueries;
+using Api.Services.interfaces.services;
 
 namespace Api.Services
 {
@@ -41,8 +41,8 @@ namespace Api.Services
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Marriages.WhereIfMatchParticipants(searchParams.MaleSurname, searchParams.FemaleSurname)
-                    .WhereIfLocation(searchParams.Location)
-                    .WhereIfYearBetween(searchParams.YearStart, searchParams.YearEnd)
+                    .WhereIfLocation(searchParams)
+                    .WhereIfYearBetween(searchParams)
                     .MarriageSortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -184,12 +184,12 @@ namespace Api.Services
                     .WhereIfMotherChristianName(searchParams.MotherChristianName)
                     .WhereIfMotheSurname(searchParams.MotherSurname)
                     .WhereIfOccupation(searchParams.Occupation)
-                    .WhereIfPersonWithinYears(searchParams.YearStart,searchParams.YearEnd)
+                    .WhereIfPersonWithinYears(searchParams)
                     .WhereIfSource(searchParams.Source)
                     .WhereIfSpouseName(searchParams.SpouseName)
                     .WhereIfSpouseSurname(searchParams.SpouseSurname)
-                    .WhereIfSurname(searchParams.Surname)
-                    .WhereIfFirstName(searchParams.FirstName)
+                    .WhereIfSurname(searchParams)
+                    .WhereIfFirstName(searchParams)
                     .PersonSortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -274,9 +274,9 @@ namespace Api.Services
             {
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
-                var unpaged = a.Sources.WhereIfLocation(searchParams.Location)
+                var unpaged = a.Sources.WhereIfLocation(searchParams)
                     .WhereIfSourceRef(searchParams.SourceRef)
-                    .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd)
+                    .WhereIfYearsBetween(searchParams)
                     .OrderBy(o => o.SourceRef);
 
                 totalRecs = unpaged.Count();
@@ -322,8 +322,7 @@ namespace Api.Services
 
             return results;
         }
-
-
+        
         public async Task<Results<ADBInternalSourceType>> SourceTypeList(ADBSourceParamObj searchParams)
         {
             var parishList = new List<ADBInternalSourceType>();
@@ -369,10 +368,7 @@ namespace Api.Services
 
             return results;
         }
-
-
-
-
+        
         public async Task<Results<ADBParishData>> ParishDataList(int parishId)
         {
             var parishList = new List<ADBParishData>();

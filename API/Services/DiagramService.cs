@@ -1,6 +1,4 @@
 ﻿using Api.Models;
-using Api.Services.interfaces;
-using Api.Types;
 using Api.Types.Diagrams;
 using ConfigHelper;
 using Api.Models;
@@ -10,6 +8,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Api.DB;
+using Api.Types.RequestQueries;
+using Api.Services.interfaces.services;
 
 namespace Api.Services
 {

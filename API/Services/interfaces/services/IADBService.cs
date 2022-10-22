@@ -1,12 +1,12 @@
-﻿using Api.Types;
-using Api.Types.ADB;
+﻿using Api.Types.ADB;
 using System.Threading.Tasks;
 using Api.Schema;
+using Api.Types.RequestQueries;
 
-namespace Api.Services.interfaces
+namespace Api.Services.interfaces.services
 {
     public interface IADBService
-    {   
+    {
         Task<Results<ADBInternalSourceType>> SourceTypeList(ADBSourceParamObj searchParams);
 
         Task<Results<ADBMarriage>> MarriageList(ADBMarriageParamObj aDBMarriageParamObj);

@@ -6,10 +6,10 @@ using Api.Models;
 using System.Threading.Tasks;
 using Api.DB;
 using Microsoft.Extensions.Configuration;
-using Api.Services.interfaces;
 using ConfigHelper;
 using Api.Types.Images;
 using Api.Schema;
+using Api.Services.interfaces.services;
 
 namespace Api.Services
 {

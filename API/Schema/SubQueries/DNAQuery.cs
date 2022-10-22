@@ -1,15 +1,12 @@
-﻿using Api.Types;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using System.Collections.Generic;
 using GraphQL;
 using System.Security.Claims;
 using System;
-using Api.Services.interfaces;
-using Api.Types;
 using Api.Types.DNAAnalyse;
 using Api.Services;
-using System.Threading.Tasks;
-using Api.Schema;
+using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
 
 namespace Api.Schema.SubQueries
 {
@@ -62,19 +59,21 @@ namespace Api.Schema.SubQueries
                     }
 
 
-                    var pobj = new DNASearchParamObj();
+                    var pobj = new DNASearchParamObj
+                    {
+                        Limit = limit,
+                        Offset = offset,
+                        SortColumn = sortColumn,
+                        SortOrder = sortOrder,
+                        Surname = surname,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
-                    pobj.Limit = limit;
-                    pobj.Offset = offset;
-                    pobj.SortColumn = sortColumn;
-                    pobj.SortOrder = sortOrder;
-
-
-                    pobj.Surname = surname;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
                     return service.DupeList(pobj);
                 }
@@ -126,19 +125,22 @@ namespace Api.Schema.SubQueries
                         return ErrorHandler.Error<FTMPersonLocation>(ce, claimService.GetClaimDebugString(currentUser));
                     }
 
-                    var pobj = new DNASearchParamObj();
+                    var pobj = new DNASearchParamObj
+                    {
+                        YearTo = yearEnd,
+                        YearFrom = yearStart,
+                        Location = place,
+                        Surname = surname,
+                        Origin = origin,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
-
-
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
-                    pobj.Location = place;
-                    pobj.Surname = surname;
-                    pobj.Origin = origin;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
+                
 
                     return service.FTMLocSearch(pobj);
                 }
@@ -182,14 +184,18 @@ namespace Api.Schema.SubQueries
 
 
 
-                    var pobj = new DNASearchParamObj();
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
-                    pobj.Origin = origin;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
+                    var pobj = new DNASearchParamObj
+                    {
+                        YearTo = yearEnd,
+                        YearFrom = yearStart,
+                        Origin = origin,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
                     return service.FTMLatLngList(pobj);
                 }
@@ -251,21 +257,24 @@ namespace Api.Schema.SubQueries
 
 
 
-                    var pobj = new DNASearchParamObj();
-
-                    pobj.Limit = limit;
-                    pobj.Offset = offset;
-                    pobj.SortColumn = sortColumn;
-                    pobj.SortOrder = sortOrder;
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
-                    pobj.Location = place;
-                    pobj.Surname = surname;
-                    pobj.Origin = origin;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
+                    var pobj = new DNASearchParamObj
+                    {
+                        Limit = limit,
+                        Offset = offset,
+                        SortColumn = sortColumn,
+                        SortOrder = sortOrder,
+                        YearTo = yearEnd,
+                        YearFrom = yearStart,
+                        Location = place,
+                        Surname = surname,
+                        Origin = origin,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
                     return service.FTMViewList(pobj);
                 }
@@ -328,23 +337,26 @@ namespace Api.Schema.SubQueries
                     }
 
 
-                    var pobj = new DNASearchParamObj();
-
-                    pobj.Limit = limit;
-                    pobj.Offset = offset;
-                    pobj.SortColumn = sortColumn;
-                    pobj.SortOrder = sortOrder;
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
-                    pobj.Surname = surname;
-                    pobj.Country = country;
-                    pobj.MinCM = mincm;
-                    pobj.Name = name;
-                    pobj.Location = location;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
+                    var pobj = new DNASearchParamObj
+                    {
+                        Limit = limit,
+                        Offset = offset,
+                        SortColumn = sortColumn,
+                        SortOrder = sortOrder,
+                        YearTo = yearEnd,
+                        YearFrom = yearStart,
+                        Surname = surname,
+                        Country = country,
+                        MinCM = mincm,
+                        Name = name,
+                        Location = location,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
                     return service.PersonOfInterestList(pobj);
                 }
@@ -362,7 +374,7 @@ namespace Api.Schema.SubQueries
                     new QueryArgument<StringGraphType> { Name = "sortColumn" },
                     new QueryArgument<StringGraphType> { Name = "sortOrder" },
                     new QueryArgument<StringGraphType> { Name = "origin" },
-                    new QueryArgument<IntGraphType> { Name = "groupNumber" }
+                    new QueryArgument<StringGraphType> { Name = "name" }
                 ),
                 resolve: context =>
                 {
@@ -388,27 +400,29 @@ namespace Api.Schema.SubQueries
                     var sortOrder = context.GetArgument<string>("sortOrder");
 
                     var origin = context.GetArgument<string>("origin");
-                    var groupNumber = context.GetArgument<string>("groupNumber");
+                //    var name = context.GetArgument<string>("name");
 
+                    //if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+                    //{
+                    //    return ErrorHandler.Error<TreeRec>(ce, claimService.GetClaimDebugString(currentUser));
+                    //}
 
-                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+                    var pobj = new DNASearchParamObj
                     {
-                        return ErrorHandler.Error<TreeRec>(ce, claimService.GetClaimDebugString(currentUser));
-                    }
+                        Limit = limit,
+                        Offset = offset,
+                        SortColumn = sortColumn,
+                        SortOrder = sortOrder,
+                        //pobj.Origin = origin;
+                        Name = origin,
+                        Meta =
+                        {
+                            User = currentUser,
+                            Error = ce?.Message,
+                            LoginInfo = claimService.GetClaimDebugString(currentUser)
+                        }
+                    };
 
-                    var pobj = new DNASearchParamObj();
-
-
-                    pobj.Limit = limit;
-                    pobj.Offset = offset;
-                    pobj.SortColumn = sortColumn;
-                    pobj.SortOrder = sortOrder;
-                    pobj.Origin = origin;
-                    pobj.GroupNumber = groupNumber;
-
-                    pobj.Meta.User = currentUser;
-                    pobj.Meta.Error = ce?.Message;
-                    pobj.Meta.LoginInfo = claimService.GetClaimDebugString(currentUser);
 
                     return service.TreeList(pobj);
                 }

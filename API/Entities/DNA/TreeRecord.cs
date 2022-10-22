@@ -1,8 +1,8 @@
-﻿using Api.Services;
+﻿using Api.Services.interfaces.domain;
 
 namespace AzureContext.Models
 {
-    public partial class TreeRecord : IOrigin, IGroupNumber
+    public partial class TreeRecord :  ITreeName
     {
         public int ID { get; set; }
         public string Name { get; set; } 
@@ -10,7 +10,5 @@ namespace AzureContext.Models
         public int PersonCount { get; set; }
         public int CM { get; set; }
         public bool Located { get; set; }
-
-        public string GroupNumber { get; set; }
     }
 }

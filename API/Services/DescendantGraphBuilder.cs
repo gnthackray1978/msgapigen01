@@ -32,7 +32,7 @@ namespace Api.Services
 
 
 
-            public List<DescendantNode> GenerateDescendantGraph(int personId, string origin)
+            public List<DescendantNode> GenerateDescendantGraph(int personId, int origin)
             {
                 List<List<DescendantNode>> results = new List<List<DescendantNode>>();
 

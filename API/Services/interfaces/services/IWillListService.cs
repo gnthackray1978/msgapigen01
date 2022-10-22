@@ -1,13 +1,13 @@
-﻿using Api.Types;
-using Api.Models;
+﻿using Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Schema;
+using Api.Types.RequestQueries;
 
-namespace Api.Services.interfaces
+namespace Api.Services.interfaces.services
 {
     public interface IWillListService
     {

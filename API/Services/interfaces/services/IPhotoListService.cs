@@ -3,7 +3,7 @@ using Api.Models;
 using System.Threading.Tasks;
 using Api.Schema;
 
-namespace Api.Services.interfaces
+namespace Api.Services.interfaces.services
 {
     public interface IPhotoListService
     {

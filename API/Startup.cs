@@ -11,7 +11,6 @@ using Api.Models;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
-using Api.Services.interfaces;
 using Api.Types.DNAAnalyse;
 using Api.Schema;
 using Api.Types.ADB;
@@ -20,9 +19,9 @@ using System;
 using ConfigHelper;
 using Api.Types.Images;
 using Api.Types.Diagrams;
-using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Api.Schema.SubQueries;
+using Api.Services.interfaces.services;
 
 namespace Api
 {

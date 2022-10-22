@@ -1,4 +1,4 @@
-﻿using Api.Services;
+﻿using Api.Services.interfaces.domain;
 
 namespace AzureContext.Models
 {
@@ -7,7 +7,7 @@ namespace AzureContext.Models
 
     public partial class FTMPersonView : IYearRange, IName, IPreciseLocation, IOrigin
     {
-        public static FTMPersonView CreateUnknownPerson(int id, int personId, string origin)
+        public static FTMPersonView CreateUnknownPerson(int id, int personId, int origin)
         {
             return new FTMPersonView()
             {
@@ -37,7 +37,7 @@ namespace AzureContext.Models
         public double AltLat { get; set; }
         public double AltLong { get; set; }
 
-        public string Origin { get; set; }
+        public int Origin { get; set; }
         public int? PersonId { get; set; }
 
         public int? FatherId { get; set; }

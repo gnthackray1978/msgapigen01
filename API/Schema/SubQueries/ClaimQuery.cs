@@ -1,11 +1,11 @@
 ﻿using Api.Models;
 using Api.Types;
-using Api.Services;
 using GraphQL.Types;
 using System.Collections.Generic;
 using GraphQL;
 using System.Security.Claims;
 using System;
+using Api.Services.interfaces.services;
 
 namespace Api.Schema.SubQueries
 {

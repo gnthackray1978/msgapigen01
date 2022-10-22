@@ -1,4 +1,4 @@
-﻿using Api.Services;
+﻿using Api.Services.interfaces.domain;
 
 namespace AzureContext.Models
 {

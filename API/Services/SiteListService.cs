@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.WebUtilities;
-using Api.Types;
 using System.Security.Claims;
 using Api.DB;
 using ConfigHelper;
-using Api.Types;
 using Api.Schema;
+using Api.Types.RequestQueries;
+using Api.Services.interfaces.services;
 
 namespace Api.Services
 {

@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using GraphQL;
 using System.Security.Claims;
 using System;
-using Api.Services.interfaces;
 using Api.Types;
 using Api.Services;
 using System.Threading.Tasks;
 using Api.Types.Diagrams;
+using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
 
 namespace Api.Schema.SubQueries
 {
@@ -42,7 +43,7 @@ namespace Api.Schema.SubQueries
 
                        var obj = new Dictionary<string, string>();
 
-                       var origin = context.GetArgument("origin", "");
+                       var origin = context.GetArgument("origin", 0);
                        var personId = context.GetArgument("personId", 0);
 
 
@@ -51,7 +52,7 @@ namespace Api.Schema.SubQueries
                            return ErrorHandler.DiagramError<AncestorNode>(ce, claimService.GetClaimDebugString(currentUser));
                        }
 
-                       var pobj = new DiagramParamObj()
+                       var pobj = new DiagramParamObj
                        {
                            Origin = origin,
                            PersonId = personId
@@ -83,7 +84,7 @@ namespace Api.Schema.SubQueries
 
                    var obj = new Dictionary<string, string>();
 
-                   var origin = context.GetArgument("origin", "");
+                   var origin = context.GetArgument("origin", 0);
                    var personId = context.GetArgument("personId", 0);
 
                    if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))

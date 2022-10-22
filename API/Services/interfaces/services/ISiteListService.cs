@@ -4,10 +4,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Api.Models;
 using System.Security.Claims;
-using Api.Types;
 using Api.Schema;
+using Api.Types.RequestQueries;
 
-namespace Api.Services
+namespace Api.Services.interfaces.services
 {
     public interface ISiteListService //: IListService<Site> 
     {

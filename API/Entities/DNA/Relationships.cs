@@ -1,4 +1,4 @@
-﻿using Api.Services;
+﻿using Api.Services.interfaces.domain;
 
 namespace AzureContext.Models
 {
@@ -19,6 +19,6 @@ namespace AzureContext.Models
 
         public string Location { get; set; }
 
-        public string Origin { get; set; }
+        public int Origin { get; set; }
     }
 }

@@ -3,9 +3,10 @@ using Api.Models;
 using System.Security.Claims;
 using Api.Schema;
 
-namespace Api.Services
+namespace Api.Services.interfaces.services
 {
-    public interface IFunctionListService  {
+    public interface IFunctionListService
+    {
         Task<SiteFunction> GetAsync(int id);
 
         Task<Results<SiteFunction>> ListAsync(int applicationId, ClaimsPrincipal user);

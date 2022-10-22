@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using GraphQL;
 using System.Security.Claims;
 using System;
-using Api.Services.interfaces;
 using Api.Services;
 using System.Threading.Tasks;
 using Api.Schema;
+using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
 
 namespace Api.Schema.SubQueries
 {
@@ -104,8 +105,8 @@ namespace Api.Schema.SubQueries
                     pobj.Offset = offset;
                     pobj.SortColumn = sortColumn;
                     pobj.SortOrder = sortOrder;
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
+                    pobj.YearTo = yearEnd;
+                    pobj.YearFrom = yearStart;
                     pobj.RefArg = refArg;
                     pobj.Desc = desc;
                     pobj.Place = place;
@@ -180,13 +181,12 @@ namespace Api.Schema.SubQueries
                         Offset = offset,
                         SortColumn = sortColumn,
                         SortOrder = sortOrder,
-                        YearEnd = yearEnd,
-                        YearStart = yearStart,
+                        YearTo = yearEnd,
+                        YearFrom = yearStart,
                         RefArg = refArg,
                         Desc = desc,
                         Place = place,
                         Surname = surname
-
                     };
                     pobj.Meta.User = currentUser;
                     pobj.Meta.Error = ce?.Message;

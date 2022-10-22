@@ -25,7 +25,7 @@ namespace Api.Services
 
 
 
-        public List<AncestorNode> GenerateAncestorGraph(string origin, int personId)
+        public List<AncestorNode> GenerateAncestorGraph(int origin, int personId)
         {
             List<List<AncestorNode>> results = new List<List<AncestorNode>>();
 

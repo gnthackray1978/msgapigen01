@@ -7,9 +7,11 @@ using Api.Entities.System.UserFuncMapping;
 using Api.Entities.Wills;
 using Api.Models;
 using Api.Models.Wills;
+using Api.Services.interfaces.domain;
 using Api.Types.DNAAnalyse;
 using AzureContext.Models;
 using ConfigHelper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -80,6 +82,10 @@ namespace Api.DB
         public virtual DbSet<Persons> Persons { get; set; }
         public virtual DbSet<PersonsOfInterest> PersonsOfInterest { get; set; }
         public virtual DbSet<TreeRecord> TreeRecord { get; set; }
+
+        public virtual DbSet<TreeRecordMapGroup> TreeRecordMapGroup { get; set; }
+
+        public virtual DbSet<TreeGroups> TreeGroups { get; set; }
 
         public virtual DbSet<Places> Places { get; set; }
         public virtual DbSet<RelationTypes> RelationTypes { get; set; }
@@ -762,10 +768,23 @@ namespace Api.DB
             modelBuilder.Entity<TreeRecord>(entity =>
             {
                 entity.ToTable("TreeRecord", "DNA");
-
                 entity.Property(e => e.ID).ValueGeneratedNever();
+                entity.Property(e => e.Name);
+                entity.Property(e => e.Origin).HasMaxLength(250);
             });
 
+            modelBuilder.Entity<TreeGroups>(entity =>
+            {
+                entity.ToTable("TreeGroups", "DNA");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.GroupName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TreeRecordMapGroup>(entity =>
+            {
+                entity.ToTable("TreeRecordMapGroup", "DNA");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
 
             modelBuilder.Entity<Places>(entity =>
             {
@@ -1318,7 +1337,7 @@ namespace Api.DB
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public static List<FTMLatLng> ListLatLongs(string connectionString, int yearFrom, int yearTo)
+        public static List<FTMLatLng> ListLatLongs(string connectionString, IYearRange yearRange )
         {
             List<FTMLatLng> ftmLatLngs = new List<FTMLatLng>();
 
@@ -1328,10 +1347,10 @@ namespace Api.DB
 
             // Year=@Year            
             SqlParameter parameterYear = new SqlParameter("@yearFrom", SqlDbType.Int);
-            parameterYear.Value = yearFrom;
+            parameterYear.Value = yearRange.YearFrom;
 
             SqlParameter parameterYear2 = new SqlParameter("@yearTo", SqlDbType.Int);
-            parameterYear2.Value = yearTo;
+            parameterYear2.Value = yearRange.YearTo;
 
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(connectionString, commandText, CommandType.Text,

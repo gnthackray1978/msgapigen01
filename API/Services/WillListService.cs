@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using Api.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Api.Services.interfaces;
-using Api.Types;
 using ConfigHelper;
 using Api.Entities.Wills;
 using Api.Schema;
 using Api.DB;
+using Api.Types.RequestQueries;
+using Api.Services.interfaces.services;
 
 namespace Api.Services
 {
@@ -140,8 +140,8 @@ namespace Api.Services
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Desc), w => w.Description.ToLower().Contains(searchParams.Desc))
                     .WhereIf(!string.IsNullOrEmpty(searchParams.RefArg), w => w.Reference.ToLower().Contains(searchParams.RefArg))
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Place), w => w.Place.ToLower().Contains(searchParams.Place))
-                    .WhereIf(validDates(searchParams.YearStart, searchParams.YearEnd),
-                            w => w.Year >= searchParams.YearStart && w.Year <= searchParams.YearEnd)
+                    .WhereIf(validDates(searchParams.YearFrom, searchParams.YearTo),
+                            w => w.Year >= searchParams.YearFrom && w.Year <= searchParams.YearTo)
                     .SortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -215,8 +215,8 @@ namespace Api.Services
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Desc), w => w.Description.ToLower().Contains(searchParams.Desc))
                     .WhereIf(!string.IsNullOrEmpty(searchParams.RefArg), w => w.Reference.ToLower().Contains(searchParams.RefArg))
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Place), w => w.Place.ToLower().Contains(searchParams.Place))
-                    .WhereIf(validDates(searchParams.YearStart, searchParams.YearEnd),
-                            w => w.Year >= searchParams.YearStart && w.Year <= searchParams.YearEnd)
+                    .WhereIf(validDates(searchParams.YearFrom, searchParams.YearTo),
+                            w => w.Year >= searchParams.YearFrom && w.Year <= searchParams.YearTo)
                     .SortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();

@@ -1,5 +1,4 @@
-﻿using Api.Services.interfaces;
-using Api.Types;
+﻿using Api.Types;
 using Api.Types.ADB;
 using Api.Types.DNAAnalyse;
 using Api.Services;
@@ -10,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
 
 namespace Api.Schema.SubQueries
 {
@@ -81,8 +82,8 @@ namespace Api.Schema.SubQueries
                     pobj.FemaleSurname = femaleSurname;
                     pobj.MaleSurname = maleSurname;
                     pobj.Location = location;
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
+                    pobj.YearTo = yearEnd;
+                    pobj.YearFrom = yearStart;
 
                     pobj.Meta.User = currentUser;
                     pobj.Meta.Error = ce?.Message;
@@ -183,8 +184,8 @@ namespace Api.Schema.SubQueries
                     pobj.SortColumn = sortColumn;
                     pobj.SortOrder = sortOrder;
                     pobj.Location = location;
-                    pobj.YearEnd = yearEnd;
-                    pobj.YearStart = yearStart;
+                    pobj.YearTo = yearEnd;
+                    pobj.YearFrom = yearStart;
 
                     pobj.FirstName = firstName;
                     pobj.Surname = surname;
@@ -346,8 +347,8 @@ namespace Api.Schema.SubQueries
                     pobj.Location = location;
 
 
-                    pobj.YearStart = yearStart;
-                    pobj.YearEnd = yearEnd;
+                    pobj.YearFrom = yearStart;
+                    pobj.YearTo = yearEnd;
 
                     pobj.Meta.User = currentUser;
                     pobj.Meta.Error = ce?.Message;

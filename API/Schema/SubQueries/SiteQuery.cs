@@ -1,6 +1,5 @@
 using Api.Models;
 using Api.Types;
-using Api.Services;
 using GraphQL.Types;
 using System.Collections.Generic;
 using System.Reflection;
@@ -8,6 +7,8 @@ using GraphQL;
 using System.Security.Claims;
 using System;
 using Api.Schema;
+using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
 
 namespace Api.Schema.SubQueries
 {

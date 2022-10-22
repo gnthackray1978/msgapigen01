@@ -1,192 +1,19 @@
-﻿using Api.Services.interfaces;
-using Api.Types;
-using Api.Types.DNAAnalyse;
+﻿using Api.Types.DNAAnalyse;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System;
-using AzureContext.Models;
 using ConfigHelper;
 using Api.DB;
 using Api.Schema;
+using Api.Types.RequestQueries;
+using Api.Services.interfaces.services;
+using Api.Services.Helpers;
 
 namespace Api.Services
 {
-    public static class DNAAnalyseLinqExtensions
-    {
-
-        public static IEnumerable<DupeEntry> DupeSortIf
-            (this IQueryable<DupeEntry> source,
-            string columnName,
-            string columnOrder)
-        {
-            if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
-            {
-                columnName = columnName.ToLower();
-
-                if (columnName == "surname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
-
-                if (columnName == "ident")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Ident) : source.OrderByDescending(z => z.Ident);
-
-                if (columnName == "origin")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
-
-                if (columnName == "birthyearfrom")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.YearFrom) : source.OrderByDescending(z => z.YearFrom);
-
-                if (columnName == "birthyearto")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.YearTo) : source.OrderByDescending(z => z.YearTo);
-
-                if (columnName == "location")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
-
-                if (columnName == "firstname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.FirstName) : source.OrderByDescending(z => z.FirstName);
-            }
-
-            return source.OrderBy(o => o.Id);
-        }
-
-        public static IEnumerable<FTMPersonView> FTMViewSortIf
-          (this IQueryable<FTMPersonView> source,
-          string columnName,
-          string columnOrder)
-        {
-            if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
-            {
-                columnName = columnName.ToLower();
-
-                if (columnName == "firstname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.FirstName) : source.OrderByDescending(z => z.FirstName);
-
-                if (columnName == "surname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
-              
-                if (columnName == "origin")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
-
-                if (columnName == "location")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
-
-
-
-                if (columnName == "altlat")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.AltLat) : source.OrderByDescending(z => z.AltLat);
-              
-                if (columnName == "altlong")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.AltLong) : source.OrderByDescending(z => z.AltLong);
-
-                if (columnName == "altlocation")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.AltLocation) : source.OrderByDescending(z => z.AltLocation);
-
-                if (columnName == "altlocationdesc")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.AltLocationDesc) : source.OrderByDescending(z => z.AltLocationDesc);
-
-
-            
-                if (columnName == "yearfrom")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.YearFrom) : source.OrderByDescending(z => z.YearFrom);
-
-                if (columnName == "yeato")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.YearTo) : source.OrderByDescending(z => z.YearTo);
-
-
-              
-                if (columnName == "birthlong")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.BirthLong) : source.OrderByDescending(z => z.BirthLong);
-
-                if (columnName == "birthlat")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.BirthLat) : source.OrderByDescending(z => z.BirthLat);
-
-            }
-
-
-            return source.OrderBy(o => o.Id);
-        }
-
-
-        public static IEnumerable<PersonsOfInterest> PersonOfInterestSortIf
-          (this IQueryable<PersonsOfInterest> source,
-          string columnName,
-          string columnOrder)
-        {
-            if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
-            {
-                columnName = columnName.ToLower();
-
-                if (columnName == "surname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Surname) : source.OrderByDescending(z => z.Surname);
-
-                if (columnName == "location")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Location) : source.OrderByDescending(z => z.Location);
-
-                if (columnName == "memory")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Memory) : source.OrderByDescending(z => z.Memory);
-
-                if (columnName == "name")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Name) : source.OrderByDescending(z => z.Name);
-
-                if (columnName == "rootsentry")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.RootsEntry) : source.OrderByDescending(z => z.RootsEntry);
-
-                if (columnName == "sharedcentimorgans")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.SharedCentimorgans) : source.OrderByDescending(z => z.SharedCentimorgans);
-
-                if (columnName == "testadmindisplayname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.TestAdminDisplayName) : source.OrderByDescending(z => z.TestAdminDisplayName);
-
-                if (columnName == "testdisplayname")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.TestDisplayName) : source.OrderByDescending(z => z.TestDisplayName);
-
-                if (columnName == "treeurl")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.TreeUrl) : source.OrderByDescending(z => z.TreeUrl);
-
-                if (columnName == "year")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Year) : source.OrderByDescending(z => z.Year);
-
-                
-            }
-
-
-            return source.OrderBy(o => o.Surname);
-        }
-
-
-        public static IEnumerable<TreeRecord> TreeRecSortIf
-         (this IQueryable<TreeRecord> source,
-         string columnName,
-         string columnOrder)
-        {
-            if (!string.IsNullOrEmpty(columnName) && !string.IsNullOrEmpty(columnOrder))
-            {
-                columnName = columnName.ToLower();
-
-                if (columnName == "cm")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.CM) : source.OrderByDescending(z => z.CM);
-
-                if (columnName == "located")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Located) : source.OrderByDescending(z => z.Located);
-
-                if (columnName == "name")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Name) : source.OrderByDescending(z => z.Name);
-
-                if (columnName == "origin")
-                    return columnOrder == "asc" ? source.OrderBy(z => z.Origin) : source.OrderByDescending(z => z.Origin);
-
-              
-
-            }
-
-
-            return source.OrderByDescending(o => o.CM);
-        }
-    }
-
-
     public class DNAAnalyseService : IDNAAnalyseListService
     {
         private readonly IMSGConfigHelper _imsConfigHelper;
@@ -211,7 +38,7 @@ namespace Api.Services
 
             try
             {
-                dupeList = AzureDBContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams.YearStart, searchParams.YearEnd);
+                dupeList = AzureDBContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams);
                  
             }
             catch (Exception e)
@@ -242,7 +69,7 @@ namespace Api.Services
 
 
                 var unpaged = a.DupeEntries
-                    .WhereIfSurname(searchParams.Surname)                    
+                    .WhereIfSurname(searchParams)                    
                       .DupeSortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -319,12 +146,17 @@ namespace Api.Services
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
 
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
 
-                var unpaged = a.FTMPersonView.Where(w => w.Surname != "")
-                    .WhereIfOrigin(searchParams.Origin)
-                    .WhereIfSurname(searchParams.Surname)
-                    .WhereIfLocation(searchParams.Location)
-                    .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd).Select(s =>
+                treeDictionary.Add(0, "Unknown");
+
+                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
+
+                 var unpaged = a.FTMPersonView.Where(w => w.Surname != "")
+                    .WhereIfOrigin(searchParams)
+                    .WhereIfSurname(searchParams)
+                    .WhereIfLocation(searchParams)
+                    .WhereIfYearsBetween(searchParams).Select(s =>
                     new
                     {
                         s.AltLat,
@@ -359,7 +191,7 @@ namespace Api.Services
                         {
                             FirstName = person.FirstName,
                             Surname = person.Surname,
-                            TreeName = person.Origin,
+                            TreeName = treeDictionary[person.Origin],
                             Id = person.Id,
                             YearFrom = person.YearFrom,
                             YearTo = person.YearTo
@@ -414,13 +246,16 @@ namespace Api.Services
             {
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
+                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
 
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+                
+                treeDictionary.Add(0,"Unknown");
 
                 var unpaged = a.FTMPersonView.Where(w=>w.Surname!="")
-                    .WhereIfOrigin(searchParams.Origin)
-                    .WhereIfSurname(searchParams.Surname)
-                    
-                    .WhereIfYearsBetween(searchParams.YearStart,searchParams.YearEnd)
+                    .WhereIfOrigin(searchParams)
+                    .WhereIfSurname(searchParams)
+                    .WhereIfYearsBetween(searchParams)
                     .WhereIfLocationPrecise(searchParams.Location)
                       .FTMViewSortIf(searchParams.SortColumn, searchParams.SortOrder)
                       ;
@@ -443,7 +278,7 @@ namespace Api.Services
                         BirthLat = app.BirthLat,
                         Location = app.Location ?? "",
                         BirthLong =app.BirthLong,
-                        Origin = app.Origin ?? "",
+                        Origin = treeDictionary[app.Origin],
                         PersonId = app.PersonId.GetValueOrDefault(),
                         DirectAncestor = app.DirectAncestor
 
@@ -480,10 +315,12 @@ namespace Api.Services
             {
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
 
+                treeDictionary.Add(0, "Unknown");
 
-                var unpaged = a.FTMPersonView.WhereIfOrigin(searchParams.Origin)
-                    .WhereIfYearsBetween(searchParams.YearStart, searchParams.YearEnd);
+                var unpaged = a.FTMPersonView.WhereIfOrigin(searchParams)
+                    .WhereIfYearsBetween(searchParams);
 
                 totalRecs = unpaged.Count();
 
@@ -503,7 +340,7 @@ namespace Api.Services
                         BirthLat = app.BirthLat,
                         Location = app.Location ?? "",
                         BirthLong = app.BirthLong,
-                        Origin = app.Origin ?? "",
+                        Origin = treeDictionary[app.Origin],
                         PersonId = app.PersonId.GetValueOrDefault(),
                         DirectAncestor = app.DirectAncestor
 
@@ -540,11 +377,11 @@ namespace Api.Services
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.PersonsOfInterest
-                    .WhereIfTesterName(searchParams.Name)
-                    .WhereIfSurnameBegins(searchParams.Surname)
-                    .WhereIfLocation(searchParams.Location)
-                    .WhereIfMinCM(searchParams.MinCM)
-                    .WhereIfYearBetween(searchParams.YearStart, searchParams.YearEnd)
+                    .WhereIfTesterName(searchParams)
+                    .WhereIfSurnameBegins(searchParams)
+                    .WhereIfLocation(searchParams)
+                    .WhereIfMinCM(searchParams)
+                    .WhereIfYearBetween(searchParams)
                       .PersonOfInterestSortIf(searchParams.SortColumn, searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -607,8 +444,8 @@ namespace Api.Services
             {
                 var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
 
-                var unpaged = a.TreeRecord.WhereIfOrigin(searchParams.Origin)
-                    .WhereIfGroupId(searchParams.GroupNumber)
+                var unpaged = a.TreeRecord.WhereIfName(searchParams.Name)
+                  
                     .TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
 
                 totalRecs = unpaged.Count();
@@ -622,7 +459,6 @@ namespace Api.Services
                         Located = app.Located,
                         Origin = app.Origin ?? "",
                         PersonCount = app.PersonCount,
-                        GroupNumber = app.GroupNumber,
                         Name = app.Name
                     });
                 }

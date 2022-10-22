@@ -1,9 +1,9 @@
-﻿using Api.Types;
-using Api.Types.DNAAnalyse;
+﻿using Api.Types.DNAAnalyse;
 using System.Threading.Tasks;
 using Api.Schema;
+using Api.Types.RequestQueries;
 
-namespace Api.Services.interfaces
+namespace Api.Services.interfaces.services
 {
     public interface IDNAAnalyseListService
     {
@@ -25,4 +25,4 @@ namespace Api.Services.interfaces
 
     }
 
-    }
+}

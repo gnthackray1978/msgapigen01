@@ -1,6 +1,7 @@
 ﻿using Api.Models;
 using ConfigHelper;
 using System;
+using System.Linq;
 using Api.DB;
 using static Api.Services.DiagramService;
 
@@ -15,7 +16,10 @@ namespace TestBed
            // var msgConfigHelper = new MSGConfigHelper();
             var b = new DescendantGraphBuilder(az);
 
-            b.GenerateDescendantGraph(3217, "_34_Kennington");
+            var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
+
+            if(tree!=null)
+                b.GenerateDescendantGraph(3217, tree.ID);
             
             Console.WriteLine("Hello World!");
             Console.ReadKey();

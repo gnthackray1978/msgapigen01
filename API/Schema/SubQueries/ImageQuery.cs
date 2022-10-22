@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using GraphQL;
 using System.Security.Claims;
 using System;
-using Api.Services.interfaces;
 using Api.Types;
 using Api.Services;
 using Api.Types.Images;
+using Api.Services.interfaces.services;
 
 namespace Api.Schema.SubQueries
 {

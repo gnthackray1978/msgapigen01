@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Api.Services
+namespace Api.Services.interfaces.services
 {
-    public interface IClaimService 
+    public interface IClaimService
     {
         Task<MSGClaim> GetClaim(int id);
 
