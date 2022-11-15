@@ -38,6 +38,15 @@ namespace Api.Services
 
             try
             {
+                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+
+
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+
+                treeDictionary.Add(0, "Unknown");
+
+                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
+
                 dupeList = AzureDBContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams);
                  
             }
