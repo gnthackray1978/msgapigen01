@@ -4,7 +4,7 @@ using Api.Services.interfaces.domain;
 
 namespace Api.Types.RequestQueries
 {
-    public class DNASearchParamObj : ISurname, IYearRange, ISortable, Ilocation
+    public class DNASearchParamObj : ISurname, IYearRange, ISortable, Ilocation, IHeatMapSearch
     {
         public MetaData Meta { get; set; } = new MetaData();
         public string Location { get; set; }
@@ -14,7 +14,7 @@ namespace Api.Types.RequestQueries
         public string SortColumn { get; set; }
         public string SortOrder { get; set; }
         public int YearFrom { get; set; }
-        public int YearTo { get; set; }
+        public int YearTo { get; set; } 
         public int MinCM { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
