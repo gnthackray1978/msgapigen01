@@ -1337,24 +1337,62 @@ namespace Api.DB
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public static List<FTMLatLng> ListLatLongs(string connectionString, IYearRange yearRange )
+        public static List<FTMLatLng> ListLatLongs(string connectionString, IHeatMapSearch heatMapSearch )
         {
             List<FTMLatLng> ftmLatLngs = new List<FTMLatLng>();
+            List<SqlParameter> paramCollection = new List<SqlParameter>();
+            var origins = heatMapSearch.GetOrigins();
+            
+            string commandText = "";
+            string originString = "";
+            string commonQry = "DirectAncestor = 1 AND (birthlat<> 0 and birthlong <> 0) and (birthto > @yearFrom and birthto < @yearTo) GROUP BY birthlat, birthlong";
 
-            string commandText = "SELECT BirthLat ,BirthLong ,count(id) AS Count FROM [DNA].[FTMPersonView] WHERE DirectAncestor = 1 AND (birthlat<> 0 and birthlong <> 0) and (birthto > @yearFrom and birthto < @yearTo) GROUP BY birthlat, birthlong";
+            
 
+            if (origins.Count == 0)
+            {
+                commandText = "SELECT BirthLat ,BirthLong ,count(id) AS Count FROM [DNA].[FTMPersonView] WHERE " +
+                              commonQry;
+            }
+            else
+            {
+                string originsQry = "";
+                int originCounter = 0;
 
+                origins.ForEach(i =>
+                {
+                    string paramName = "@Origin" + originCounter;
+
+                    originsQry += paramName + ",";
+
+                    paramCollection.Add(new SqlParameter(paramName, SqlDbType.Int)
+                    {
+                        Value = i
+                    });
+
+                    originCounter++;
+                });
+
+                originsQry = originsQry.Remove(originsQry.Length - 1, 1);
+
+                commandText = "SELECT BirthLat ,BirthLong ,count(id) AS Count FROM [DNA].[FTMPersonView] WHERE " +
+                              "Origin IN (" +originsQry + ") AND " + commonQry;
+            }
 
             // Year=@Year            
             SqlParameter parameterYear = new SqlParameter("@yearFrom", SqlDbType.Int);
-            parameterYear.Value = yearRange.YearFrom;
+            parameterYear.Value = heatMapSearch.YearFrom;
 
             SqlParameter parameterYear2 = new SqlParameter("@yearTo", SqlDbType.Int);
-            parameterYear2.Value = yearRange.YearTo;
+            parameterYear2.Value = heatMapSearch.YearTo;
+
+            paramCollection.Add(parameterYear);
+            paramCollection.Add(parameterYear2);
+
 
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(connectionString, commandText, CommandType.Text,
-                parameterYear, parameterYear2))
+                       paramCollection.ToArray()))
             {
                 int idx = 0;
                 while (reader.Read())
