@@ -1,0 +1,32 @@
+﻿# Write your query or mutation here
+query  {
+  dna {
+      ftmlocsearch(
+      surname: ""
+      yearStart: 1500
+      yearEnd: 2000
+      location: ""
+      origin: "138,390"
+    ) {
+      page
+      totalResults
+      results {
+        ftmPersonSummary {
+          firstName
+          surname
+          treeName
+          yearFrom
+          yearTo
+          __typename
+        }
+        birthLat
+        birthLong
+        locationName
+        id
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}

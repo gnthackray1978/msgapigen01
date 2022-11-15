@@ -1,0 +1,39 @@
+﻿# Write your query or mutation here
+query  {
+  dna {
+    poisearch(
+           limit: 50
+      offset: 0
+      sortColumn: ""
+      sortOrder: ""
+      surname: "smith"
+      country: "England"
+      mincm: 8
+      location: ""
+      yearStart: 1500
+      yearEnd: 2000
+      name: ""
+    ) {
+      page
+      totalResults
+      results {
+          id
+        christianName
+        surname
+        birthYear
+        birthPlace
+        birthCounty
+        testDisplayName
+        testAdminDisplayName
+        treeUrl
+        testAdminDisplayName
+        sharedCentimorgans
+        memory
+        name
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
