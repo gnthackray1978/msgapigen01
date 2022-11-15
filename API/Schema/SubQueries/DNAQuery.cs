@@ -92,8 +92,6 @@ namespace Api.Schema.SubQueries
                     new QueryArgument<StringGraphType> { Name = "location" },
                     new QueryArgument<StringGraphType> { Name = "surname" },
                     new QueryArgument<StringGraphType> { Name = "origin" }
-
-
                 ),
                 resolve: context =>
                 {
@@ -108,11 +106,6 @@ namespace Api.Schema.SubQueries
                     {
                         ce = e;
                     }
-
-                    var obj = new Dictionary<string, string>();
-
-                    var query = context.GetArgument<string>("query");
-
 
                     var yearStart = context.GetArgument<int>("yearStart");
                     var yearEnd = context.GetArgument<int>("yearEnd");
@@ -170,20 +163,16 @@ namespace Api.Schema.SubQueries
                     {
                         ce = e;
                     }
-
-                    var obj = new Dictionary<string, string>();
-
+                    
                     var yearStart = context.GetArgument<int>("yearStart");
                     var yearEnd = context.GetArgument<int>("yearEnd");
                     var origin = context.GetArgument<string>("origin");
 
-                    //if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
-                    //{
-                    //	return ErrorHandler.Error<FTMLatLng>(ce, claimService.GetClaimDebugString(currentUser));
-                    //}
-
-
-
+                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
+                    {
+                        return ErrorHandler.Error<FTMLatLng>(ce, claimService.GetClaimDebugString(currentUser));
+                    }
+                    
                     var pobj = new DNASearchParamObj
                     {
                         YearTo = yearEnd,
@@ -315,9 +304,9 @@ namespace Api.Schema.SubQueries
                         ce = e;
                     }
 
-                    var obj = new Dictionary<string, string>();
+                //    var obj = new Dictionary<string, string>();
 
-                    var query = context.GetArgument<string>("query");
+                //    var query = context.GetArgument<string>("query");
                     var limit = context.GetArgument<int>("limit");
                     var offset = context.GetArgument<int>("offset");
                     var sortColumn = context.GetArgument<string>("sortColumn");
@@ -368,13 +357,13 @@ namespace Api.Schema.SubQueries
             FieldAsync<TreeRecResult, Results<TreeRec>>(
                 "treerecsearch",
                 arguments: new QueryArguments(
-                    new QueryArgument<StringGraphType> { Name = "query" },
+                  //  new QueryArgument<StringGraphType> { Name = "query" },
                     new QueryArgument<IntGraphType> { Name = "limit" },
                     new QueryArgument<IntGraphType> { Name = "offset" },
                     new QueryArgument<StringGraphType> { Name = "sortColumn" },
                     new QueryArgument<StringGraphType> { Name = "sortOrder" },
-                    new QueryArgument<StringGraphType> { Name = "origin" },
-                    new QueryArgument<StringGraphType> { Name = "name" }
+                    new QueryArgument<StringGraphType> { Name = "treeName" }
+                   // new QueryArgument<StringGraphType> { Name = "name" }
                 ),
                 resolve: context =>
                 {
@@ -399,7 +388,7 @@ namespace Api.Schema.SubQueries
                     var sortColumn = context.GetArgument<string>("sortColumn");
                     var sortOrder = context.GetArgument<string>("sortOrder");
 
-                    var origin = context.GetArgument<string>("origin");
+                    var treeName = context.GetArgument<string>("treeName");
                 //    var name = context.GetArgument<string>("name");
 
                     //if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
@@ -414,7 +403,7 @@ namespace Api.Schema.SubQueries
                         SortColumn = sortColumn,
                         SortOrder = sortOrder,
                         //pobj.Origin = origin;
-                        Name = origin,
+                        Name = treeName,
                         Meta =
                         {
                             User = currentUser,
