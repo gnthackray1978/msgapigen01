@@ -38,7 +38,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
 
                 var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
@@ -47,7 +47,7 @@ namespace Api.Services
 
                 searchParams.Groupings = a.TreeRecordMapGroup.ToList();
 
-                dupeList = AzureDBContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams);
+                dupeList = DNAContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams);
                  
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
 
                 var unpaged = a.DupeEntries
@@ -152,7 +152,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
 
                 var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
@@ -253,7 +253,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 searchParams.Groupings = a.TreeRecordMapGroup.ToList();
 
@@ -322,7 +322,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
 
@@ -383,7 +383,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.PersonsOfInterest
                     .WhereIfTesterName(searchParams)
@@ -451,7 +451,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.TreeRecord.WhereIfName(searchParams.Name)
                   

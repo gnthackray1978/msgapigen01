@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Api.Entities.System.Auth
+namespace Api.Entities.MSGCore.Auth
 {
 
     public partial class Msgapplications

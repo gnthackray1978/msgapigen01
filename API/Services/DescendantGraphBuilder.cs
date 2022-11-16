@@ -17,20 +17,14 @@ namespace Api.Services
     {
         public class DescendantGraphBuilder
         {
-            private readonly AzureDBContext _azureDbContext;
+            private readonly DNAContext _azureDbContext;
             private List<FTMPersonView> _persons;
-          //  private List<GraphMarriage> _graphMarriages;
             private List<Relationships> _relationships;
 
-            public DescendantGraphBuilder(AzureDBContext azureDbContext)
+            public DescendantGraphBuilder(DNAContext azureDbContext)
             {
                 _azureDbContext = azureDbContext;
-
-               
-
             }
-
-
 
             public List<DescendantNode> GenerateDescendantGraph(int personId, int origin)
             {
@@ -194,9 +188,7 @@ namespace Api.Services
 
                 return flattenedResults;
             }
-
-
-
+            
             private DescendantNode getAncestorFromGraph(List<List<DescendantNode>> destination, int personId)
             {
                 return destination.SelectMany(gen => gen).FirstOrDefault(person => person.PersonId == personId);

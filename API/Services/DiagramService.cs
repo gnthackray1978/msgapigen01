@@ -45,7 +45,7 @@ namespace Api.Services
             List<AncestorNode> gag = new List<AncestorNode>();
             try
             {
-                var c = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var c = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 var a = new AncestorGraphBuilder(c);
 
@@ -94,7 +94,7 @@ namespace Api.Services
             try
             {
 
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
                 var d = new DescendantGraphBuilder(a);
 

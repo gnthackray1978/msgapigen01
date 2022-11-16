@@ -36,7 +36,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
 
                 var pageList = a.MsgPages.ToList();
 
@@ -74,7 +74,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
 
 

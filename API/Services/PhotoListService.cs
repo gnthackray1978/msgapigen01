@@ -39,7 +39,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
 
                 var parents = a.ImageParents.Where(w => w.Page == page).Select(s=>s.Id).ToList();
@@ -90,7 +90,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
 
                 var unpaged = a.ImageParents.Where(w=>w.Page == page);

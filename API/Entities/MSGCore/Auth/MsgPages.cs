@@ -1,4 +1,4 @@
-﻿namespace Api.Entities.System.Auth
+﻿namespace Api.Entities.MSGCore.Auth
 {
     public partial class MsgPages
     {

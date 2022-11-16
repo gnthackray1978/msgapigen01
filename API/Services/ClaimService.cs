@@ -71,7 +71,7 @@ namespace Api.Services
 
 
                 int idx = 0;
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
 
                 if (user != null)
                 {
@@ -128,7 +128,7 @@ namespace Api.Services
                     }                    
                 }
 
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
 
                 var group = a.MsggroupMapUser.FirstOrDefault(fd => fd.UserId == userId);
 

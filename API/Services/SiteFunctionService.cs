@@ -33,7 +33,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var f = a.Msgfunctions.FirstOrDefault(fi => fi.Id == id);
                 var page = pageList.FirstOrDefault(p => p.Id == f.Page);
@@ -62,7 +62,7 @@ namespace Api.Services
             _sites = new List<SiteFunction>();
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions.Where(fi => fi.ApplicationId == applicationId);
                 
@@ -106,7 +106,7 @@ namespace Api.Services
             _sites = new List<SiteFunction>();
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new MSGCoreContext(_imsConfigHelper.MSGGenDB01);
                 var pageList = a.MsgPages.ToList();
                 var app = a.Msgfunctions;
 

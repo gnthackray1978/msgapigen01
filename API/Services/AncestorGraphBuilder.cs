@@ -10,21 +10,15 @@ namespace Api.Services
 {
     public class AncestorGraphBuilder
     {
-        private readonly AzureDBContext _azureDbContext;
+        private readonly DNAContext _azureDbContext;
         private List<FTMPersonView> _persons;
         private List<GraphMarriage> _graphMarriages;
 
-        public AncestorGraphBuilder(AzureDBContext azureDbContext)
+        public AncestorGraphBuilder(DNAContext azureDbContext)
         {
             _azureDbContext = azureDbContext;
-
-            
-
-
         }
-
-
-
+        
         public List<AncestorNode> GenerateAncestorGraph(int origin, int personId)
         {
             List<List<AncestorNode>> results = new List<List<AncestorNode>>();

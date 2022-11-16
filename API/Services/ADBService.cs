@@ -38,7 +38,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Marriages.WhereIfMatchParticipants(searchParams.MaleSurname, searchParams.FemaleSurname)
                     .WhereIfLocation(searchParams)
@@ -114,7 +114,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Parishs
                     .WhereIfMatchParishCounty(searchParams.County)
@@ -172,7 +172,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Persons.WhereIfBirthCounty(searchParams.BirthCounty)
                     .WhereIfBirthLocation(searchParams.BirthLocation)
@@ -272,7 +272,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.Sources.WhereIfLocation(searchParams)
                     .WhereIfSourceRef(searchParams.SourceRef)
@@ -333,7 +333,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.SourceTypes.OrderBy(o => o.Id);
 
@@ -379,7 +379,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.ParishTranscriptionDetails.Where(w=>w.ParishId == parishId);
 
@@ -420,7 +420,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new TDBContext(_imsConfigHelper.MSGGenDB01);
 
                 var unpaged = a.ParishRecords.Where(w => w.ParishId == parishId);
 

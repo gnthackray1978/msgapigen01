@@ -34,7 +34,7 @@ namespace Api.Services
                 if (locationParts.Length == 3)
                     double.TryParse(locationParts[2], out rad);
 
-                return source.Where(w=> AzureDBContext.east_or_west(lat, lng,w.BirthLat,w.BirthLong, rad));
+                return source.Where(w=> DNAContext.east_or_west(lat, lng,w.BirthLat,w.BirthLong, rad));
                   
             }
 

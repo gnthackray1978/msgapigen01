@@ -84,7 +84,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new WillsContext(_imsConfigHelper.MSGGenDB01);
 
                 var app = a.LincsWills.FirstOrDefault(fi => fi.Id == id);
 
@@ -124,7 +124,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new WillsContext(_imsConfigHelper.MSGGenDB01);
 
                 //searchParams.First
 
@@ -199,7 +199,7 @@ namespace Api.Services
 
             try
             {
-                var a = new AzureDBContext(_imsConfigHelper.MSGGenDB01);
+                var a = new WillsContext(_imsConfigHelper.MSGGenDB01);
 
                 //searchParams.First
 

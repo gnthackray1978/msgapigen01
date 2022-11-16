@@ -22,7 +22,7 @@ namespace TestBed
   
         static void Main(string[] args)
         {
-            var az = new AzureDBContext(Secrets.ConnectionString);
+            var az = new DNAContext(Secrets.ConnectionString);
             // var msgConfigHelper = new MSGConfigHelper();
 
 
@@ -36,7 +36,7 @@ namespace TestBed
 
         }
 
-        private static void TestGenerateDescendantGraph(AzureDBContext az)
+        private static void TestGenerateDescendantGraph(DNAContext az)
         {
             var b = new DescendantGraphBuilder(az);
 
@@ -46,7 +46,7 @@ namespace TestBed
                 b.GenerateDescendantGraph(3217, tree.ID);
         }
 
-        private async static void TestFTMLatLngList(AzureDBContext az)
+        private async static void TestFTMLatLngList(DNAContext az)
         {
             var c = new config() { };
 
