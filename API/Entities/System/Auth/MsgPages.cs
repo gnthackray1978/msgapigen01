@@ -1,4 +1,4 @@
-﻿namespace Api.Entities.System.UserFuncMapping
+﻿namespace Api.Entities.System.Auth
 {
     public partial class MsgPages
     {

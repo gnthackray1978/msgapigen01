@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api.Entities.System.UserFuncMapping
+namespace Api.Entities.System.Auth
 {
 
     public partial class Msgapplications

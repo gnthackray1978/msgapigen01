@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using Api.Entities.Places;
 using Api.Entities.System.Auth;
-using Api.Entities.System.UserFuncMapping;
 using Api.Entities.Wills;
-using Api.Models;
 using Api.Models.Wills;
 using Api.Services.interfaces.domain;
 using Api.Types.DNAAnalyse;
 using AzureContext.Models;
 using ConfigHelper;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Api.DB
 {
@@ -34,34 +30,7 @@ namespace Api.DB
         public static bool east_or_west(double lat, double lng, double lat2, double lng2, double rad)
             => throw new NotSupportedException();
 
-        public virtual DbSet<ApiClaims> ApiClaims { get; set; }
-        public virtual DbSet<ApiProperties> ApiProperties { get; set; }
-        public virtual DbSet<ApiResources> ApiResources { get; set; }
-        public virtual DbSet<ApiScopeClaims> ApiScopeClaims { get; set; }
-        public virtual DbSet<ApiScopes> ApiScopes { get; set; }
-        public virtual DbSet<ApiSecrets> ApiSecrets { get; set; }
-        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<ClientClaims> ClientClaims { get; set; }
-        public virtual DbSet<ClientCorsOrigins> ClientCorsOrigins { get; set; }
-        public virtual DbSet<ClientGrantTypes> ClientGrantTypes { get; set; }
-        public virtual DbSet<ClientIdPrestrictions> ClientIdPrestrictions { get; set; }
-        public virtual DbSet<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
-        public virtual DbSet<ClientProperties> ClientProperties { get; set; }
-        public virtual DbSet<ClientRedirectUris> ClientRedirectUris { get; set; }
-        public virtual DbSet<ClientScopes> ClientScopes { get; set; }
-        public virtual DbSet<ClientSecrets> ClientSecrets { get; set; }
-        public virtual DbSet<Clients> Clients { get; set; }
-        public virtual DbSet<DeviceCodes> DeviceCodes { get; set; }
-        public virtual DbSet<Functions> Functions { get; set; }
-        public virtual DbSet<IdentityClaims> IdentityClaims { get; set; }
-        public virtual DbSet<IdentityProperties> IdentityProperties { get; set; }
-        public virtual DbSet<IdentityResources> IdentityResources { get; set; }
+
         public virtual DbSet<LincsWills> LincsWills { get; set; }
 
         public virtual DbSet<NorfolkWills> NorfolkWills { get; set; }
@@ -78,7 +47,6 @@ namespace Api.DB
         public virtual DbSet<ParishRecords> ParishRecords { get; set; }
         public virtual DbSet<ParishTranscriptionDetails> ParishTranscriptionDetails { get; set; }
         public virtual DbSet<Parishs> Parishs { get; set; }
-        public virtual DbSet<PersistedGrants> PersistedGrants { get; set; }
         public virtual DbSet<Persons> Persons { get; set; }
         public virtual DbSet<PersonsOfInterest> PersonsOfInterest { get; set; }
         public virtual DbSet<TreeRecord> TreeRecord { get; set; }
@@ -94,11 +62,8 @@ namespace Api.DB
         public virtual DbSet<SourceMappings> SourceMappings { get; set; }
         public virtual DbSet<SourceTypes> SourceTypes { get; set; }
         public virtual DbSet<Sources> Sources { get; set; }
-        public virtual DbSet<Tokens> Tokens { get; set; }
-
+       
         public virtual DbSet<FTMPersonView> FTMPersonView { get; set; }
-
-
 
         public virtual DbSet<Relationships> Relationships { get; set; }
 
@@ -131,379 +96,7 @@ namespace Api.DB
                     typeof(double)
                 }))
     .HasName("east_or_west");
-
-            modelBuilder.Entity<ApiClaims>(entity =>
-            {
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.ApiResource)
-                    .WithMany(p => p.ApiClaims)
-                    .HasForeignKey(x => x.ApiResourceId);
-            });
-
-            modelBuilder.Entity<ApiProperties>(entity =>
-            {
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(2000);
-
-                entity.HasOne(d => d.ApiResource)
-                    .WithMany(p => p.ApiProperties)
-                    .HasForeignKey(x => x.ApiResourceId);
-            });
-
-            modelBuilder.Entity<ApiResources>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.DisplayName).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-            });
-
-            modelBuilder.Entity<ApiScopeClaims>(entity =>
-            {
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.ApiScope)
-                    .WithMany(p => p.ApiScopeClaims)
-                    .HasForeignKey(x => x.ApiScopeId);
-            });
-
-            modelBuilder.Entity<ApiScopes>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.DisplayName).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.ApiResource)
-                    .WithMany(p => p.ApiScopes)
-                    .HasForeignKey(x => x.ApiResourceId);
-            });
-
-            modelBuilder.Entity<ApiSecrets>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(4000);
-
-                entity.HasOne(d => d.ApiResource)
-                    .WithMany(p => p.ApiSecrets)
-                    .HasForeignKey(x => x.ApiResourceId);
-            });
-
-            modelBuilder.Entity<AspNetRoleClaims>(entity =>
-            {
-                entity.Property(e => e.RoleId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(x => x.RoleId);
-            });
-
-            modelBuilder.Entity<AspNetRoles>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetUserClaims>(entity =>
-            {
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(x => x.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserLogins>(entity =>
-            {
-                entity.HasKey(x => new { x.LoginProvider, x.ProviderKey });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(x => x.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserRoles>(entity =>
-            {
-                entity.HasKey(x => new { x.UserId, x.RoleId });
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(x => x.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(x => x.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserTokens>(entity =>
-            {
-                entity.HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(x => x.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUsers>(entity =>
-            {
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NameIdentifier).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<ClientClaims>(entity =>
-            {
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientClaims)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientCorsOrigins>(entity =>
-            {
-                entity.Property(e => e.Origin)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientCorsOrigins)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientGrantTypes>(entity =>
-            {
-                entity.Property(e => e.GrantType)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientGrantTypes)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientIdPrestrictions>(entity =>
-            {
-                entity.ToTable("ClientIdPRestrictions");
-
-                entity.Property(e => e.Provider)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientIdPrestrictions)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientPostLogoutRedirectUris>(entity =>
-            {
-                entity.Property(e => e.PostLogoutRedirectUri)
-                    .IsRequired()
-                    .HasMaxLength(2000);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientPostLogoutRedirectUris)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientProperties>(entity =>
-            {
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(2000);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientProperties)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientRedirectUris>(entity =>
-            {
-                entity.Property(e => e.RedirectUri)
-                    .IsRequired()
-                    .HasMaxLength(2000);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientRedirectUris)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientScopes>(entity =>
-            {
-                entity.Property(e => e.Scope)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientScopes)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<ClientSecrets>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(2000);
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(4000);
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientSecrets)
-                    .HasForeignKey(x => x.ClientId);
-            });
-
-            modelBuilder.Entity<Clients>(entity =>
-            {
-                entity.Property(e => e.BackChannelLogoutUri).HasMaxLength(2000);
-
-                entity.Property(e => e.ClientClaimsPrefix).HasMaxLength(200);
-
-                entity.Property(e => e.ClientId)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.ClientName).HasMaxLength(200);
-
-                entity.Property(e => e.ClientUri).HasMaxLength(2000);
-
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.FrontChannelLogoutUri).HasMaxLength(2000);
-
-                entity.Property(e => e.LogoUri).HasMaxLength(2000);
-
-                entity.Property(e => e.PairWiseSubjectSalt).HasMaxLength(200);
-
-                entity.Property(e => e.ProtocolType)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.UserCodeType).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<DeviceCodes>(entity =>
-            {
-                entity.HasKey(x => x.UserCode);
-
-                entity.Property(e => e.UserCode).HasMaxLength(200);
-
-                entity.Property(e => e.ClientId)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Data).IsRequired();
-
-                entity.Property(e => e.DeviceCode)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.SubjectId).HasMaxLength(200);
-            });
-
-            modelBuilder.Entity<Functions>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Name).IsRequired();
-            });
-
-            modelBuilder.Entity<IdentityClaims>(entity =>
-            {
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.IdentityResource)
-                    .WithMany(p => p.IdentityClaims)
-                    .HasForeignKey(x => x.IdentityResourceId);
-            });
-
-            modelBuilder.Entity<IdentityProperties>(entity =>
-            {
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(2000);
-
-                entity.HasOne(d => d.IdentityResource)
-                    .WithMany(p => p.IdentityProperties)
-                    .HasForeignKey(x => x.IdentityResourceId);
-            });
-
-            modelBuilder.Entity<IdentityResources>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.DisplayName).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-            });
-
+            
             modelBuilder.Entity<MsgapplicationMapGroup>(entity =>
             {
                 entity.ToTable("MSGApplicationMapGroup");
@@ -571,64 +164,13 @@ namespace Api.DB
             {
                 entity.ToTable("MSGGroups");
             });
-
-            modelBuilder.Entity<PersistedGrants>(entity =>
-            {
-                entity.HasKey(x => x.Key);
-
-                entity.Property(e => e.Key).HasMaxLength(200);
-
-                entity.Property(e => e.ClientId)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Data).IsRequired();
-
-                entity.Property(e => e.SubjectId).HasMaxLength(200);
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Tokens>(entity =>
-            {
-                entity.Property(e => e.ImageUrl).HasMaxLength(200);
-
-                entity.Property(e => e.Locale).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Provider)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Refresh).HasMaxLength(200);
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(200);
-            });
-
-
-
+            
             modelBuilder.Entity<NorfolkWillsRaw>(entity =>
             {
                 entity.ToTable("NorfolkWillsRaw", "Wills");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
-
 
             modelBuilder.Entity<NorfolkWills>(entity =>
             {
@@ -683,10 +225,7 @@ namespace Api.DB
 
                 entity.Property(e => e.Url).IsUnicode(false);
             });
-
-
-
-
+            
             modelBuilder.Entity<DupeEntry>(entity =>
             {
                 entity.ToTable("DupeEntries", "DNA");
@@ -734,8 +273,7 @@ namespace Api.DB
                 entity.Property(e => e.Location).HasColumnName("BirthLocation");
 
             });
-
-
+            
             modelBuilder.Entity<Relationships>(entity =>
             {
                 entity.ToTable("Relationships", "DNA");
@@ -1161,25 +699,7 @@ namespace Api.DB
 
                 entity.Property(e => e.ParishY).HasColumnType("decimal(12, 6)");
             });
-
-            modelBuilder.Entity<PersistedGrants>(entity =>
-            {
-                entity.HasKey(e => e.Key);
-
-                entity.Property(e => e.Key).HasMaxLength(200);
-
-                entity.Property(e => e.ClientId)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Data).IsRequired();
-
-                entity.Property(e => e.SubjectId).HasMaxLength(200);
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
+            
 
             modelBuilder.Entity<Persons>(entity =>
             {
