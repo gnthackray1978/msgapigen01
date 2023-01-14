@@ -1,0 +1,20 @@
+﻿# Write your query or mutation here
+query  {
+  blog {
+    search(
+      level: 0
+    ) {
+      page
+      totalResults
+      results {
+        id
+        text
+        level
+        title
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}

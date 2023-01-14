@@ -1,6 +1,7 @@
 ﻿using Api.Models;
 using ConfigHelper;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Api.DB;
 using Api.Services;
@@ -26,7 +27,7 @@ namespace TestBed
             // var msgConfigHelper = new MSGConfigHelper();
 
 
-            TestFTMLatLngList(az);
+            TestFtmlocsearch(az);
 
 
 
@@ -65,13 +66,58 @@ namespace TestBed
                 Groupings = az.TreeRecordMapGroup.ToList(),
                 YearFrom = 1500,
                 YearTo = 1900,
-                Origin = "300"
+                Origin = "",
+                Location = "wiltshire"
+
             };
 
 
-            await b.FTMLatLngList(p);
+            var tp =  b.FTMLatLngList(p);
 
 
+        }
+
+        private async static void TestFtmlocsearch(DNAContext az)
+        {
+            var c = new config() { };
+
+
+            var b = new DNAAnalyseService(null, null, c);
+
+            // var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
+
+
+            var treeDictionary = az.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+
+            treeDictionary.Add(0, "Unknown");
+
+            var p = new DNASearchParamObj
+            {
+                Groupings = az.TreeRecordMapGroup.ToList(),
+                YearFrom = 1500,
+                YearTo = 1900,
+                Origin = "",
+                Location = "wiltshire"
+
+            };
+
+
+            var tp = b.FTMLocSearch(p);
+
+
+            foreach (var x in tp.Result.results)
+            {
+                
+
+                foreach (var xp in x.FTMPersonSummary)
+                {
+                    if (xp.Surname == "Sumpsion")
+                    {
+                        Debug.WriteLine(xp.Surname);
+                        Debug.WriteLine(x.BirthLat + "," + x.BirthLong);
+                    }
+                }
+            }
         }
     }
 }

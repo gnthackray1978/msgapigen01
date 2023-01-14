@@ -25,7 +25,8 @@ namespace Api.DB
         public virtual DbSet<MsggroupMapUser> MsggroupMapUser { get; set; }
         public virtual DbSet<Msggroups> Msggroups { get; set; }
         public virtual DbSet<MsgPages> MsgPages { get; set; }
-        
+
+        public virtual DbSet<Msgblogs> MsgBlogs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -106,8 +107,12 @@ namespace Api.DB
             {
                 entity.ToTable("MSGGroups");
             });
-            
-         
+
+            modelBuilder.Entity<Msgblogs>(entity =>
+            {
+                entity.ToTable("MSGBlog");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 

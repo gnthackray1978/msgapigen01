@@ -1,27 +1,26 @@
 ﻿
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using GraphQL;
-using Api.Services;
-using Api.Types;
-using Api.Models;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
+
+using Api.Services;
+using Api.Types;
+using Api.Models;
 using Api.Types.DNAAnalyse;
 using Api.Schema;
 using Api.Types.ADB;
-
-using System;
-using ConfigHelper;
 using Api.Types.Images;
 using Api.Types.Diagrams;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Api.Schema.SubQueries;
 using Api.Services.interfaces.services;
+using Api.Types.Blog;
+
+using ConfigHelper;
 
 namespace Api
 {
@@ -97,6 +96,7 @@ namespace Api
             services.AddHttpClient<IADBService, ADBService>();
             services.AddHttpClient<IPhotoListService, PhotoListService>();
             services.AddHttpClient<IDiagramService, DiagramService>();
+            services.AddHttpClient<IBlogService, BlogService>();
 
             services.AddSingleton<ClaimQuery>();
             services.AddSingleton<SiteQuery>();
@@ -106,14 +106,15 @@ namespace Api
             services.AddSingleton<ADBQuery>();
             services.AddSingleton<ImageQuery>();
             services.AddSingleton<DiagramQuery>();
+            services.AddSingleton<BlogQuery>();
 
             services.AddSingleton<ApiImagesType>();
             services.AddSingleton<ApiParentImagesType>();
-
             services.AddSingleton<MSGClaimType>();
             services.AddSingleton<SiteType>();
             services.AddSingleton<SiteFunctionType>();
             services.AddSingleton<WillType>();
+            services.AddSingleton<BlogType>();
 
             services.AddSingleton<FTMPersonLocationType>();
             services.AddSingleton<FTMPersonSummaryType>();
@@ -140,12 +141,15 @@ namespace Api
             services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
             services.AddSingleton<SiteResultType<SiteType, Site>>();
             services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
+            
+            
             //
             services.AddSingleton<AncestorResult>();
             services.AddSingleton<DescendantResult>();
 
             services.AddSingleton<ApiParentImagesResult>();
             services.AddSingleton<ApiImagesResult>();
+            services.AddSingleton<BlogListResult>();
             services.AddSingleton<DupeResult>();
             services.AddSingleton<FTMViewResult>();
             services.AddSingleton<FTMLatLngResult>();

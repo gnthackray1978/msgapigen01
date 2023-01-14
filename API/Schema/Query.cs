@@ -24,6 +24,8 @@ namespace Api.Schemas
 			Field<ImageQuery>("image", resolve: context => new { });
 
 			Field<DiagramQuery>("diagram", resolve: context => new { });
+
+            Field<BlogQuery>("blog", resolve: context => new { });
 		}
 	}
 }

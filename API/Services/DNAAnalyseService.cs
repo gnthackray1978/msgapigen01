@@ -172,11 +172,14 @@ namespace Api.Services
                         s.AltLong,
                         s.BirthLat,
                         s.BirthLong,
-                        blongStr = mergeDoublesToString(s.BirthLong,s.AltLong),
-                        blatStr = mergeDoublesToString(s.BirthLat, s.AltLat),
+                        //blongStr = mergeDoublesToString(s.BirthLong,s.AltLong),
+                        blongStr = s.BirthLong.ToString(),
+                      //  blatStr = mergeDoublesToString(s.BirthLat, s.AltLat),
+                      blatStr = s.BirthLat.ToString(),
                         s.FirstName,
                         s.Id,
-                        locat = mergeLocations(s.Location,s.AltLocation),
+                       // locat = mergeLocations(s.Location,s.AltLocation),
+                       locat = s.Location,
                         s.Origin,
                         s.PersonId,
                         s.Surname,
@@ -206,8 +209,11 @@ namespace Api.Services
                             YearTo = person.YearTo
                         });
 
-                        blat = mergeDoubles(person.BirthLat, person.AltLat);
-                        blong = mergeDoubles(person.BirthLong, person.AltLong);
+                        //blat = mergeDoubles(person.BirthLat, person.AltLat);
+                        blat = person.BirthLat;
+                      //  blong = mergeDoubles(person.BirthLong, person.AltLong);
+                      blong = person.BirthLong;
+
                         location = person.locat;
                     }
 

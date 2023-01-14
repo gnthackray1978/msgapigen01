@@ -16,7 +16,6 @@ using Api.Services.interfaces.services;
 
 namespace Api.Services
 {
-
     public class SiteListService  : ISiteListService
     {
 

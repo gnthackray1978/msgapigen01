@@ -14,4 +14,6 @@ namespace Api.Models
         public string Error { get; set; }
 
     }
+
+
 }
