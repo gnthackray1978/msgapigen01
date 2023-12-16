@@ -214,3 +214,4 @@ tempkey.rsa
 samples/KeyManagement/FileSystem/dataprotectionkeys/
 samples/KeyManagement/FileSystem/signingkeys/
 Config/Secrets.cs
+config.json
