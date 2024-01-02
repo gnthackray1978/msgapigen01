@@ -9,23 +9,23 @@ namespace Api.Schemas
 		{
 			Name = "Query";
 
-			Field<SiteQuery>( "site", resolve: context => new{ });
+            Field<SiteQuery>("site").Resolve(context => new { });
 
-			Field<ClaimQuery>("claim", resolve: context => new { });
+			Field<ClaimQuery>("claim").Resolve(context => new { });
 
-			Field<SiteFunctionQuery>("function", resolve: context => new { });
+			Field<SiteFunctionQuery>("function").Resolve(context => new { });
 
-			Field<WillQuery>("will", resolve: context => new { });
+			Field<WillQuery>("will").Resolve(context => new { });
 
-			Field<DNAQuery>("dna", resolve: context => new { });
+			Field<DNAQuery>("dna").Resolve(context => new { });
 
-			Field<ADBQuery>("adb", resolve: context => new { });
+			Field<ADBQuery>("adb").Resolve(context => new { });
 
-			Field<ImageQuery>("image", resolve: context => new { });
+			Field<ImageQuery>("image").Resolve(context => new { });
 
-			Field<DiagramQuery>("diagram", resolve: context => new { });
+			Field<DiagramQuery>("diagram").Resolve(context => new { });
 
-            Field<BlogQuery>("blog", resolve: context => new { });
+            Field<BlogQuery>("blog").Resolve(context => new { });
 		}
 	}
 }

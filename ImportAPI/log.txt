@@ -1,0 +1,122 @@
+2023-12-28 03:45:25.249 +00:00 [INF] Starting up
+2023-12-28 03:47:33.301 +00:00 [INF] Starting up
+2023-12-28 03:47:34.399 +00:00 [INF] RegisterServices
+2023-12-28 03:47:46.794 +00:00 [INF] SetupMiddleware
+2023-12-28 04:09:03.740 +00:00 [INF] Starting up
+2023-12-28 04:09:08.899 +00:00 [INF] RegisterServices
+2023-12-28 04:09:09.578 +00:00 [INF] https://msgvault01.vault.azure.net/
+2023-12-28 04:09:24.367 +00:00 [INF] SetupMiddleware
+2023-12-28 04:15:00.720 +00:00 [INF] Starting up
+2023-12-28 04:15:02.839 +00:00 [INF] RegisterServices
+2023-12-28 04:15:02.922 +00:00 [INF] https://msgvault01.vault.azure.net/
+2023-12-28 04:15:16.206 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2023-12-28 04:15:17.477 +00:00 [INF] SetupMiddleware
+2023-12-29 09:08:30.011 +00:00 [INF] Starting up
+2023-12-29 09:08:34.623 +00:00 [INF] RegisterServices
+2023-12-29 09:08:35.035 +00:00 [INF] https://msgvault01.vault.azure.net/
+2023-12-29 09:08:35.037 +00:00 [INF] Creating secret client
+2023-12-29 09:09:02.143 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2023-12-29 09:09:05.226 +00:00 [INF] SetupMiddleware
+2024-01-01 12:09:34.834 +00:00 [INF] Starting up
+2024-01-01 12:09:40.951 +00:00 [INF] RegisterServices
+2024-01-01 12:09:41.455 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:09:41.472 +00:00 [INF] Creating secret client
+2024-01-01 12:10:07.794 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:10:11.534 +00:00 [INF] SetupMiddleware
+2024-01-01 12:18:00.568 +00:00 [INF] Starting up
+2024-01-01 12:18:05.044 +00:00 [INF] RegisterServices
+2024-01-01 12:18:05.122 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:18:05.124 +00:00 [INF] Creating secret client
+2024-01-01 12:18:27.718 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:18:30.558 +00:00 [INF] SetupMiddleware
+2024-01-01 12:27:20.745 +00:00 [INF] Starting up
+2024-01-01 12:27:21.981 +00:00 [INF] RegisterServices
+2024-01-01 12:27:22.032 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:27:22.034 +00:00 [INF] Creating secret client
+2024-01-01 12:30:25.511 +00:00 [INF] Starting up
+2024-01-01 12:30:26.363 +00:00 [INF] RegisterServices
+2024-01-01 12:30:26.396 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:30:26.397 +00:00 [INF] Creating secret client
+2024-01-01 12:30:46.622 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:30:47.944 +00:00 [INF] SetupMiddleware
+2024-01-01 12:34:54.953 +00:00 [INF] Starting up
+2024-01-01 12:34:55.814 +00:00 [INF] RegisterServices
+2024-01-01 12:34:55.854 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:34:55.856 +00:00 [INF] Creating secret client
+2024-01-01 12:35:17.005 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:35:18.405 +00:00 [INF] SetupMiddleware
+2024-01-01 12:42:20.647 +00:00 [INF] Starting up
+2024-01-01 12:42:21.730 +00:00 [INF] RegisterServices
+2024-01-01 12:42:21.817 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:42:21.821 +00:00 [INF] Creating secret client
+2024-01-01 12:42:43.290 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:42:44.991 +00:00 [INF] SetupMiddleware
+2024-01-01 12:50:22.788 +00:00 [INF] Starting up
+2024-01-01 12:50:24.081 +00:00 [INF] RegisterServices
+2024-01-01 12:50:24.145 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:50:24.147 +00:00 [INF] Creating secret client
+2024-01-01 12:50:45.462 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:50:47.048 +00:00 [INF] SetupMiddleware
+2024-01-01 12:51:59.266 +00:00 [INF] Starting up
+2024-01-01 12:52:00.575 +00:00 [INF] RegisterServices
+2024-01-01 12:52:00.624 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:52:00.626 +00:00 [INF] Creating secret client
+2024-01-01 12:52:22.728 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:52:24.282 +00:00 [INF] SetupMiddleware
+2024-01-01 12:58:01.038 +00:00 [INF] Starting up
+2024-01-01 12:58:04.439 +00:00 [INF] RegisterServices
+2024-01-01 12:58:04.654 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 12:58:04.656 +00:00 [INF] Creating secret client
+2024-01-01 12:58:26.063 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 12:58:27.807 +00:00 [INF] SetupMiddleware
+2024-01-01 14:20:35.116 +00:00 [INF] Starting up
+2024-01-01 14:20:38.274 +00:00 [INF] RegisterServices
+2024-01-01 14:20:38.347 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-01 14:20:38.349 +00:00 [INF] Creating secret client
+2024-01-01 14:21:00.808 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-01 14:21:02.325 +00:00 [INF] SetupMiddleware
+2024-01-02 15:36:23.785 +00:00 [INF] Starting up
+2024-01-02 15:36:30.978 +00:00 [INF] RegisterServices
+2024-01-02 15:36:31.575 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 15:36:31.577 +00:00 [INF] Creating secret client
+2024-01-02 15:36:55.551 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 15:36:59.645 +00:00 [INF] SetupMiddleware
+2024-01-02 15:56:03.277 +00:00 [INF] Starting up
+2024-01-02 15:56:08.067 +00:00 [INF] RegisterServices
+2024-01-02 15:56:09.078 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 15:56:09.082 +00:00 [INF] Creating secret client
+2024-01-02 15:56:52.639 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 15:56:56.532 +00:00 [INF] SetupMiddleware
+2024-01-02 16:32:13.415 +00:00 [INF] Starting up
+2024-01-02 16:32:16.622 +00:00 [INF] RegisterServices
+2024-01-02 16:32:17.234 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 16:32:17.236 +00:00 [INF] Creating secret client
+2024-01-02 16:32:40.377 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 16:32:42.754 +00:00 [INF] SetupMiddleware
+2024-01-02 17:32:11.496 +00:00 [INF] Starting up
+2024-01-02 17:32:18.075 +00:00 [INF] RegisterServices
+2024-01-02 17:32:18.813 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 17:32:18.818 +00:00 [INF] Creating secret client
+2024-01-02 17:32:44.895 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 17:32:48.746 +00:00 [INF] SetupMiddleware
+2024-01-02 18:43:07.777 +00:00 [INF] Starting up
+2024-01-02 18:43:10.684 +00:00 [INF] RegisterServices
+2024-01-02 18:43:11.080 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 18:43:11.082 +00:00 [INF] Creating secret client
+2024-01-02 18:43:40.438 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 18:43:44.661 +00:00 [INF] SetupMiddleware
+2024-01-02 19:27:42.154 +00:00 [INF] Starting up
+2024-01-02 19:27:49.810 +00:00 [INF] RegisterServices
+2024-01-02 19:27:52.480 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 19:27:52.687 +00:00 [INF] Creating secret client
+2024-01-02 19:28:23.861 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 19:28:28.503 +00:00 [INF] SetupMiddleware
+2024-01-02 19:48:53.306 +00:00 [INF] MsgNotificationHub constructed
+2024-01-02 19:48:53.309 +00:00 [INF] MsgNotificationHub OnConnectedAsync: aY9apzUXJPLI3AZZ1RJ7RQQJ28gQf02
+2024-01-02 20:02:58.329 +00:00 [INF] MsgNotificationHub constructed
+2024-01-02 20:43:59.884 +00:00 [INF] Starting up
+2024-01-02 20:44:01.234 +00:00 [INF] RegisterServices
+2024-01-02 20:44:01.300 +00:00 [INF] https://msgvault01.vault.azure.net/
+2024-01-02 20:44:01.302 +00:00 [INF] Creating secret client
+2024-01-02 20:44:24.332 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
+2024-01-02 20:44:26.024 +00:00 [INF] SetupMiddleware

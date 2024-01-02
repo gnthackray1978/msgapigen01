@@ -1,19 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using GraphQL;
-using GraphQL.Types;
-using GraphQL.Validation;
-using GraphQL.NewtonsoftJson;
-using GraphQL.Authorization;
-
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Collections.Generic;
 using System;
-using Api;
 using ConfigHelper;
 using Api.Schema;
 
@@ -45,9 +37,7 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] GraphQLQuery query)
         {
-
-
-            var writer = new GraphQL.SystemTextJson.DocumentWriter();
+            var writer = new GraphQL.SystemTextJson.GraphQLSerializer();
 
             JObject variables = query.Variables;
 
@@ -66,13 +56,10 @@ namespace Api.Controllers
             var json = await _schema.ExecuteAsync(writer, _ =>
              {
                  _.Query = query.Query;
-                 _.Inputs = query.Variables.ToInputs();
+                 _.Variables = writer.ReadNode<Inputs>(query.Variables) ?? Inputs.Empty;
                  _.UserContext = dictionary;
              });
-
-
-
-
+            
             return new JsonResult(JsonConvert.DeserializeObject(json));
         }
     }

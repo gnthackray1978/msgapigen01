@@ -40,7 +40,7 @@ namespace Api.DB
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Secrets.ConnectionString);
+                optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
 

@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>FTM Manager</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="./Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+    <script src="./Scripts/app.js"></script>
+
+    <link href="Css/styles.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4xE7VpfxqbdKcH19lze4LDxHX4e5nqLU&callback=initMap&libraries=&v=weekly" defer></script>
+
+    <script src="./Scripts/signalr.js"></script>
+
+    <script src="./Scripts/signalWrapper.js"></script>
+    
+
+    <script src="./Scripts/webConsole.js"></script>
+    
+    <script src="./Scripts/tabs.js"></script>
+
+    <script>
+        var wc = new WebConsole();
+
+        var tabs = new Tabs();
+
+        var p = new PlaceObj(wc);
+
+        var sw = new SignalWrapper();
+
+        var printOutput = (message) => {
+            wc.printOutputLine(message);
+        };
+
+        var printTrace = (message) => {
+            wc.printTrace(message);
+        };
+
+        var printTraceLine = (message) => {
+            wc.printTraceLine(message);
+        };
+
+        var printErrorLine = (message) => {
+            wc.printErrorLine(message);
+        };
+
+        sw.run(signalR, printOutput);
+
+        $(function () {
+            tabs.run();
+            p.displayPlaceStats();
+            p.displayPeopleStats();
+            p.displayGedStats();
+            p.displayCorrectImportUpdateSections();
+            
+        });
+
+    </script>
+</head>
+<body>
+
+
+    <div id="map"></div>
+    
+    
+    
+  
+    <div class="container-fluid">
+        <h2>Tree Manager</h2>
+
+        <div class="row">
+            <div class="col subheader">Stats</div>
+        </div>
+        <div class="row">
+            <div class="col" id="dupeCount">Dupes</div>
+            <div class="col" id="originCount">Origins</div>
+            <div class="col" id="personCount">Persons</div>
+            <div class="col" id="marriagecount">Marriages</div>
+            <div class="col" id="treerecordcount">Match Trees</div>
+        </div>
+
+        <div class="row bottomMargin">
+            <div class="col" id="placesCount">Places</div>
+            <div class="col" id="incompleteCount">Incomplete</div>
+            <div class="col" id="unsearchedCount">Unsearched</div>
+            <div class="col" id="notfoundCount">Not Found</div>
+            <div class="col"></div>
+        </div>
+
+        <div class="row">
+            <div class="col subheader">GED Files</div>
+        </div>
+        <div class="row">
+            <input class="buttonLeftMargin" type="file" id="gedUpload" />
+            <div class="col"><a href="#Foo" onclick="p.importGed();">1. Upload GED File</a></div>
+        </div>
+
+        <div class="row topMargin">
+            <div class="col">
+                <table id="ged-file-list">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Date Imported</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ged-file-list-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="row topMargin">
+            <div class="col subheader">People and Events</div>
+        </div>
+
+        <div id="pae-import-row" class="row">
+            <div class="col"><a href="#Foo" onclick="p.importPersons();">1. Import </a></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+
+        <div id="pae-update-row" class="row">
+            <div class="col"><a href="#Foo" onclick="p.createDupeView();">1. Create Dupe List </a></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+
+
+        <div id="lpr-rows">
+            <div class="row topMargin">
+                <div class="col subheader">Location Processing</div>
+            </div>
+
+            <div class="row">
+                <div class="col"><a href="#Foo" onclick="p.addMissingPlaces();">1. Adding missing locations </a></div>
+                <div class="col"><a href="#Foo" onclick="p.getUnEncodedLocationsFromServer();">2. GeoCode Location entries </a><div id="geocodecount" style="display:inline">0</div></div>
+                <div class="col"><a href="#Foo" onclick="p.updatePlaceMetadata();">3. Update Place Cache county and lat long fields</a></div>
+                <div class="col"></div>
+            </div>
+
+            <div id="pae-update-row" class="row">
+                <div class="col"><a href="#Foo" onclick="p.updateLocations();">4. Update County and Country fields of FTMPerson table</a></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+
+        <div class="row topMargin">
+            <div class="col subheader">Telemetry</div>
+        </div>
+
+        <div class="row">
+            <div class="col subheader"><a href="#Output" onclick="tabs.showOutput();">Output</a></div>
+            <div class="col subheader"><a href="#Trace" onclick="tabs.showTrace();">Trace</a></div>
+            <div class="col subheader"><a href="#Error" onclick="tabs.showError();">Error</a></div>
+        </div>
+
+
+        <div class="row cntdebug" style="background-color: blue; margin-left: 1px; margin-right: 1px;">
+            <div class="col">
+                <div id="debug-progress" style="color: green; background-color: black; font-weight: 600; padding-left: 1px">1</div>
+            </div>
+        </div>
+
+        <div class="row cntdebug" style="background-color: blue; margin-left: 1px; margin-right: 1px;">
+            <div class="col">
+                <ul id="debug-trace" style="color: green; background-color: black; font-weight: 600; padding-left: 1px"></ul>
+            </div>
+        </div>
+
+        <div class="row cntoutput" style="background-color: purple; margin-left: 1px; margin-right: 1px;">
+            <div class="col">
+                <ul id="output" style="color: green; background-color: black; font-weight: 600; padding-left: 1px"></ul>
+            </div>
+        </div>
+
+        <div class="row cnterror" style="background-color: black; margin-left: 1px; margin-right: 1px;">
+            <div class="col"><ul id="error" style="color: red; background-color: black; font-weight: 600; padding-left: 1px"></ul></div>
+        </div>
+
+    </div>
+
+</body>
+</html>

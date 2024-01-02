@@ -12,10 +12,21 @@ namespace TestBed
 {
     public class config : IMSGConfigHelper
     {
+        public string AzureDB { get; set; }
         public string ClientURLs { get; set; }
         public string AuthServerUrl { get; set; }
         public string MSGApiGenUrl { get; set; }
-        public string MSGGenDB01 { get; set; } = Secrets.ConnectionString;
+        public string GedPath { get; set; }
+        public string MSGGenDB01 { get; set; }
+        public string MSGGenDB01Local { get; set; }
+        public string DNA_Match_File_FileName { get; set; }
+        public string DNA_Match_File_Path { get; set; }
+        public bool DNA_Match_File_IsEncrypted { get; set; }
+        public string FTMConString { get; set; }
+        public string PlaceConString { get; set; }
+        public string CacheData_FileName { get; set; }
+        public string CacheData_Path { get; set; }
+        public bool CacheData_IsEncrypted { get; set; }
     }
 
     class Program
@@ -23,7 +34,9 @@ namespace TestBed
   
         static void Main(string[] args)
         {
-            var az = new DNAContext(Secrets.ConnectionString);
+            var c = new MSGConfigHelper();
+            
+            var az = new DNAContext(c.AzureDB);
             // var msgConfigHelper = new MSGConfigHelper();
 
 

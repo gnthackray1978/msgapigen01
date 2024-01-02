@@ -21,6 +21,7 @@ using Api.Services.interfaces.services;
 using Api.Types.Blog;
 
 using ConfigHelper;
+using Serilog;
 
 namespace Api
 {
@@ -46,7 +47,9 @@ namespace Api
                 .AddAuthorization()
                 .AddNewtonsoftJson();
 
-          
+            
+
+
             var msgConfigHelper = new MSGConfigHelper();
 
             services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
@@ -186,8 +189,8 @@ namespace Api
             // app.UseMvc();
 
             app.UseWebSockets();
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" });
-            app.UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/voyager" });
+            app.UseGraphQLPlayground("/");
+            app.UseGraphQLVoyager("/voyager" );
 
             app.UseRouting();
             app.UseAuthorization();

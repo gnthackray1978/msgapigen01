@@ -1,0 +1,23 @@
+{
+  "name": "MSGAPI",
+  "version": "1.0.0",
+  "description": "Personal Projects API using GraphQL for .NET",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnthackray1978/msgapigen01.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gnthackray1978/msgapigen01/issues"
+  },
+  "homepage": "https://github.com/gnthackray1978/msgapigen01#readme",
+  "dependencies": {
+    "@microsoft/signalr": "^8.0.0"
+  }
+}
