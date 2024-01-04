@@ -120,3 +120,11 @@
 2024-01-02 20:44:01.302 +00:00 [INF] Creating secret client
 2024-01-02 20:44:24.332 +00:00 [INF] Client URLS: http://localhost:1234 http://gnthackray.co.uk
 2024-01-02 20:44:26.024 +00:00 [INF] SetupMiddleware
+2024-01-03 06:59:05.806 +00:00 [INF] MsgNotificationHub constructed
+2024-01-03 06:59:05.810 +00:00 [INF] MsgNotificationHub OnConnectedAsync: bXkzGj0eNGExVALSwvJzIgQJ28gQf02
+2024-01-03 13:22:13.909 +00:00 [INF] MsgNotificationHub constructed
+2024-01-03 18:39:56.870 +00:00 [INF] MsgNotificationHub constructed
+2024-01-03 18:39:56.875 +00:00 [INF] MsgNotificationHub OnConnectedAsync: naQyunzX_1BQKC5gICyG6QQJ28gQf02
+2024-01-03 20:47:09.259 +00:00 [INF] MsgNotificationHub constructed
+2024-01-03 22:20:21.762 +00:00 [INF] MsgNotificationHub constructed
+2024-01-03 22:20:21.765 +00:00 [INF] MsgNotificationHub OnConnectedAsync: tWHzlIVXRBwhwzHp6T20ZQQJ28gQf02

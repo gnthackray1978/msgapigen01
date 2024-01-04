@@ -26,11 +26,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.12" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="MSG.ConfigHelper" Version="1.0.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ConfigHelper\ConfigHelper.csproj" />
   </ItemGroup>
 
 </Project>

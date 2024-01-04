@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceLibNet.Tests", "PlaceL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportAPI", "ImportAPI\ImportAPI.csproj", "{826CA407-5E58-46AE-9B17-91CA0C43046A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigHelper", "ConfigHelper\ConfigHelper.csproj", "{80677549-AD79-4BD3-9660-C04A4A69F3EC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80677549-AD79-4BD3-9660-C04A4A69F3EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80677549-AD79-4BD3-9660-C04A4A69F3EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80677549-AD79-4BD3-9660-C04A4A69F3EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80677549-AD79-4BD3-9660-C04A4A69F3EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
