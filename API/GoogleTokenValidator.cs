@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,11 @@ namespace Api
 
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
         {
-            validatedToken = null;
-            var payload = GoogleJsonWebSignature.ValidateAsync(securityToken, new GoogleJsonWebSignature.ValidationSettings()).Result; // here is where I delegate to Google to validate
+            
+            var payload = GoogleJsonWebSignature.ValidateAsync(securityToken,
+                new GoogleJsonWebSignature.ValidationSettings()).Result; // here is where I delegate to Google to validate
+
+            validatedToken = new JwtSecurityToken(securityToken);
 
             var claims = new List<Claim>
                 {
