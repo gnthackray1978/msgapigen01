@@ -68,10 +68,17 @@ public class PersistedImportCacheRepository : IPersistedImportCacheRepository
 
         var importData = new ImportData() { CurrentId = new List<int>() };
 
-        importData.CurrentId = _persistedCacheContext.TreeImport.Where(w => w.FileName == fileName).Select(s => s.Id).ToList();
+        int newId = 1;
 
+        if (_persistedCacheContext.TreeImport.Any())
+        {
+            importData.CurrentId = _persistedCacheContext
+                .TreeImport.Where(w => w.FileName == fileName)
+                .Select(s => s.Id).ToList();
 
-        var newId = _persistedCacheContext.TreeImport.Max(m => m.Id) + 1;
+            newId = _persistedCacheContext.TreeImport.Max(m => m.Id) + 1;
+        }
+
 
         var import = new TreeImport()
         {

@@ -1,26 +1,23 @@
-﻿using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HotChocolate.Types;
 
 namespace Api.Types.ADB
 {
-    public class ADBParishType : ObjectGraphType<ADBParish>
+    public class ADBParishType : ObjectType<ADBParish>
     {
-        public ADBParishType() {
-            
-            Field(m => m.Id);
+        protected override void Configure(IObjectTypeDescriptor<ADBParish> descriptor)
+        {
 
-            Field(m => m.ParishName);
-            Field(m => m.ParishRegistersDeposited);
-            Field(m => m.ParishNotes);
-            Field(m => m.ParentParish);
-            Field(m => m.ParishStartYear);
-            Field(m => m.ParishEndYear);
-            Field(m => m.ParishCounty);
-            Field(m => m.ParishX);
-            Field(m => m.ParishY);
+           descriptor.Field(m => m.Id);
+
+           descriptor.Field(m => m.ParishName);
+           descriptor.Field(m => m.ParishRegistersDeposited);
+           descriptor.Field(m => m.ParishNotes);
+           descriptor.Field(m => m.ParentParish);
+           descriptor.Field(m => m.ParishStartYear);
+           descriptor.Field(m => m.ParishEndYear);
+           descriptor.Field(m => m.ParishCounty);
+           descriptor.Field(m => m.ParishX);
+           descriptor.Field(m => m.ParishY);
         }
 
     }

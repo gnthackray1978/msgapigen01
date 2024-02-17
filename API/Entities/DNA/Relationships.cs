@@ -19,6 +19,6 @@ namespace AzureContext.Models
 
         public string Location { get; set; }
 
-        public int Origin { get; set; }
+        public string Origin { get; set; }
     }
 }

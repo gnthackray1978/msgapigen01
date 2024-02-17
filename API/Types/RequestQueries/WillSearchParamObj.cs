@@ -3,9 +3,16 @@ using System.Threading.Tasks;
 
 namespace Api.Types.RequestQueries
 {
+
+
     public class WillSearchParamObj : IYearRange, ISortable
     {
-        public MetaData Meta { get; set; } = new MetaData();
+        //    public MetaData Meta { get; set; } = new MetaData();
+
+        public string Error { get; set; }
+
+        public string LoginInfo { get; set; }
+
 
         public string RefArg { get; set; }
 

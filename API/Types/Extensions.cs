@@ -1,19 +1,48 @@
-﻿using GraphQL;
-using GraphQL.SystemTextJson;
+﻿//using GraphQL;
+//using GraphQL.SystemTextJson;
 
-public static class StringExtensions
+using Api.Types.RequestQueries;
+
+static class DNASearchParamObjExtensions
 {
-    private static readonly GraphQLSerializer _serializer = new();
 
-    public static Inputs ToInputs(this string json)
-        => json == null ? Inputs.Empty : _serializer.Deserialize<Inputs>(json) ?? Inputs.Empty;
+    public static GroupingsObj ToGroupingsObj(this DNASearchParamObj dnaSearchParamObj)
+    {
+        return new GroupingsObj()
+        {
+            Location = dnaSearchParamObj.Location,
+            Surname = dnaSearchParamObj.Surname,
+            Limit = dnaSearchParamObj.Limit,
+            Offset = dnaSearchParamObj.Offset,
+            SortColumn = dnaSearchParamObj.SortColumn,
+            SortOrder = dnaSearchParamObj.SortOrder,
+            YearFrom = dnaSearchParamObj.YearFrom,
+            YearTo = dnaSearchParamObj.YearTo,
+            MinCM = dnaSearchParamObj.MinCM,
+            TreeName = dnaSearchParamObj.TreeName,
+            Country = dnaSearchParamObj.Country,
+            Origin = dnaSearchParamObj.Origin,
+        };
+    }
 
-    public static Inputs ToInputs(this System.Text.Json.JsonElement element)
-        => _serializer.ReadNode<Inputs>(element) ?? Inputs.Empty;
+    public static int ToSingleInt(this string csv)
+    {
+        if(string.IsNullOrEmpty(csv)) return 0;
 
-    public static T? FromJson<T>(this string json)
-        => _serializer.Deserialize<T>(json);
+        if (csv.Contains(','))
+        {
+            var parts = csv.Split(',');
 
-    public static System.Threading.Tasks.ValueTask<T?> FromJsonAsync<T>(this System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default)
-        => _serializer.ReadAsync<T>(stream, cancellationToken);
+            if (parts.Length > 0)
+            {
+                csv = parts[0];
+            }
+
+        }
+
+        if (int.TryParse(csv, out int singleId))
+            return singleId;
+
+        return 0;
+    }
 }

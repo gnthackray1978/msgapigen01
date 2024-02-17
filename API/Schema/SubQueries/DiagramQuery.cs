@@ -1,106 +1,42 @@
-﻿using Api.Models;
-using Api.Types;
-using GraphQL.Types;
-using System.Collections.Generic;
-using GraphQL;
+﻿
+using System.Security;
 using System.Security.Claims;
-using System;
-using Api.Types;
 using Api.Services;
 using System.Threading.Tasks;
 using Api.Types.Diagrams;
 using Api.Services.interfaces.services;
 using Api.Types.RequestQueries;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-    public class DiagramQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class DiagramQuery 
     {
-        public DiagramQuery(IDiagramService service, IClaimService claimService)
+        public Task<DiagramResults<AncestorNode>> ancestorsearch(DiagramParamObj pobj,
+            [Service] IDiagramService repository,
+            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
         {
+            if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+            {
+            //    return ErrorHandler.Error<AncestorNode>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
+            }
 
-            Name = "Diagram";
-
-            FieldAsync<AncestorResult, DiagramResults<AncestorNode>>(
-                   "ancestorsearch",
-                   arguments: new QueryArguments(
-                       new QueryArgument<IntGraphType> { Name = "personId" },
-                       new QueryArgument<StringGraphType> { Name = "origin" }
-                   ),
-                   resolve: context =>
-                   {
-                       ClaimsPrincipal currentUser = null;
-                       Exception ce = null;
-
-                       try
-                       {
-                           currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                       }
-                       catch (Exception e)
-                       {
-                           ce = e;
-                       }
-
-                       var obj = new Dictionary<string, string>();
-
-                       var origin = context.GetArgument("origin", 0);
-                       var personId = context.GetArgument("personId", 0);
-
-
-                       if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
-                       {
-                           return ErrorHandler.DiagramError<AncestorNode>(ce, claimService.GetClaimDebugString(currentUser));
-                       }
-
-                       var pobj = new DiagramParamObj
-                       {
-                           Origin = origin,
-                           PersonId = personId
-                       };
-
-                       return service.GetAncestors(pobj);
-                   }
-               );
-
-            FieldAsync<DescendantResult, DiagramResults<DescendantNode>>(
-               "descendantsearch",
-               arguments: new QueryArguments(
-                   new QueryArgument<IntGraphType> { Name = "personId" },
-                       new QueryArgument<StringGraphType> { Name = "origin" }
-               ),
-               resolve: context =>
-               {
-                   ClaimsPrincipal currentUser = null;
-                   Exception ce = null;
-
-                   try
-                   {
-                       currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                   }
-                   catch (Exception e)
-                   {
-                       ce = e;
-                   }
-
-                   var obj = new Dictionary<string, string>();
-
-                   var origin = context.GetArgument("origin", 0);
-                   var personId = context.GetArgument("personId", 0);
-
-                   if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
-                   {
-                       return ErrorHandler.DiagramError<DescendantNode>(ce, claimService.GetClaimDebugString(currentUser));
-                   }
-
-                   var pobj = new DiagramParamObj()
-                   {
-                       Origin = origin,
-                       PersonId = personId
-                   };
-
-                   return service.GetDescendants(pobj);
-               }
-           );
+            return repository.GetAncestors(pobj);
         }
+
+        public Task<DiagramResults<DescendantNode>> descendantsearch(DiagramParamObj pobj,
+            [Service] IDiagramService repository,
+            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        {
+            if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+            {
+                //    return ErrorHandler.Error<AncestorNode>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
+            }
+
+            return repository.GetDescendants(pobj);
+        }
+ 
     }
 }

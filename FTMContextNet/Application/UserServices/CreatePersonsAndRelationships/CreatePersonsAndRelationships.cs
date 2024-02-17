@@ -93,6 +93,13 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
 
                 _ilog.WriteLine("Adding Relationships");
 
+                //var p1 = gedDb.Persons.FirstOrDefault(w => w.FamilyName == "Douglas" && w.Forename == "John");
+
+                //var p2 = gedDb.Persons.FirstOrDefault(w => w.FamilyName == "Luck" && w.Forename == "Ann");
+
+                //var r1 = gedDb.Relationships.Where(w => w.Person1Id == p1.Id || w.Person2Id == p1.Id).ToList();
+
+
                 _persistedCacheRepository.InsertRelationships(_currentImportId, _currentUserId, gedDb.Relationships);
 
                 _ilog.WriteLine("Adding Person Tree Origins");

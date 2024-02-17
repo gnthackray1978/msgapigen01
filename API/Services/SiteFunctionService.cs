@@ -17,13 +17,10 @@ namespace Api.Services
     {
         private List<SiteFunction> _sites = new List<SiteFunction>();
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public SiteFunctionService(HttpClient client,
-            IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public SiteFunctionService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
             _imsConfigHelper = imsConfigHelper;
         }
   
@@ -92,10 +89,10 @@ namespace Api.Services
 
              
             
-            results.results = _sites;
+            results.rows = _sites;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = results.results.Count();
+            results.total_rows = results.rows.Count();
 
             return results;
         }
@@ -135,10 +132,10 @@ namespace Api.Services
 
 
 
-            results.results = _sites;
+            results.rows = _sites;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = results.results.Count();
+            results.total_rows = results.rows.Count();
 
             return results;
         }

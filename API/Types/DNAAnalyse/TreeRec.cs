@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Api.Types.DNAAnalyse
 {
-    public class TreeRecType : ObjectGraphType<TreeRec>
+    public class TreeRecType : ObjectType<TreeRec>
     {
-        public TreeRecType()
+        protected override void Configure(IObjectTypeDescriptor<TreeRec> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.Name);
-            Field(m => m.Origin);
-            Field(m => m.PersonCount);
-            Field(m => m.CM);
-            Field(m => m.Located);
-            Field(m => m.GroupNumber);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.Name);
+           descriptor.Field(m => m.Origin);
+           descriptor.Field(m => m.PersonCount);
+           descriptor.Field(m => m.CM);
+           descriptor.Field(m => m.Located);
+           descriptor.Field(m => m.GroupNumber);
         }
     }
 

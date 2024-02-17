@@ -17,12 +17,12 @@ namespace Api.Schema
 
             var results = new Results<T>();
 
-            results.results = new List<T>();
+            results.rows = new List<T>();
 
             results.LoginInfo = loginInfo;
             results.Error = error;
 
-            results.total_results = 0;
+            results.total_rows = 0;
 
             return results;
         }
@@ -37,7 +37,7 @@ namespace Api.Schema
 
             var results = new DiagramResults<T>();
 
-            results.results = new List<T>();
+            results.rows = new List<T>();
 
             results.LoginInfo = loginInfo;
             results.Error = error;

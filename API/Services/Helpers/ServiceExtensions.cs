@@ -223,7 +223,7 @@ namespace Api.Services
 
         public static IQueryable<T> WhereIfOrigin<T>(
             this IQueryable<T> source,
-            DNASearchParamObj param) where T : IOrigin
+            GroupingsObj param) where T : IOrigin
         {
             //this origin might now be a group
 

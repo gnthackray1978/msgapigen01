@@ -97,13 +97,9 @@ namespace ImportAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
             
-
             app.UseHttpsRedirection();
-
-
-
+            
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -112,7 +108,6 @@ namespace ImportAPI
 
             app.UseAuthorization();
  
-            
             app.UseEndpoints(e =>
             {
                 e.MapHub<MsgNotificationHub>("/hub/MsgNotificationHub");

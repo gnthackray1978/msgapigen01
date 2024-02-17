@@ -1,28 +1,28 @@
-﻿using GraphQL.Types;
+﻿using HotChocolate.Types;
 
 namespace Api.Models
 {
 
-    public class WillType : ObjectGraphType<Will>
+    public class WillType : ObjectType<Will>
     {
-        public WillType()
+        protected override void Configure(IObjectTypeDescriptor<Will> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.DateString);
-            Field(m => m.Url);
-            Field(m => m.Description);
-            Field(m => m.Collection);
-            Field(m => m.Reference);
-            Field(m => m.Place);
-            Field(m => m.Year);
+            descriptor.Field(m => m.Id);
+            descriptor.Field(m => m.DateString);
+            descriptor.Field(m => m.Url);
+            descriptor.Field(m => m.Description);
+            descriptor.Field(m => m.Collection);
+            descriptor.Field(m => m.Reference);
+            descriptor.Field(m => m.Place);
+            descriptor.Field(m => m.Year);
 
-            Field(m => m.Typ);
-            Field(m => m.FirstName);
-            Field(m => m.Surname);
-            Field(m => m.Occupation);
+            descriptor.Field(m => m.Typ);
+            descriptor.Field(m => m.FirstName);
+            descriptor.Field(m => m.Surname);
+            descriptor.Field(m => m.Occupation);
 
-            Field(m => m.Aliases);
-            Field(m => m.Error);
+            descriptor.Field(m => m.Aliases);
+            descriptor.Field(m => m.Error);
 
         }
     }

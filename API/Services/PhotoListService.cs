@@ -15,20 +15,14 @@ namespace Api.Services
 {
     public class PhotoListService : IPhotoListService
     {
-
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public PhotoListService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public PhotoListService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
-            _imsConfigHelper = imsConfigHelper;
+             _imsConfigHelper = imsConfigHelper;
         }
          
-
-        
-
         public async Task<Results<ApiImage>> ImagesList(string user, string page)
         {
             var _apiImages = new List<ApiImage>();
@@ -68,16 +62,14 @@ namespace Api.Services
                 results.Error = e.Message;
             }
 
-            results.results = _apiImages;
+            results.rows = _apiImages;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
-
-
-        //Task<Results<ParentImages>> ParentImagesList();
+        
         public async Task<Results<ApiParentImages>> ParentImagesList(string user, string page)
         {
             var _wills = new List<ApiParentImages>();
@@ -121,15 +113,13 @@ namespace Api.Services
 
 
 
-            results.results = _wills; 
+            results.rows = _wills; 
             results.Error += results.Error;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
-
-
     }
 }

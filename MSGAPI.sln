@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceLibNet.Tests", "PlaceL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportAPI", "ImportAPI\ImportAPI.csproj", "{826CA407-5E58-46AE-9B17-91CA0C43046A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSite", "TestSite\TestSite.csproj", "{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{826CA407-5E58-46AE-9B17-91CA0C43046A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

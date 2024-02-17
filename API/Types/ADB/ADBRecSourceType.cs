@@ -1,13 +1,15 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 
 namespace Api.Types.ADB
 {
-    public class ADBRecSourceType : ObjectGraphType<ADBRecSource>
+    public class ADBRecSourceType : ObjectType<ADBRecSource>
     {
-        public ADBRecSourceType() {
-            Field(m => m.Id);
-            Field(m => m.RecordTypeName);
-            Field(m => m.RecordTypeDescription);
+        protected override void Configure(IObjectTypeDescriptor<ADBRecSource> descriptor)
+        {
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.RecordTypeName);
+           descriptor.Field(m => m.RecordTypeDescription);
         }
     }
 

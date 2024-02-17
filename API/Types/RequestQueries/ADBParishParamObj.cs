@@ -3,7 +3,7 @@
     public class ADBParishParamObj
     {
 
-        public MetaData Meta { get; set; } = new MetaData();
+    //   public MetaData Meta { get; set; } = new MetaData();
 
 
         public string ParishName { get; set; }

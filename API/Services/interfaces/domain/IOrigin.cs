@@ -2,6 +2,6 @@
 {
     public interface IOrigin
     {
-        public int Origin { get; set; }
+        public string Origin { get; set; }
     }
 }

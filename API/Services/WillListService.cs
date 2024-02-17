@@ -69,12 +69,12 @@ namespace Api.Services
     {
 
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
+  //      private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public WillListService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public WillListService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
+           // _client = client;
             _imsConfigHelper = imsConfigHelper;
         }
 
@@ -175,12 +175,12 @@ namespace Api.Services
             }
 
 
-            results.LoginInfo = searchParams.Meta.LoginInfo;
-            results.Error += Environment.NewLine + searchParams.Meta.Error;
-            results.results = _wills;
+            results.LoginInfo = searchParams.LoginInfo;
+            results.Error += (Environment.NewLine + searchParams.Error).Trim();;
+            results.rows = _wills;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs/ searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -210,6 +210,14 @@ namespace Api.Services
                     return true;
                 };
 
+                totalRecs = a.NorfolkWills
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Surname), w => w.Surname.ToLower().Contains(searchParams.Surname))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Desc), w => w.Description.ToLower().Contains(searchParams.Desc))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.RefArg), w => w.Reference.ToLower().Contains(searchParams.RefArg))
+                    .WhereIf(!string.IsNullOrEmpty(searchParams.Place), w => w.Place.ToLower().Contains(searchParams.Place))
+                    .WhereIf(validDates(searchParams.YearFrom, searchParams.YearTo),
+                        w => w.Year >= searchParams.YearFrom && w.Year <= searchParams.YearTo).Count();
+
                 var unpaged = a.NorfolkWills
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Surname), w => w.Surname.ToLower().Contains(searchParams.Surname))
                     .WhereIf(!string.IsNullOrEmpty(searchParams.Desc), w => w.Description.ToLower().Contains(searchParams.Desc))
@@ -219,9 +227,9 @@ namespace Api.Services
                             w => w.Year >= searchParams.YearFrom && w.Year <= searchParams.YearTo)
                     .SortIf(searchParams.SortColumn, searchParams.SortOrder);
 
-                totalRecs = unpaged.Count();
+                var paged = unpaged.Skip(searchParams.Offset).Take(searchParams.Limit).ToList();
 
-                foreach (var app in unpaged.Skip(searchParams.Offset).Take(searchParams.Limit))
+                foreach (var app in paged)
                 {
                     _wills.Add(new Will()
                     {
@@ -245,18 +253,17 @@ namespace Api.Services
             }
             catch (Exception e)
             {
-
                 results.Error = e.Message;
             }
 
             
 
-            results.results = _wills;
-            results.LoginInfo = searchParams.Meta.LoginInfo;
-            results.Error += Environment.NewLine + searchParams.Meta.Error;
+            results.rows = _wills;
+            results.LoginInfo = searchParams.LoginInfo;
+            results.Error += (Environment.NewLine + searchParams.Error).Trim();
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }

@@ -572,7 +572,12 @@ namespace FTMContextNet.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-         
+
+        public void UpdateRecordMapGroupIds()
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
     }

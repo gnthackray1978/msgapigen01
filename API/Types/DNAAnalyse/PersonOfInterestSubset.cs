@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,29 +7,29 @@ using System.Threading.Tasks;
 
 namespace Api.Types.DNAAnalyse
 {
-    public class PersonOfInterestType : ObjectGraphType<PersonOfInterestSubset>
+    public class PersonOfInterestType : ObjectType<PersonOfInterestSubset>
     {
-        public PersonOfInterestType()
+        protected override void Configure(IObjectTypeDescriptor<PersonOfInterestSubset> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.PersonId);
-            Field(m => m.ChristianName);
-            Field(m => m.Surname);
-            Field(m => m.BirthYear);
-            Field(m => m.BirthPlace);
-            Field(m => m.BirthCounty);
-            Field(m => m.BirthCountry);
-            Field(m => m.TestDisplayName);
-            Field(m => m.TestAdminDisplayName);
-            Field(m => m.TreeUrl);
-            Field(m => m.TestGuid);
-            Field(m => m.Confidence);
-            Field(m => m.SharedCentimorgans);
-            Field(m => m.CreatedDate);
-            Field(m => m.RootsEntry);
-            Field(m => m.Memory);
-            Field(m => m.KitId);
-            Field(m => m.Name);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.PersonId);
+           descriptor.Field(m => m.ChristianName);
+           descriptor.Field(m => m.Surname);
+           descriptor.Field(m => m.BirthYear);
+           descriptor.Field(m => m.BirthPlace);
+           descriptor.Field(m => m.BirthCounty);
+           descriptor.Field(m => m.BirthCountry);
+           descriptor.Field(m => m.TestDisplayName);
+           descriptor.Field(m => m.TestAdminDisplayName);
+           descriptor.Field(m => m.TreeUrl);
+           descriptor.Field(m => m.TestGuid);
+           descriptor.Field(m => m.Confidence);
+           descriptor.Field(m => m.SharedCentimorgans);
+           descriptor.Field(m => m.CreatedDate);
+           descriptor.Field(m => m.RootsEntry);
+           descriptor.Field(m => m.Memory);
+           descriptor.Field(m => m.KitId);
+           descriptor.Field(m => m.Name);
         }
     }
 

@@ -5,7 +5,7 @@ namespace Api.Types.RequestQueries
     public class ADBSourceParamObj : IYearRange, ISortable, Ilocation
     {
 
-        public MetaData Meta { get; set; } = new MetaData();
+    //    public MetaData Meta { get; set; } = new MetaData();
 
         public string SourceRef { get; set; }
 

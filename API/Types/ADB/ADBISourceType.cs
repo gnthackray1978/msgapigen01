@@ -1,14 +1,15 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 
 namespace Api.Types.ADB
 {
-    public class ADBISourceType : ObjectGraphType<ADBInternalSourceType>
+    public class ADBISourceType : ObjectType<ADBInternalSourceType>
     {
-        public ADBISourceType()
+        protected override void Configure(IObjectTypeDescriptor<ADBInternalSourceType> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.SourceTypeDesc);
-            Field(m => m.SourceDateAdded);
+            descriptor.Field(m => m.Id);
+            descriptor.Field(m => m.SourceTypeDesc);
+            descriptor.Field(m => m.SourceDateAdded);
         }
     }
 

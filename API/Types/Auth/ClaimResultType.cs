@@ -1,23 +1,23 @@
-﻿using Api.Schema;
-using GraphQL.Types;
+﻿//using Api.Schema;
+//using HotChocolate.Types;
 
-namespace Api.Types
-{
-    public class ClaimResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>> where GraphT : IGraphType
-    {
-        public ClaimResultType()
-        {
-            Field<ListGraphType<GraphT>>(
-                "results",
-                resolve: context =>
-                {
-                    return context.Source.results;
-                }
-            );
-            Field(r => r.Page);
-            Field(r => r.TotalResults);
-            Field(r => r.TotalPages);
-            Field(r => r.Error);
-        }
-    }
-}
+//namespace Api.Types
+//{
+//    //public class ClaimResultType<GraphT, ObjT> : ObjectType<Results<ObjT>> where GraphT : IGraphType
+//    //{
+//    //    protected override void Configure(IObjectTypeDescriptor<Will> descriptor)
+//    //    {
+//    //       descriptor.Field<ListGraphType<GraphT>>(
+//    //            "results",
+//    //            resolve: context =>
+//    //            {
+//    //                return context.Source.results;
+//    //            }
+//    //        );
+//    //       descriptor.Field(r => r.Page);
+//    //       descriptor.Field(r => r.TotalResults);
+//    //       descriptor.Field(r => r.TotalPages);
+//    //       descriptor.Field(r => r.Error);
+//    //    }
+//    //}
+//}

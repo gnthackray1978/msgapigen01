@@ -4,8 +4,7 @@ namespace Api.Types.RequestQueries
 {
     public class ADBMarriageParamObj : ISortable, Ilocation, IYearRange
     {
-
-        public MetaData Meta { get; set; } = new MetaData();
+        //public MetaData Meta { get; set; } = new MetaData();
 
         public int Limit { get; set; }
         public int Offset { get; set; }

@@ -4,6 +4,6 @@ namespace Api.Services.interfaces.domain
 {
     public interface IHeatMapSearch : IYearRange
     {
-        List<int> GetOrigins();
+        List<string> GetOrigins();
     }
 }

@@ -25,6 +25,7 @@ public interface IPersistedCacheContext
     int BulkInsertTreeRecord(int userId, List<TreeRecord> treeRecords);
     int InsertGroups(int id, string groupName,int importId, int userId);
     int InsertRecordMapGroup(string groupName, string treeName,int importId,int userId);
+    void UpdateRecordMapGroupIds();
     void DeleteOrigins(int importId);
     void DeleteDupes(int importId);
     void DeleteDupes();

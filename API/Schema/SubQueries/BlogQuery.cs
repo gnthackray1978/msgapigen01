@@ -1,79 +1,37 @@
 ﻿using System;
+using System.Security;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Api.Models;
+using Api.Services;
 using Api.Services.interfaces.services;
 using Api.Types;
 using Api.Types.Blog;
 using Api.Types.RequestQueries;
-using GraphQL;
-using GraphQL.Types;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-    public class BlogQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class BlogQuery 
     {
-        public BlogQuery(IBlogService service, IClaimService claimService)
+        //public Task<Blog> single(int id, [Service] IBlogService repository,
+        //    [Service] IClaimService claimService)
+        //{
+        //    return repository.GetBlog(id);
+        //}
+
+        public Task<Results<Blog>> searchBlog(BlogParamObj pobj, [Service] IBlogService repository,
+            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
         {
-            Name = "Blog";
+            if (!claimService.UserValid(currentUser, MSGApplications.Blog))
+            {
+                return ErrorHandler.Error<Blog>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
+            }
 
-            FieldAsync<BlogType, Blog>(
-                "single",
-                arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" }
-                ),
-                resolve: context =>
-                {
-                    try
-                    {
-                        var currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-
-
-                    //
-                    var id = context.GetArgument<int>("id");
-                    return service.GetBlog(id);
-                }
-            );
-
-            FieldAsync<BlogListResult, Results<Blog>>(
-                "search",
-                arguments: new QueryArguments(
-                    new QueryArgument<StringGraphType> { Name = "query" },
-                    new QueryArgument<IntGraphType> { Name = "level" }
-                ),
-                resolve: context =>
-                {
-                    ClaimsPrincipal currentUser = null;
-               
-                    Exception claimException = null;
-                    try
-                    {
-                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                    }
-                    catch (Exception e)
-                    {
-                        claimException = e;
-                    }
-
-                    var id = context.GetArgument<int>("level");
-
-                    var blogParamObj = new BlogParamObj() { LevelId = id };
-                    
-                    var tp = service.ListBlogs(blogParamObj);
-
-
-                    if (claimException != null)
-                        tp.Result.Error += Environment.NewLine + claimException.Message;
-
-                    return tp;
-                }
-            );
-
+            return repository.ListBlogs(pobj);
         }
+         
     }
 }

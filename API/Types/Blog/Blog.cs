@@ -1,30 +1,28 @@
 ﻿using System;
-using Api.Models;
-using Api.Schema;
-using Api.Types.Images;
-using GraphQL.Types;
+using HotChocolate.Types;
 
 namespace Api.Types.Blog
 {
-    public class BlogType : ObjectGraphType<Blog>
+    public class BlogType : ObjectType<Blog>
     {
-        public BlogType()
+        protected override void Configure(IObjectTypeDescriptor<Blog> descriptor)
         {
-            Field(m => m.Id);
+           descriptor.Field(m => m.Id);
 
-            Field(m => m.Text);
-            Field(m => m.Level);
-            Field(m => m.Title);
-            Field(m => m.LinkURL);
-            Field(m => m.LinkDescription);
-            Field(m => m.ImageURL);
-            Field(m => m.ImageDescription);
-            Field(m => m.DateLastEdit);
+           descriptor.Field(m => m.Text);
+           descriptor.Field(m => m.Level);
+           descriptor.Field(m => m.Title);
+           descriptor.Field(m => m.LinkURL);
+           descriptor.Field(m => m.LinkDescription);
+           descriptor.Field(m => m.ImageURL);
+           descriptor.Field(m => m.ImageDescription);
+           descriptor.Field(m => m.DateLastEdit);
         }
     }
 
     public class Blog
     {
+
         public int Id { get; set; }
         public string Text { get; set; }
         public int Level { get; set; }
@@ -41,28 +39,5 @@ namespace Api.Types.Blog
 
         public string Error { get; set; }
     }
-
-
-    public class BlogListType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>>
-        where GraphT : IGraphType
-    {
-        public BlogListType()
-        {
-            Field<ListGraphType<GraphT>>(
-                "results",
-                resolve: context =>
-                {
-                    return context.Source.results;
-                }
-            );
-            Field(r => r.Page);
-            Field(r => r.TotalResults);
-            Field(r => r.TotalPages);
-            Field(r => r.Error);
-            Field(r => r.LoginInfo);
-        }
-    }
-
-    public class BlogListResult : BlogListType<BlogType, Blog> { }
     
 }

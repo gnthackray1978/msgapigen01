@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Api.Types.Images
 {
-    public class ApiParentImagesType : ObjectGraphType<ApiParentImages>
+    public class ApiParentImagesType : ObjectType<ApiParentImages>
     {
-        public ApiParentImagesType()
+        protected override void Configure(IObjectTypeDescriptor<ApiParentImages> descriptor)
         {
-            Field(m => m.Id);
-      
-            Field(m => m.Title);
-            Field(m => m.Info);
-            Field(m => m.From);
-            Field(m => m.To);
-            Field(m => m.Page);
+            descriptor.Field(m => m.Id);
+
+            descriptor.Field(m => m.Title);
+            descriptor.Field(m => m.Info);
+            descriptor.Field(m => m.From);
+            descriptor.Field(m => m.To);
+            descriptor.Field(m => m.Page);
         }
     }
 

@@ -10,7 +10,9 @@ function PlaceObj(webConsole) {
     let isDev = false;
 
 //    if (!isDev)
-        this.rootPath = 'https://msgapiinput01.azurewebsites.net';
+       // this.rootPath = 'https://msgapiinput01.azurewebsites.net';
+
+    this.rootPath = 'https://localhost:44347';
 }
 
 PlaceObj.prototype = {

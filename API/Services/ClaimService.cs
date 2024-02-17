@@ -21,21 +21,22 @@ namespace Api.Services
         MapOverview= 6,
         FamilyTreeAnalizer=7,
         FamilyHistoryPhotos=8,
-        Wills =9
+        Wills =9,
+        Blog = 10, 
+        UserLookup = 11
     }
 
     public class ClaimService : IClaimService
     {
         private List<MSGClaim> _sites = new List<MSGClaim>();
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
+        //private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public ClaimService(HttpClient client, 
-            IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public ClaimService(IMSGConfigHelper imsConfigHelper)
         {
             _imsConfigHelper = imsConfigHelper;
-            _client = client;        
+        //    _client = client;        
         }
 
         public async Task<MSGClaim> GetClaim(int id)
@@ -193,10 +194,10 @@ namespace Api.Services
                 throw e;
             }
               
-            results.results = _sites;
+            results.rows = _sites;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = results.results.Count();
+            results.total_rows = results.rows.Count();
 
             return results;
         }

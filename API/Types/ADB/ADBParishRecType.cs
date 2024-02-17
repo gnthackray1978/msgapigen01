@@ -1,17 +1,19 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 
 namespace Api.Types.ADB
 {
-    public class ADBParishRecType : ObjectGraphType<ADBParishRec>
+    public class ADBParishRecType : ObjectType<ADBParishRec>
     {
-        public ADBParishRecType() {
-            Field(m => m.Id);
-            Field(m => m.ParishId);
-            Field(m => m.DataTypeId);
-            Field(m => m.Year);
-            Field(m => m.RecordType);
-            Field(m => m.OriginalRegister);
-            Field(m => m.YearEnd);
+        protected override void Configure(IObjectTypeDescriptor<ADBParishRec> descriptor)
+        {
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.ParishId);
+           descriptor.Field(m => m.DataTypeId);
+           descriptor.Field(m => m.Year);
+           descriptor.Field(m => m.RecordType);
+           descriptor.Field(m => m.OriginalRegister);
+           descriptor.Field(m => m.YearEnd);
         }
     }
 

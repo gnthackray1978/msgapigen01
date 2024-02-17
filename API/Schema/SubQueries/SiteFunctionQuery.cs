@@ -1,73 +1,36 @@
 ﻿using Api.Models;
-using Api.Types;
-using GraphQL.Types;
-using System.Collections.Generic;
-using GraphQL;
 using System.Security.Claims;
 using System;
+using System.Security;
+using System.Threading.Tasks;
+using Api.Services;
 using Api.Services.interfaces.services;
+using Api.Types.RequestQueries;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-    public class SiteFunctionQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class SiteFunctionQuery 
     {
-        public SiteFunctionQuery(IFunctionListService service)
+        //public Task<SiteFunction> single([Service] IFunctionListService repository, int id)
+        //{
+        //    return repository.GetAsync(id);
+        //}
+
+        public Task<Results<SiteFunction>> searchSiteFunction( [Service] IFunctionListService repository,
+             ClaimsPrincipal currentUser, int? appId)
         {
-            Name = "Function";
-
-            FieldAsync<SiteFunctionType, SiteFunction>(
-                "single",
-                arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" }
-                ),
-                resolve: context =>
-                {
-                    try
-                    {
-                        var currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-
-                    var id = context.GetArgument<int>("id");
-
-                    return service.GetAsync(id);
-                }
-            );
-
-            FieldAsync<SiteFunctionResultType<SiteFunctionType, SiteFunction>, Results<SiteFunction>>(
-                "search",
-                arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "appid" }
-                ),
-                resolve: context =>
-                {
-                    ClaimsPrincipal currentUser = null;
-
-                    try
-                    {
-                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-
-                    var appId = context.GetArgument<int?>("appid");
-
-                    if (appId == null || appId == 0)
-                    {
-                        return service.ListAsync(currentUser);
-                    }
-                    else
-                    {
-                        return service.ListAsync(appId.Value, currentUser);
-                    }
-                }
-            );
-
+            if (appId == null || appId == 0)
+            {
+                return repository.ListAsync(currentUser);
+            }
+            else
+            {
+                return repository.ListAsync(appId.Value, currentUser);
+            }
         }
+         
     }
 }

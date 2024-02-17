@@ -1,25 +1,25 @@
-﻿using Api.Schema;
-using GraphQL.Types;
+﻿//using Api.Models;
+//using Api.Schema;
+//using HotChocolate.Types;
 
-namespace Api.Types
-{
-    public class WillResultType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>> 
-        where GraphT : IGraphType
-    {
-        public WillResultType()
-        {
-            Field<ListGraphType<GraphT>>(
-                "results",
-                resolve: context =>
-                {
-                    return context.Source.results;
-                }
-            );
-            Field(r => r.Page);
-            Field(r => r.TotalResults);
-            Field(r => r.TotalPages);
-            Field(r => r.Error);
-            Field(r => r.LoginInfo);
-        }
-    }
-}
+//namespace Api.Types
+//{
+//    public class WillResultType : ObjectType<Results<WillResultType>> 
+//    {
+//        protected override void Configure(IObjectTypeDescriptor<WillResultType> descriptor)
+//        {
+//            descriptor.Field<ListGraphType<GraphT>>(
+//                "results",
+//                resolve: context =>
+//                {
+//                    return context.Source.results;
+//                }
+//            );
+//            descriptor.Field(r => r.Page);
+//            descriptor.Field(r => r.TotalResults);
+//            descriptor.Field(r => r.TotalPages);
+//            descriptor.Field(r => r.Error);
+//            descriptor.Field(r => r.LoginInfo);
+//        }
+//    }
+//}

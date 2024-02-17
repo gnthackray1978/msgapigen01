@@ -8,7 +8,7 @@ public partial class TreeRecordMapGroup :IEquatable<TreeRecordMapGroup>
 
     public string TreeName { get; set; }
 
-    public string GroupName { get; set; }
+    public string GroupName { get; set; }                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 
     public int ImportId { get; set; }
 

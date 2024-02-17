@@ -1,0 +1,37 @@
+﻿body {
+}
+
+.subheader {
+    font-weight: bold;
+}
+
+.topMargin {
+    margin-top: 10px;
+}
+
+.bottomMargin {
+    margin-bottom: 10px;
+}
+
+.tdFileName {
+    width: 250px;
+}
+
+.tdFileSize {
+    width: 100px;
+}
+
+.tdDate {
+    width: 250px;
+}
+
+.buttonLeftMargin {
+    margin-left: 15px;
+}
+
+.selectedRow {
+    background-color: red
+}
+.unselectedRow {
+    background-color: white
+}

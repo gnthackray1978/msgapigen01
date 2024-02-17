@@ -1,16 +1,14 @@
 
 using Api.Schemas;
-using GraphQL;
-using GraphQL.Types;
 using System;
 
 namespace Api.Schema
 {
-    public class MainSchema : GraphQL.Types.Schema
+    public class MainSchema// : GraphQL.Types.Schema
     {
-        public MainSchema(IServiceProvider resolver) : base(resolver)
+        public MainSchema(IServiceProvider resolver) //: base(resolver)
         {
-            Query = new Query();
+         //   Query = new Query();
         }
     }
 }

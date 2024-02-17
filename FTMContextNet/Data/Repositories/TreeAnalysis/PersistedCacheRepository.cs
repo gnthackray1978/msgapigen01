@@ -285,7 +285,7 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
                 var treeLocations = locationsMapOrigin.Where(c => c.Origin == tree)
                     .Select(s => s.LinkedLocations).ToArray();
 
-                treeRecords.Add(TreeRecord.CreateFromOrigin(tree,
+                treeRecords.Add(TreeRecord.CreateFromOrigin(tree.Trim(),
                     string.Join(",", EnglishHistoricCounties.FromPlaceList(treeLocations)),
                     treeLocations.Length, importId));
 
@@ -298,7 +298,7 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
 
         public int InsertTreeGroups(int id, string treeGroup, int importId, int userId)
         {
-            return _persistedCacheContext.InsertGroups(id, treeGroup, importId, userId);
+            return _persistedCacheContext.InsertGroups(id, treeGroup.Trim(), importId, userId);
         }
 
         public void InsertTreeGroups(Dictionary<int, string> treeGroups, int importId, int userId)
@@ -311,7 +311,7 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
 
         public int InsertTreeRecordMapGroup(string treeGroup, string treeName, int importId, int userId)
         {
-            return _persistedCacheContext.InsertRecordMapGroup(treeGroup, treeName, importId, userId);
+            return _persistedCacheContext.InsertRecordMapGroup(treeGroup.Trim(), treeName.Trim(), importId, userId);
         }
 
         public void InsertTreeRecordMapGroup(Dictionary<string, List<string>> recordMapGroups, int importId, int userId)
@@ -323,11 +323,16 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
                     InsertTreeRecordMapGroup(mapping, grp.Key, importId, userId);
                 }
             }
+
+            _persistedCacheContext.UpdateRecordMapGroupIds();
         }
 
         public void InsertPersons(int importId, int userId, List<Person> persons)
         {
-            var nextId = _persistedCacheContext.FTMPersonView.Max(m => m.Id) + 1;
+            int nextId = 1;
+            
+            if(_persistedCacheContext.FTMPersonView.Any())
+                nextId= _persistedCacheContext.FTMPersonView.Max(m => m.Id) + 1;
 
             var ftmPersons = persons.Select(person => FTMPersonView.Create(person)).ToList();
 
@@ -336,7 +341,10 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
 
         public void InsertRelationships(int importId, int userId, List<RelationSubSet> marriages)
         {
-            var nextId = _persistedCacheContext.Relationships.Max(m => m.Id) + 1;
+            //int nextId = 1;
+
+            //if(_persistedCacheContext.Relationships.Any()) 
+            //    nextId = _persistedCacheContext.Relationships.Max(m => m.Id) + 1;
 
             var ftmPersons = marriages.Select(person => Relationships.Create(person)).ToList();
 

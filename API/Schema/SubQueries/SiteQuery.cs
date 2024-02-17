@@ -1,55 +1,59 @@
 using Api.Models;
-using Api.Types;
-using GraphQL.Types;
-using System.Collections.Generic;
-using System.Reflection;
-using GraphQL;
 using System.Security.Claims;
-using System;
-using Api.Helpers;
-using Api.Schema;
+using System.Threading.Tasks;
 using Api.Services.interfaces.services;
 using Api.Types.RequestQueries;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-    public class SiteQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class SiteQuery 
     {
-        public SiteQuery(ISiteListService service, IClaimService claimService)
+        //public Task<Site> single([Service] ISiteListService repository, int id)
+        //{
+        //    return repository.GetSite(id);
+        //}
+
+        public Task<Results<Site>> searchSite([Service] ISiteListService repository,
+            ClaimsPrincipal currentUser, int? appId)
         {
-            Name = "Site";
-            
-            Field<SiteType, Site>("single")
-                .Arguments(new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" }
-                ))
-                .ResolveAsync(context =>
-                {
-                    var id = context.GetArgument<int>("id");
-                    return service.GetSite(id);
-                });
+            var siteParamObj = new SiteParamObj
+            {
+                GroupId = 1 // todo fix this.
+            };
 
-            Field<SiteResultType<SiteType, Site>, Results<Site>>("search")
-                .Arguments(new QueryArguments(
-                    new QueryArgument<StringGraphType> { Name = "query" },
-                    new QueryArgument<StringGraphType> { Name = "page" }
-                ))
-                .ResolveAsync(context =>
-                {
-                    var u = context.GetUser(claimService);
-                    
-                    var siteParamObj = new SiteParamObj
-                    {
-                        GroupId = u.GroupId
-                    };
-
-                    var tp = service.ListSites(siteParamObj);
-
-                    tp.Result.Error += u.UpdateError(tp.Result.Error);
-
-                    return tp;
-                });
-
+            return repository.ListSites(siteParamObj);
         }
+
+        //public SiteQuery(ISiteListService service, IClaimService claimService)
+        //{
+        //    Name = "Site";
+            
+            
+
+        //    Field<SiteResultType<SiteType, Site>, Results<Site>>("search")
+        //        .Arguments(new QueryArguments(
+        //            new QueryArgument<StringGraphType> { Name = "query" },
+        //            new QueryArgument<StringGraphType> { Name = "page" }
+        //        ))
+        //        .ResolveAsync(context =>
+        //        {
+        //            var u = context.GetUser(claimService);
+                    
+        //            var siteParamObj = new SiteParamObj
+        //            {
+        //                GroupId = u.GroupId
+        //            };
+
+        //            var tp = service.ListSites(siteParamObj);
+
+        //            tp.Result.Error += u.UpdateError(tp.Result.Error);
+
+        //            return tp;
+        //        });
+
+        //}
     }
 }

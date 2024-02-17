@@ -1,63 +1,96 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using Serilog.Events;
-using System;
+﻿using Serilog;
+using Api.Schema.SubQueries;
+using Api.Services;
+using Api.Services.interfaces.services;
+using ConfigHelper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Api
 {
+    public class Query
+    {
+
+    }
+    
     public class Program
     {
         public static void Main(string[] args)
         {
-            Console.Title = "API";
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("log.txt")
+                .CreateBootstrapLogger();
 
-            BuildWebHostBuilder(args).Build().Run();
-        }
+            Log.Information("Starting up");
 
-        public static IHostBuilder BuildWebHostBuilder(string[] args)
-        {
-            return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
-                .UseSerilog((ctx, config) =>
+            var builder = WebApplication.CreateBuilder(args);
+            var msgConfigHelper = new MSGConfigHelper();
+             
+            builder.Services.AddAuthorization().AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+            .AddJwtBearer(o =>
+            {
+                o.SecurityTokenValidators.Clear();
+                o.SecurityTokenValidators.Add(new GoogleTokenValidator());
+            });
+
+            builder.Services
+                .AddSingleton<IMSGConfigHelper>(msgConfigHelper)
+                .AddSingleton<IWillListService, WillListService>()
+                .AddSingleton<IClaimService, ClaimService>()
+                .AddSingleton<IADBService, ADBService>()
+                .AddSingleton<IBlogService, BlogService>()
+                .AddSingleton<IDiagramService, Api.Services.DiagramService>()
+                .AddSingleton<IDNAAnalyseListService, DNAAnalyseService>()
+                .AddSingleton<IPhotoListService, PhotoListService>()
+                .AddSingleton<IFunctionListService, SiteFunctionService>()
+                .AddSingleton<ISiteListService, SiteListService>()
+                .AddGraphQLServer()
+                .AddQueryType(q => q.Name("Query"))
+                .AddTypeExtension<ADBQuery>()
+                .AddTypeExtension<BlogQuery>()
+                .AddTypeExtension<ClaimQuery>()
+                .AddTypeExtension<DiagramQuery>()
+                .AddTypeExtension<DNAQuery>()
+                .AddTypeExtension<ImageQuery>()
+                .AddTypeExtension<SiteFunctionQuery>()
+                .AddTypeExtension<SiteQuery>()
+                .AddTypeExtension<WillQuery>();
+
+            string[] o = { msgConfigHelper.ClientURLs };
+
+            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
+                o = msgConfigHelper.ClientURLs.Split(' ');
+         
+            builder.Services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
                 {
-                    config.MinimumLevel.Debug()
-                        .MinimumLevel.Debug()
-                        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                        .MinimumLevel.Override("System", LogEventLevel.Warning)
-                        .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-                        .Enrich.FromLogContext();
-
-                    //if (ctx.HostingEnvironment.IsDevelopment())
-                    //{
-                    config.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}");
-                    //}
-                    //else if (ctx.HostingEnvironment.IsProduction())
-                    //{
-                    //    config.WriteTo.File(@"/identityserver.txt",
-                    //        fileSizeLimitBytes: 1_000_000,
-                    //        rollOnFileSizeLimit: true,
-                    //        shared: true,
-                    //        flushToDiskInterval: TimeSpan.FromSeconds(1));
-                    //}
-                })
-                .ConfigureAppConfiguration((ctx, builder) =>
-                {
-                    var config = builder.Build();
-                    var tokenProvider = new AzureServiceTokenProvider();
-                    var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
-
-                    builder.AddAzureKeyVault(config["KeyVault:BaseUrl"], kvClient, new DefaultKeyVaultSecretManager());
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
+                    policy.WithOrigins(o)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                 });
-        }
+            });
 
+            var app = builder.Build();
+
+            app.UseCors("default");
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapGraphQL();
+
+            app.Run();
+        }
+         
     }
 }

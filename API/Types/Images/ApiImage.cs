@@ -1,18 +1,16 @@
-﻿using GraphQL.Types;
+﻿using HotChocolate.Types;
 
 namespace Api.Models
 {
-
-    public class ApiImagesType : ObjectGraphType<ApiImage>
+    public class ApiImagesType : ObjectType<ApiImage>
     {
-        public ApiImagesType()
+        protected override void Configure(IObjectTypeDescriptor<ApiImage> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.Path);
-            Field(m => m.Title);
-            Field(m => m.Info);
-            Field(m => m.ParentImageId);
-
+            descriptor.Field(m => m.Id);
+            descriptor.Field(m => m.Path);
+            descriptor.Field(m => m.Title);
+            descriptor.Field(m => m.Info);
+            descriptor.Field(m => m.ParentImageId);
         }
     }
 

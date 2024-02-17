@@ -1,8 +1,6 @@
 ﻿using Api.Types.DNAAnalyse;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System;
 using ConfigHelper;
@@ -17,16 +15,14 @@ namespace Api.Services
     public class DNAAnalyseService : IDNAAnalyseListService
     {
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public DNAAnalyseService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public DNAAnalyseService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
             _imsConfigHelper = imsConfigHelper;
         }
 
-        public async Task<Results<FTMLatLng>> FTMLatLngList(DNASearchParamObj searchParams) {
+        public async Task<Results<FTMLatLng>> FTMLatLngList(DNASearchParamObj searchParams2) {
 
             var dupeList = new List<FTMLatLng>();
 
@@ -40,12 +36,13 @@ namespace Api.Services
             {
                 var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
+                //var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
 
-                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+                //treeDictionary.Add(0, "Unknown");
 
-                treeDictionary.Add(0, "Unknown");
+                GroupingsObj searchParams = searchParams2.ToGroupingsObj();
 
-                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
+                searchParams.Mappings = a.TreeRecordMapGroup.ToList();
 
                 dupeList = DNAContext.ListLatLongs(_imsConfigHelper.MSGGenDB01, searchParams);
                  
@@ -56,10 +53,10 @@ namespace Api.Services
             }
 
             results.LoginInfo = "";
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = 0;
             results.total_pages = totalRecs;
-            results.total_results = dupeList.Count();
+            results.total_rows = dupeList.Count();
 
             return results;
         }
@@ -110,16 +107,17 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
 
-        public async Task<Results<FTMPersonLocation>> FTMLocSearch(DNASearchParamObj searchParams)
+        public async Task<Results<FTMPersonLocation>> FTMLocSearch(DNASearchParamObj searchParams2)
         {
+           
             var dupeList = new List<FTMPersonLocation>();
 
             var results = new Results<FTMPersonLocation>();
@@ -155,11 +153,13 @@ namespace Api.Services
                 var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
 
-                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID.ToString(), p => p.Name);
 
-                treeDictionary.Add(0, "Unknown");
+            //    treeDictionary.Add("0", "Unknown");
 
-                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
+                //todo fix hack
+                GroupingsObj searchParams = searchParams2.ToGroupingsObj();
+                searchParams.Mappings = a.TreeRecordMapGroup.ToList();
 
                  var unpaged = a.FTMPersonView.Where(w => w.Surname != "")
                     .WhereIfOrigin(searchParams)
@@ -203,7 +203,7 @@ namespace Api.Services
                         {
                             FirstName = person.FirstName,
                             Surname = person.Surname,
-                            TreeName = treeDictionary[person.Origin],
+                            TreeName = treeDictionary[person.Origin.ToSingleInt().ToString()],
                             Id = person.Id,
                             YearFrom = person.YearFrom,
                             YearTo = person.YearTo
@@ -241,19 +241,28 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
 
-        public async Task<Results<FTMView>> FTMViewList(DNASearchParamObj searchParams)
+        public async Task<Results<FTMView>> FTMViewList(DNASearchParamObj searchParams2)
         {
+            
             var dupeList = new List<FTMView>();
 
             var results = new Results<FTMView>();
+            
+            // when opening tree selection this loads
+            // and error with something like a null reference exception
+            // i think a value is not supplied to the service
+
+
+            //todo fix hack
+            GroupingsObj searchParams = searchParams2.ToGroupingsObj();
 
             int totalRecs = 0;
 
@@ -261,11 +270,14 @@ namespace Api.Services
             {
                 var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
-                searchParams.Groupings = a.TreeRecordMapGroup.ToList();
+                //new GroupingsObj(searchParams, a.TreeRecordMapGroup.ToList()).Groupings = a.TreeRecordMapGroup.ToList();
 
-                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID.ToString(), p => p.Name);
                 
-                treeDictionary.Add(0,"Unknown");
+                if(!treeDictionary.ContainsKey("0"))
+                    treeDictionary.Add("0","Unknown");
+                
+                searchParams.Mappings = a.TreeRecordMapGroup.ToList();
 
                 var unpaged = a.FTMPersonView.Where(w=>w.Surname!="")
                     .WhereIfOrigin(searchParams)
@@ -293,7 +305,7 @@ namespace Api.Services
                         BirthLat = app.BirthLat,
                         Location = app.Location ?? "",
                         BirthLong =app.BirthLong,
-                        Origin = treeDictionary[app.Origin],
+                        Origin = app.Origin,
                         PersonId = app.PersonId.GetValueOrDefault(),
                         DirectAncestor = app.DirectAncestor
 
@@ -310,19 +322,21 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
 
-        public async Task<Results<FTMView>> FTMViewPlaces(DNASearchParamObj searchParams)
+        public async Task<Results<FTMView>> FTMViewPlaces(DNASearchParamObj searchParams2)
         {
             var dupeList = new List<FTMView>();
 
             var results = new Results<FTMView>();
+            //todo fix hack
+            GroupingsObj searchParams = searchParams2.ToGroupingsObj();
 
             int totalRecs = 0;
 
@@ -330,9 +344,14 @@ namespace Api.Services
             {
                 var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
-                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+                var treeDictionary = a.TreeRecord.ToDictionary(p => p.ID.ToString(), p => p.Name);
 
-                treeDictionary.Add(0, "Unknown");
+                if(!treeDictionary.ContainsKey("0"))
+                    treeDictionary.Add("0", "Unknown");
+
+                
+
+                searchParams.Mappings = a.TreeRecordMapGroup.ToList();
 
                 var unpaged = a.FTMPersonView.WhereIfOrigin(searchParams)
                     .WhereIfYearsBetween(searchParams);
@@ -372,10 +391,10 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -440,10 +459,10 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -459,7 +478,7 @@ namespace Api.Services
             {
                 var a = new DNAContext(_imsConfigHelper.MSGGenDB01);
 
-                var unpaged = a.TreeRecord.WhereIfName(searchParams.Name)
+                var unpaged = a.TreeRecord.WhereIfName(searchParams.TreeName)
                   
                     .TreeRecSortIf(searchParams.SortColumn,searchParams.SortOrder);
 
@@ -488,10 +507,10 @@ namespace Api.Services
 
 
 
-            results.results = dupeList;
+            results.rows = dupeList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }

@@ -2,8 +2,8 @@
 {
     public class DiagramParamObj
     {
-        public int Origin { get; set; }
+        public string Origin { get; set; }
 
-        public int PersonId { get; set; }
+        public string PersonId { get; set; }
     }
 }

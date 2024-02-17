@@ -1,76 +1,35 @@
 ﻿using Api.Models;
-using Api.Types;
-using GraphQL.Types;
 using System.Collections.Generic;
-using GraphQL;
 using System.Security.Claims;
-using System;
+using System.Security;
 using Api.Services.interfaces.services;
+using System.Threading.Tasks;
+using Api.Services;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-
-
-    public class ClaimQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class ClaimQuery
     {
-        public ClaimQuery(IClaimService service)
+        //public Task<MSGClaim> single(int id, [Service] IClaimService repository,
+        //    [Service] IClaimService claimService)
+        //{
+        //    return repository.GetClaim(id);
+        //}
+
+        public Task<Results<MSGClaim>> searchClaims([Service] IClaimService claimService, ClaimsPrincipal currentUser)
         {
-
-            Name = "Claim";
-
-            FieldAsync<MSGClaimType, MSGClaim>(
-                "single",
-                arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" }
-                ),
-                resolve: context =>
-                {
-                    try
-                    {
-                        var currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-
-
-                    //
-                    var id = context.GetArgument<int>("id");
-                    return service.GetClaim(id);
-                }
-            );
-
-            FieldAsync<ClaimResultType<MSGClaimType, MSGClaim>, Results<MSGClaim>>(
-            "search",
-            arguments: new QueryArguments(
-                new QueryArgument<StringGraphType> { Name = "query" },
-                new QueryArgument<StringGraphType> { Name = "page" }
-            ),
-            resolve: context =>
+            if (!claimService.UserValid(currentUser, MSGApplications.UserLookup))
             {
-                ClaimsPrincipal currentUser = null;
-
-                try
-                {
-                    currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                }
-                catch (Exception e)
-                {
-
-                }
-
-                var obj = new Dictionary<string, string>();
-
-                var query = context.GetArgument<string>("query");
-                var page = context.GetArgument<string>("page");
-
-                if (query != null) obj.Add("query", query);
-
-                return service.ListUserClaims(obj, currentUser);
+                return ErrorHandler.Error<MSGClaim>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
             }
-        );
+
+            var obj = new Dictionary<string, string>();
+
+            return claimService.ListUserClaims(obj, currentUser);
         }
+         
     }
 }

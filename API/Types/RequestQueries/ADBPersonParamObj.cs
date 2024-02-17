@@ -5,7 +5,7 @@ namespace Api.Types.RequestQueries
     public class ADBPersonParamObj : ISurname, IYearRange, ISortable
     {
 
-        public MetaData Meta { get; set; } = new MetaData();
+   //     public MetaData Meta { get; set; } = new MetaData();
 
         public string Location { get; set; }
         public string FirstName { get; set; }

@@ -128,3 +128,107 @@
 2024-01-03 20:47:09.259 +00:00 [INF] MsgNotificationHub constructed
 2024-01-03 22:20:21.762 +00:00 [INF] MsgNotificationHub constructed
 2024-01-03 22:20:21.765 +00:00 [INF] MsgNotificationHub OnConnectedAsync: tWHzlIVXRBwhwzHp6T20ZQQJ28gQf02
+2024-01-26 08:35:27.592 +00:00 [INF] Starting up
+2024-01-26 08:35:32.937 +00:00 [INF] RegisterServices
+2024-01-26 08:36:07.981 +00:00 [INF] SetupMiddleware
+2024-01-26 08:36:12.911 +00:00 [INF] MsgNotificationHub constructed
+2024-01-26 08:36:12.915 +00:00 [INF] MsgNotificationHub OnConnectedAsync: x9pw2rxdgjkGG-OfNWh0jwQJ28gQf02
+2024-01-26 09:46:31.965 +00:00 [INF] Starting up
+2024-01-26 09:46:36.329 +00:00 [INF] RegisterServices
+2024-01-26 09:47:50.688 +00:00 [INF] Starting up
+2024-01-26 09:47:53.102 +00:00 [INF] RegisterServices
+2024-01-26 09:48:23.938 +00:00 [INF] SetupMiddleware
+2024-01-26 11:16:57.692 +00:00 [INF] Starting up
+2024-01-26 11:16:58.663 +00:00 [INF] RegisterServices
+2024-01-26 11:17:19.787 +00:00 [INF] Starting up
+2024-01-26 11:17:21.002 +00:00 [INF] RegisterServices
+2024-01-26 11:17:45.128 +00:00 [INF] SetupMiddleware
+2024-01-26 11:19:28.378 +00:00 [INF] MsgNotificationHub constructed
+2024-01-26 11:19:28.395 +00:00 [INF] MsgNotificationHub OnConnectedAsync: AAKErMqCu2VcUKimIKHFggQJ28gQf02
+2024-01-26 11:19:28.547 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:19:28.559 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:19:28.596 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:19:28.625 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:36:23.243 +00:00 [INF] Starting up
+2024-01-26 11:36:29.908 +00:00 [INF] RegisterServices
+2024-01-26 11:37:01.097 +00:00 [INF] SetupMiddleware
+2024-01-26 11:37:02.312 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:37:02.318 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:37:02.322 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:37:02.328 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:39:51.413 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:39:51.471 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:39:54.643 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:39:54.669 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:40:56.018 +00:00 [INF] WriteLine: Executing CreatePersonsAndRelationships Handler
+2024-01-26 11:40:56.052 +00:00 [INF] WriteLine: Parsing Tree
+2024-01-26 11:40:59.400 +00:00 [INF] WriteLine: Adding Person Details
+2024-01-26 11:42:38.608 +00:00 [INF] Starting up
+2024-01-26 11:42:40.095 +00:00 [INF] RegisterServices
+2024-01-26 11:43:01.855 +00:00 [INF] SetupMiddleware
+2024-01-26 11:43:02.907 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:43:02.910 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:43:02.919 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:43:03.057 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 11:43:11.786 +00:00 [INF] WriteLine: Executing CreatePersonsAndRelationships Handler
+2024-01-26 11:43:11.819 +00:00 [INF] WriteLine: Parsing Tree
+2024-01-26 11:43:15.384 +00:00 [INF] WriteLine: Adding Person Details
+2024-01-26 11:44:11.073 +00:00 [INF] WriteLine: Adding Relationships
+2024-01-26 19:19:21.894 +00:00 [INF] Starting up
+2024-01-26 19:19:27.103 +00:00 [INF] RegisterServices
+2024-01-26 19:19:53.585 +00:00 [INF] SetupMiddleware
+2024-01-26 19:19:55.840 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:19:55.847 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:19:55.860 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:19:55.979 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:20:10.487 +00:00 [INF] WriteLine: Executing CreatePersonsAndRelationships Handler
+2024-01-26 19:20:10.524 +00:00 [INF] WriteLine: Parsing Tree
+2024-01-26 19:20:15.822 +00:00 [INF] WriteLine: Adding Person Details
+2024-01-26 19:21:29.374 +00:00 [INF] WriteLine: Adding Relationships
+2024-01-26 19:21:33.571 +00:00 [INF] WriteLine: Adding Person Tree Origins
+2024-01-26 19:21:44.644 +00:00 [INF] WriteLine: Creating Tree Records
+2024-01-26 19:21:48.885 +00:00 [INF] WriteLine: Created 406 tree records
+2024-01-26 19:21:50.124 +00:00 [INF] WriteLine: Adding Tree Groups
+2024-01-26 19:22:00.142 +00:00 [INF] WriteLine: Adding Tree Group Mappings
+2024-01-26 19:22:42.138 +00:00 [INF] WriteLine: Finished Create Tree Group Mappings
+2024-01-26 19:22:42.175 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:22:42.179 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-01-26 19:22:42.205 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 11:49:15.512 +00:00 [INF] Starting up
+2024-02-17 11:49:23.112 +00:00 [INF] RegisterServices
+2024-02-17 11:49:59.802 +00:00 [INF] SetupMiddleware
+2024-02-17 11:50:04.272 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 11:50:04.457 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 11:50:04.587 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 11:50:04.956 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 11:50:58.351 +00:00 [INF] MsgNotificationHub constructed
+2024-02-17 11:50:58.356 +00:00 [INF] MsgNotificationHub OnConnectedAsync: vMY0T9EXPTrpetI8ea1jFAxonIYgf02
+2024-02-17 11:57:03.758 +00:00 [INF] WriteLine: UpdatePersonLocations started
+2024-02-17 11:57:09.060 +00:00 [INF] WriteLine: UpdatePersonLocations: 27756 locations
+2024-02-17 11:57:45.689 +00:00 [INF] WriteLine: Time taken: 0:20.098
+2024-02-17 11:57:45.691 +00:00 [INF] WriteLine: found 27756locations
+2024-02-17 11:57:45.725 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:00:36.572 +00:00 [INF] WriteLine: UpdatePersonLocations started
+2024-02-17 12:00:41.154 +00:00 [INF] WriteLine: UpdatePersonLocations: 27756 locations
+2024-02-17 12:02:38.884 +00:00 [INF] MsgNotificationHub constructed
+2024-02-17 12:08:59.429 +00:00 [INF] Starting up
+2024-02-17 12:09:10.357 +00:00 [INF] RegisterServices
+2024-02-17 12:09:53.112 +00:00 [INF] SetupMiddleware
+2024-02-17 12:09:56.822 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:09:56.849 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:09:57.374 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:09:57.940 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:15:32.288 +00:00 [INF] WriteLine: UpdatePersonLocations started
+2024-02-17 12:15:36.033 +00:00 [INF] WriteLine: UpdatePersonLocations: 27756 locations
+2024-02-17 12:16:52.326 +00:00 [INF] Starting up
+2024-02-17 12:16:53.316 +00:00 [INF] RegisterServices
+2024-02-17 12:17:40.607 +00:00 [INF] SetupMiddleware
+2024-02-17 12:17:43.154 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:17:43.226 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:17:43.242 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:17:43.246 +00:00 [INF] WriteLine: Executing GetInfoService
+2024-02-17 12:18:36.184 +00:00 [INF] WriteLine: UpdatePersonLocations started
+2024-02-17 12:18:40.110 +00:00 [INF] WriteLine: UpdatePersonLocations: 27756 locations
+2024-02-17 12:19:26.342 +00:00 [INF] WriteLine: Time taken: 0:33.312
+2024-02-17 12:19:26.344 +00:00 [INF] WriteLine: found 27756locations
+2024-02-17 12:19:26.355 +00:00 [INF] WriteLine: Executing GetInfoService

@@ -1,17 +1,17 @@
 ﻿using Api.Models;
-using GraphQL.Types;
+using HotChocolate.Types;
 
 namespace Api.Types
 {
-    public class MSGClaimType : ObjectGraphType<MSGClaim>
+    public class MSGClaimType : ObjectType<MSGClaim>
 	{
-		public MSGClaimType()
-		{
-			Field(m => m.Id);
-			Field(m => m.Name);
-			Field(m => m.Subject);
-			Field(m => m.Type);
-			Field(m => m.Value);
+        protected override void Configure(IObjectTypeDescriptor<MSGClaim> descriptor)
+        {
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.Name);
+           descriptor.Field(m => m.Subject);
+           descriptor.Field(m => m.Type);
+           descriptor.Field(m => m.Value);
 
 		}
 	}

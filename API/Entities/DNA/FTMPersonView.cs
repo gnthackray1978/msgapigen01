@@ -7,12 +7,12 @@ namespace AzureContext.Models
 
     public partial class FTMPersonView : IYearRange, IName, IPreciseLocation, IOrigin
     {
-        public static FTMPersonView CreateUnknownPerson(int id, int personId, int origin)
+        public static FTMPersonView CreateUnknownPerson(int id, int personId, string origin)
         {
             return new FTMPersonView()
             {
                 FirstName = "",
-                Surname = "",
+                Surname = "unk",
                 Origin = origin,
                 Id = id, 
                 PersonId = personId
@@ -37,7 +37,7 @@ namespace AzureContext.Models
         public double AltLat { get; set; }
         public double AltLong { get; set; }
 
-        public int Origin { get; set; }
+        public string Origin { get; set; }
         public int? PersonId { get; set; }
 
         public int? FatherId { get; set; }

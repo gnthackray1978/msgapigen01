@@ -1,26 +1,22 @@
-﻿using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HotChocolate.Types;
 
 namespace Api.Types.DNAAnalyse
 {
-    public class DupeType : ObjectGraphType<Dupe>
+    public class DupeType : ObjectType<Dupe>
     {
-        public DupeType()
+        protected override void Configure(IObjectTypeDescriptor<Dupe> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.PersonId);
-            Field(m => m.FirstName);
-            Field(m => m.Surname);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.PersonId);
+           descriptor.Field(m => m.FirstName);
+           descriptor.Field(m => m.Surname);
 
-            Field(m => m.Ident);
-            Field(m => m.Origin);
-            Field(m => m.Location);
+           descriptor.Field(m => m.Ident);
+           descriptor.Field(m => m.Origin);
+           descriptor.Field(m => m.Location);
 
-            Field(m => m.YearFrom);
-            Field(m => m.YearTo);
+           descriptor.Field(m => m.YearFrom);
+           descriptor.Field(m => m.YearTo);
 
 
         }

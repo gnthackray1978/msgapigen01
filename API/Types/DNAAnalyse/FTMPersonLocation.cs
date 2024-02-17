@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 using System.Collections.Generic;
 
 namespace Api.Types.DNAAnalyse
@@ -15,15 +16,16 @@ namespace Api.Types.DNAAnalyse
 
     }
 
-    public class FTMPersonLocationType : ObjectGraphType<FTMPersonLocation>
+    public class FTMPersonLocationType : ObjectType<FTMPersonLocation>
     {
-        public FTMPersonLocationType()
+        protected override void Configure(IObjectTypeDescriptor<FTMPersonLocation> descriptor)
         {
-            Field(x => x.Id);
-            Field(x => x.BirthLat);
-            Field(x => x.BirthLong);
-            Field(x => x.LocationName);
-            Field<ListGraphType<FTMPersonSummaryType>>("ftmPersonSummary");
+           descriptor.Field(x => x.Id);
+           descriptor.Field(x => x.BirthLat);
+           descriptor.Field(x => x.BirthLong);
+           descriptor.Field(x => x.LocationName);
+
+        //   descriptor.Field<List<FTMPersonSummaryType>>("ftmPersonSummary");
         }
     }
 
@@ -42,16 +44,16 @@ namespace Api.Types.DNAAnalyse
 
     }
 
-    public class FTMPersonSummaryType : ObjectGraphType<FTMPersonSummary>
+    public class FTMPersonSummaryType : ObjectType<FTMPersonSummary>
     {
-        public FTMPersonSummaryType()
+        protected override void Configure(IObjectTypeDescriptor<FTMPersonSummary> descriptor)
         {
-            Field(x => x.Id);
-            Field(x => x.TreeName);
-            Field(x => x.FirstName);
-            Field(x => x.Surname);
-            Field(x => x.YearFrom);
-            Field(x => x.YearTo);
+           descriptor.Field(x => x.Id);
+           descriptor.Field(x => x.TreeName);
+           descriptor.Field(x => x.FirstName);
+           descriptor.Field(x => x.Surname);
+           descriptor.Field(x => x.YearFrom);
+           descriptor.Field(x => x.YearTo);
         }
     }
 

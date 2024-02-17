@@ -1,98 +1,39 @@
 ﻿using Api.Models;
-using Api.Types;
-using GraphQL.Types;
-using System.Collections.Generic;
-using GraphQL;
 using System.Security.Claims;
-using System;
-using Api.Types;
+using System.Security;
+using System.Threading.Tasks;
 using Api.Services;
 using Api.Types.Images;
 using Api.Services.interfaces.services;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace Api.Schema.SubQueries
 {
-    public class ImageQuery : ObjectGraphType
+    [ExtendObjectType("Query")]
+    public class ImageQuery  
     {
-
-        public ImageQuery(IPhotoListService service, IClaimService claimService)
+        public Task<Results<ApiImage>> imagesearch(string page, [Service] IPhotoListService repository,
+            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
         {
-            Name = "Image";
+            if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
+            {
+                return ErrorHandler.Error<ApiImage>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
+            }
 
-
-
-            FieldAsync<ApiImagesResult, Results<ApiImage>>(
-                "imagesearch",
-                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
-                resolve: context =>
-                {
-                    ClaimsPrincipal currentUser = null;
-                    Exception ce = null;
-
-                    try
-                    {
-                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                    }
-                    catch (Exception e)
-                    {
-                        ce = e;
-                    }
-
-                    var obj = new Dictionary<string, string>();
-
-                    var query = context.GetArgument<string>("page");
-
-                    var results = service.ImagesList("", query);
-                    results.Result.Error = "None";
-                    results.Result.LoginInfo = query;
-
-                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
-                    {
-                        results.Result.LoginInfo = "No User";
-                        results.Result.Error += Environment.NewLine + "No Valid User found";
-                        //	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
-                    }
-
-
-
-                    return results;
-                }
-            );
-
-            FieldAsync<ApiParentImagesResult, Results<ApiParentImages>>(
-                "imageparentsearch",
-                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "page" }),
-                resolve: context =>
-                {
-                    ClaimsPrincipal currentUser = null;
-                    Exception ce = null;
-
-                    try
-                    {
-                        currentUser = (ClaimsPrincipal)context.UserContext["claimsprincipal"];
-                    }
-                    catch (Exception e)
-                    {
-                        ce = e;
-                    }
-
-
-                    var query = context.GetArgument<string>("page");
-
-                    var results = service.ParentImagesList("", query);
-
-                    results.Result.LoginInfo = query;
-
-                    if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
-                    {
-                        results.Result.LoginInfo = query;
-                        results.Result.Error += Environment.NewLine + "No Valid User found";
-                        //	return ErrorHandler.Error<ApiImage>(ce, claimService.GetClaimDebugString(currentUser));
-                    }
-
-                    return results;
-                }
-            );
+            return repository.ImagesList("",page);
         }
+
+        public Task<Results<ApiParentImages>> imageparentsearch(string page, [Service] IPhotoListService repository,
+            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        {
+            if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
+            {
+                return ErrorHandler.Error<ApiParentImages>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
+            }
+
+            return repository.ParentImagesList("", page);
+        }
+        
     }
 }

@@ -1,29 +1,30 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 
 namespace Api.Types.DNAAnalyse
 {
-    public class FTMViewType : ObjectGraphType<FTMView>
+    public class FTMViewType : ObjectType<FTMView>
     {
-        public FTMViewType()
+        protected override void Configure(IObjectTypeDescriptor<FTMView> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.PersonId);
-            Field(m => m.FirstName);
-            Field(m => m.Surname);        
-            Field(m => m.Origin);
-            Field(m => m.YearFrom);
-            Field(m => m.YearTo);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.PersonId);
+           descriptor.Field(m => m.FirstName);
+           descriptor.Field(m => m.Surname);        
+           descriptor.Field(m => m.Origin);
+           descriptor.Field(m => m.YearFrom);
+           descriptor.Field(m => m.YearTo);
 
-            Field(m => m.Location);
-            Field(m => m.BirthLat);
-            Field(m => m.BirthLong);
+           descriptor.Field(m => m.Location);
+           descriptor.Field(m => m.BirthLat);
+           descriptor.Field(m => m.BirthLong);
 
-            Field(m => m.AltLocationDesc);
-            Field(m => m.AltLocation);
+           descriptor.Field(m => m.AltLocationDesc);
+           descriptor.Field(m => m.AltLocation);
 
-            Field(m => m.AltLat);
-            Field(m => m.AltLong);
-            Field(m => m.DirectAncestor);
+           descriptor.Field(m => m.AltLat);
+           descriptor.Field(m => m.AltLong);
+           descriptor.Field(m => m.DirectAncestor);
         }
     }
 

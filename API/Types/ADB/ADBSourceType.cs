@@ -1,36 +1,29 @@
-﻿using GraphQL.Types;
+﻿using HotChocolate.Types;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Types.ADB
 {
-    public class ADBSourceType : ObjectGraphType<ADBSource>
+    public class ADBSourceType : ObjectType<ADBSource>
     {
-        public ADBSourceType()
+        protected override void Configure(IObjectTypeDescriptor<ADBSource> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.SourceRef);
-            Field(m => m.SourceDate);
-            Field(m => m.SourceDateTo);
-            Field(m => m.SourceDateStr);
-            Field(m => m.SourceDateStrTo);
-            Field(m => m.SourceDescription);
-            Field(m => m.OriginalLocation);
-            Field(m => m.IsCopyHeld);
-            Field(m => m.IsViewed);
-            Field(m => m.IsThackrayFound);
-            Field(m => m.DateAdded);
-            Field(m => m.UserId);
-            Field(m => m.SourceNotes);
-            Field(m => m.SourceFileCount);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.SourceRef);
+           descriptor.Field(m => m.SourceDate);
+           descriptor.Field(m => m.SourceDateTo);
+           descriptor.Field(m => m.SourceDateStr);
+           descriptor.Field(m => m.SourceDateStrTo);
+           descriptor.Field(m => m.SourceDescription);
+           descriptor.Field(m => m.OriginalLocation);
+           descriptor.Field(m => m.IsCopyHeld);
+           descriptor.Field(m => m.IsViewed);
+           descriptor.Field(m => m.IsThackrayFound);
+           descriptor.Field(m => m.DateAdded);
+           descriptor.Field(m => m.UserId);
+           descriptor.Field(m => m.SourceNotes);
+           descriptor.Field(m => m.SourceFileCount);
         }
     }
-
-
-
-
 
     public class ADBSource
     {

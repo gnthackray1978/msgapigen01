@@ -40,7 +40,7 @@ namespace Api.DB
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(ConnectionString);
+                optionsBuilder.UseSqlServer(ConnectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(60));
             }
         }
 

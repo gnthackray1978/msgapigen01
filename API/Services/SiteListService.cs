@@ -1,13 +1,8 @@
 using System.Linq;
 using System;
-using System.Net.Http;
 using System.Collections.Generic;
 using Api.Models;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Security.Claims;
 using Api.DB;
 using ConfigHelper;
 using Api.Schema;
@@ -20,12 +15,10 @@ namespace Api.Services
     {
 
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
         private readonly string _apiKey;
 
-        public SiteListService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public SiteListService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
             _imsConfigHelper = imsConfigHelper;
         }
 
@@ -111,10 +104,10 @@ namespace Api.Services
             }
 
 
-            results.results = _sites;
+            results.rows = _sites;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = results.results.Count();
+            results.total_rows = results.rows.Count();
 
             return results;
         }

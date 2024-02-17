@@ -1,25 +1,18 @@
-﻿using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HotChocolate.Types;
 
 namespace Api.Types.DNAAnalyse
 {
-
-
-    public class FTMLatLngType : ObjectGraphType<FTMLatLng>
+    public class FTMLatLngType : ObjectType<FTMLatLng>
     {
-        public FTMLatLngType()
+        protected override void Configure(IObjectTypeDescriptor<FTMLatLng> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.Lat);
-            Field(m => m.Long);
-            Field(m => m.Weight);     
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.Lat);
+           descriptor.Field(m => m.Long);
+           descriptor.Field(m => m.Weight);     
         }
     }
-
-
+    
     public class FTMLatLng
     {
         public int Id { get; set; }         

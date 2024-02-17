@@ -1,18 +1,19 @@
-﻿using GraphQL.Types;
+﻿using Api.Models;
+using HotChocolate.Types;
 using System;
 
 namespace Api.Types.ADB
 {
-    public class ADBSourceMapType : ObjectGraphType<ADBSourceMap>
+    public class ADBSourceMapType : ObjectType<ADBSourceMap>
     {
-        public ADBSourceMapType()
+        protected override void Configure(IObjectTypeDescriptor<ADBSourceMap> descriptor)
         {
-            Field(m => m.Id);
-            Field(m => m.SourceId);
-            Field(m => m.MarriageRecordId);
-            Field(m => m.PersonRecordId);
-            Field(m => m.DateAdded);
-            Field(m => m.MapTypeId);
+           descriptor.Field(m => m.Id);
+           descriptor.Field(m => m.SourceId);
+           descriptor.Field(m => m.MarriageRecordId);
+           descriptor.Field(m => m.PersonRecordId);
+           descriptor.Field(m => m.DateAdded);
+           descriptor.Field(m => m.MapTypeId);
         }
     }
     public class ADBSourceMap
@@ -20,9 +21,7 @@ namespace Api.Types.ADB
         public int Id { get; set; }
         public int? SourceId { get; set; }
         public int? MarriageRecordId { get; set; }
-
         public int? PersonRecordId { get; set; }
-
         public DateTime? DateAdded { get; set; }
         public int? MapTypeId { get; set; }
     }

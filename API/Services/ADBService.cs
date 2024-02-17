@@ -4,9 +4,7 @@ using Api.Types.ADB;
 using System.Collections.Generic;
 using System.Linq;
 using AzureContext.Models;
-using System.Net.Http;
 using Api.DB;
-using Microsoft.Extensions.Configuration;
 using ConfigHelper;
 using Api.Schema;
 using Api.Types.RequestQueries;
@@ -17,17 +15,12 @@ namespace Api.Services
     public class ADBService : IADBService
     {
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
-        private readonly string _apiKey;
 
-        public ADBService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public ADBService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
             _imsConfigHelper = imsConfigHelper;
-
         }
-
-
+        
         public async Task<Results<ADBMarriage>> MarriageList(ADBMarriageParamObj searchParams)
         {
             var marriageList = new List<ADBMarriage>();
@@ -94,10 +87,10 @@ namespace Api.Services
 
 
 
-            results.results = marriageList;
+            results.rows = marriageList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -152,10 +145,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -254,10 +247,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -315,10 +308,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -361,10 +354,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = searchParams.Offset == 0 ? 0 : searchParams.Offset / searchParams.Limit;
             results.total_pages = totalRecs / searchParams.Limit;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -403,10 +396,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }
@@ -450,10 +443,10 @@ namespace Api.Services
 
 
 
-            results.results = parishList;
+            results.rows = parishList;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = totalRecs;
+            results.total_rows = totalRecs;
 
             return results;
         }

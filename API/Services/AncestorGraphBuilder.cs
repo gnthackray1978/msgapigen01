@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Api.Services
 {
@@ -19,11 +20,26 @@ namespace Api.Services
             _azureDbContext = azureDbContext;
         }
         
-        public List<AncestorNode> GenerateAncestorGraph(int origin, int personId)
+        public List<AncestorNode> GenerateAncestorGraph(int personId)
         {
             List<List<AncestorNode>> results = new List<List<AncestorNode>>();
+            List<AncestorNode> flattenedResults = new List<AncestorNode>();
 
-            Console.WriteLine("GenerateDescendantGraph");
+            //Console.WriteLine("GenerateDescendantGraph");ToSingleInt
+
+            Serilog.Log.Information("Generate Ancestor Graph");
+
+            var originRecord = _azureDbContext.FTMPersonView.FirstOrDefault(fd => fd.PersonId == personId);
+
+            if (originRecord == null)
+                return flattenedResults;
+
+            string origin = originRecord?.Origin ?? "";
+
+            
+
+          //  var tree = _azureDbContext.TreeRecord
+           //     .FirstOrDefault(f => f.ID == origin.ToSingleInt())?.Name ?? "";
 
             _persons = _azureDbContext.FTMPersonView.Where(w=>w.Origin == origin).ToList();
 
@@ -41,32 +57,40 @@ namespace Api.Services
             int currentGeneration = 0;
 
             results.Add(new List<AncestorNode>());
-            results.Last().Add(new AncestorNode()
+
+            if (startPerson != null)
             {
-                PersonId = startPerson.PersonId.GetValueOrDefault(),
-                BirthLocation = startPerson.Location ??"",
-                ChristianName = startPerson.FirstName,
-                Surname = startPerson.Surname,
-                DOB = startPerson.YearFrom.ToString(),
-                FatherId = startPerson.FatherId.GetValueOrDefault(),
-                MotherId = startPerson.MotherId.GetValueOrDefault(),
-                ChildIdxLst = new List<int>(),
-                ChildLst = new List<int>(),
-                SpouseIdxLst = new List<int>(),
-                SpouseIdLst = new List<int>(),
-                GenerationIdx = 0
+                results.Last().Add(new AncestorNode()
+                    {
+                        PersonId = startPerson.PersonId.GetValueOrDefault(),
+                        BirthLocation = startPerson.Location ?? "",
+                        ChristianName = startPerson.FirstName,
+                        Surname = startPerson.Surname,
+                        DOB = startPerson.YearFrom.ToString(),
+                        FatherId = startPerson.FatherId.GetValueOrDefault(),
+                        MotherId = startPerson.MotherId.GetValueOrDefault(),
+                        ChildIdxLst = new List<int>(),
+                        ChildLst = new List<int>(),
+                        SpouseIdxLst = new List<int>(),
+                        SpouseIdLst = new List<int>(),
+                        GenerationIdx = 0
+                    }
+                );
+
+
+                fillParents(results.Last().Last(), ref results, ref currentGeneration);
             }
-            );
-
-            fillParents(results.Last().Last(), ref results, ref currentGeneration);
-
+            else
+            {
+                Serilog.Log.Information("No Records found for person:" + personId);
+            }
             //add to array
 
             //look up this persons parents.
 
             //
 
-            List<AncestorNode> flattenedResults = new List<AncestorNode>();
+            
             int id = 0;
             foreach (var gp in results)
             {

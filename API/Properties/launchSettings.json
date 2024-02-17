@@ -10,6 +10,8 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:5001/ui/playground",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

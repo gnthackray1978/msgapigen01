@@ -3,11 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using GraphQL;
-using GraphQL.Server.Ui.Playground;
-using GraphQL.Server.Ui.Voyager;
-using GraphQL.Types;
-
 using Api.Services;
 using Api.Types;
 using Api.Models;
@@ -19,7 +14,7 @@ using Api.Types.Diagrams;
 using Api.Schema.SubQueries;
 using Api.Services.interfaces.services;
 using Api.Types.Blog;
-
+using HotChocolate.AspNetCore;
 using ConfigHelper;
 using Serilog;
 
@@ -37,22 +32,19 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-       
-             
-            //services.AddTransient()
+            var msgConfigHelper = new MSGConfigHelper();
+
+            services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddMvcCore()//(o=>o.EnableEndpointRouting =false)
                 .AddAuthorization()
                 .AddNewtonsoftJson();
-
             
-
-
-            var msgConfigHelper = new MSGConfigHelper();
-
-            services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
+            #region cors and auth
 
             services.AddAuthentication(options =>
             {
@@ -84,13 +76,13 @@ namespace Api
                 });
             });
 
+            #endregion
 
+            //services.AddSingleton(s => 
+            //    new MainSchema( new FuncServiceProvider(
+            //        type => (IGraphType)s.GetRequiredService(type))));
 
-          //  services.AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
-
-            services.AddSingleton(s => new MainSchema( new FuncServiceProvider(type => (IGraphType)s.GetRequiredService(type))));
-
-
+            #region AddHttpClient services
             services.AddHttpClient<IClaimService, ClaimService>();
             services.AddHttpClient<ISiteListService, SiteListService>();
             services.AddHttpClient<IFunctionListService, SiteFunctionService>();
@@ -100,22 +92,40 @@ namespace Api
             services.AddHttpClient<IPhotoListService, PhotoListService>();
             services.AddHttpClient<IDiagramService, DiagramService>();
             services.AddHttpClient<IBlogService, BlogService>();
+            #endregion
 
-            services.AddSingleton<ClaimQuery>();
-            services.AddSingleton<SiteQuery>();
-            services.AddSingleton<SiteFunctionQuery>();
-            services.AddSingleton<WillQuery>();
-            services.AddSingleton<DNAQuery>();
-            services.AddSingleton<ADBQuery>();
-            services.AddSingleton<ImageQuery>();
-            services.AddSingleton<DiagramQuery>();
-            services.AddSingleton<BlogQuery>();
+            //inherit from ObjectGraphType
+            //  services.AddSingleton<ClaimQuery>();
+            //  services.AddSingleton<SiteQuery>();
+            //  services.AddSingleton<SiteFunctionQuery>();
+            //   services.AddSingleton<WillQuery>();
+            // services.AddSingleton<DNAQuery>();
+            // services.AddSingleton<ADBQuery>();
+            //  services.AddSingleton<ImageQuery>();
+            //  services.AddSingleton<DiagramQuery>();
+            //  services.AddSingleton<BlogQuery>();
 
+
+
+            //   AddDomainSingletons(services); 
+
+            //inherit from schema
+            //   services.AddSingleton<MainSchema>();
+
+            //  services.AddControllers().AddNewtonsoftJson();
+
+            services.AddGraphQLServer()
+                .AddQueryType<WillQuery>();
+
+        }
+
+        private static void AddDomainSingletons(IServiceCollection services)
+        {
             services.AddSingleton<ApiImagesType>();
             services.AddSingleton<ApiParentImagesType>();
             services.AddSingleton<MSGClaimType>();
-            services.AddSingleton<SiteType>();
-            services.AddSingleton<SiteFunctionType>();
+          //  services.AddSingleton<SiteType>();
+         //   services.AddSingleton<SiteFunctionType>();
             services.AddSingleton<WillType>();
             services.AddSingleton<BlogType>();
 
@@ -139,76 +149,31 @@ namespace Api
             services.AddSingleton<AncestorNodeType>();
             services.AddSingleton<DescendantNodeType>();
 
-            services.AddSingleton<WillResultType<WillType, Will>>();
-
-            services.AddSingleton<ClaimResultType<MSGClaimType, MSGClaim>>();
-            services.AddSingleton<SiteResultType<SiteType, Site>>();
-            services.AddSingleton<SiteFunctionResultType<SiteFunctionType, SiteFunction>>();
             
-            
-            //
-            services.AddSingleton<AncestorResult>();
-            services.AddSingleton<DescendantResult>();
-
-            services.AddSingleton<ApiParentImagesResult>();
-            services.AddSingleton<ApiImagesResult>();
-            services.AddSingleton<BlogListResult>();
-            services.AddSingleton<DupeResult>();
-            services.AddSingleton<FTMViewResult>();
-            services.AddSingleton<FTMLatLngResult>();
-
-            services.AddSingleton<FTMPersonLocationResult>();
-            services.AddSingleton<PersonOfInterestResult>();
-            services.AddSingleton<TreeRecResult>();
-            services.AddSingleton<MarriageSearchResult>();
-            services.AddSingleton<PersonSearchResult>();
-            services.AddSingleton<ParishSearchResult>();
-            services.AddSingleton<SourceSearchResult>();
-
-            services.AddSingleton<MainSchema>();
-            
-            services.AddControllers().AddNewtonsoftJson();
-
-            
-
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            //if (env.IsDevelopment())
+            
+
+            //app.UseCors("default");
+            //app.UseAuthentication();
+
+            //app.UseWebSockets();
+
+            //app.UseRouting();
+            //app.UseAuthorization();
+
+            //app.UseDefaultFiles();
+
+            //app.UseEndpoints(endpoints =>
             //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseHttpsRedirection();
-            //}
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller}/{action=Index}/{id?}");
+            //    endpoints.MapRazorPages();
+            //});
 
-            app.UseCors("default");
-            app.UseAuthentication();
-            // app.UseMvc();
-
-            app.UseWebSockets();
-            app.UseGraphQLPlayground("/");
-            app.UseGraphQLVoyager("/voyager" );
-
-            app.UseRouting();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
-        
-        
-        //.UseWebSockets()
-        //    .UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" })
-        //    .UseGraphQLVoyager(new GraphQLVoyagerOptions() { Path = "/voyager" });
-         
         }
     }
 }

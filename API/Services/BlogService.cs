@@ -1,29 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Api.DB;
-using Api.Entities.MSGCore.Auth;
-using Api.Models;
 using Api.Schema;
 using Api.Services.interfaces.services;
 using Api.Types.Blog;
 using Api.Types.RequestQueries;
 using ConfigHelper;
-using Microsoft.Extensions.Configuration;
 
 namespace Api.Services
 {
     public class BlogService : IBlogService
     {
         private readonly IMSGConfigHelper _imsConfigHelper;
-        private readonly HttpClient _client;
-        private readonly string _apiKey;
 
-        public BlogService(HttpClient client, IConfiguration config, IMSGConfigHelper imsConfigHelper)
+        public BlogService(IMSGConfigHelper imsConfigHelper)
         {
-            _client = client;
             _imsConfigHelper = imsConfigHelper;
         }
 
@@ -89,10 +82,10 @@ namespace Api.Services
                 results.Error = e.Message;
             }
 
-            results.results = blogs;
+            results.rows = blogs;
             results.Page = 0;
             results.total_pages = 1;
-            results.total_results = results.results.Count();
+            results.total_rows = results.rows.Count();
 
             return results;
         }

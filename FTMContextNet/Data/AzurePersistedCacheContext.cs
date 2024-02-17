@@ -146,7 +146,7 @@ public partial class AzurePersistedCacheContext : DbContext, IPersistedCacheCont
                 row.AltLocation,
                 row.AltLat,
                 row.AltLong,
-                row.Origin,
+                row.Origin.Trim(),
                 row.PersonId,
                 row.FatherId,
                 row.MotherId,
@@ -245,7 +245,7 @@ public partial class AzurePersistedCacheContext : DbContext, IPersistedCacheCont
         try
         {
             command.CommandTimeout = 300;
-            command.CommandText = "UPDATE T SET T.BirthLat = Temp.Lat, T.BirthLong = Temp.Lng, T.AltLat = Temp.AltLat, T.AltLong = Temp.AltLng FROM DNA.FTMPersonView T INNER JOIN dbo.__TempLocationUpdate Temp ON T.Id = Temp.Id;";
+            command.CommandText = "UPDATE T SET T.BirthLat = Temp.BirthLat, T.BirthLong = Temp.BirthLong, T.AltLat = Temp.AltLat, T.AltLong = Temp.AltLong FROM DNA.FTMPersonView T INNER JOIN dbo.__TempLocationUpdate Temp ON T.Id = Temp.Id;";
             command.ExecuteNonQuery();
             
         }
@@ -413,6 +413,36 @@ public partial class AzurePersistedCacheContext : DbContext, IPersistedCacheCont
         transaction.Commit();
 
         return id;
+    }
+
+    public void UpdateRecordMapGroupIds()
+    {
+        //todo giant hack that needs refactoring out.
+
+        var connectionString = _configObj.MSGGenDB01;
+
+
+        using var connection = new SqlConnection(connectionString);
+
+        var command = connection.CreateCommand();
+        command.CommandText = "UPDATE A SET GroupId = B.Id FROM dna.TreeGroups B JOIN dna.TreeRecordMapGroup A on B.GroupName = A.GroupName;";
+
+        connection.Open();
+
+        using var transaction = connection.BeginTransaction();
+
+        command.Transaction = transaction;
+        command.Prepare();
+
+        command.ExecuteNonQuery();
+
+        command.CommandText = "UPDATE A set TreeId = B.Id FROM dna.TreeRecord B JOIN dna.TreeRecordMapGroup A on B.[Name] = A.TreeName";
+
+        command.ExecuteNonQuery();
+
+        transaction.Commit();
+
+
     }
 
     public int InsertRecordMapGroup(string groupName, string treeName, int importId, int userId)

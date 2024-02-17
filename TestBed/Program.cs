@@ -57,7 +57,7 @@ namespace TestBed
             var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
 
             if (tree != null)
-                b.GenerateDescendantGraph(3217, tree.ID);
+                b.GenerateDescendantGraph(3217);
         }
 
         private async static void TestFTMLatLngList(DNAContext az)
@@ -65,7 +65,7 @@ namespace TestBed
             var c = new config() { };
 
 
-            var b = new DNAAnalyseService(null,null,c);
+            var b = new DNAAnalyseService(c);
 
             // var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
 
@@ -76,7 +76,7 @@ namespace TestBed
 
             var p = new DNASearchParamObj
             {
-                Groupings = az.TreeRecordMapGroup.ToList(),
+            //    Groupings = az.TreeRecordMapGroup.ToList(),
                 YearFrom = 1500,
                 YearTo = 1900,
                 Origin = "",
@@ -95,7 +95,7 @@ namespace TestBed
             var c = new config() { };
 
 
-            var b = new DNAAnalyseService(null, null, c);
+            var b = new DNAAnalyseService(c);
 
             // var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
 
@@ -106,7 +106,7 @@ namespace TestBed
 
             var p = new DNASearchParamObj
             {
-                Groupings = az.TreeRecordMapGroup.ToList(),
+             //   Groupings = az.TreeRecordMapGroup.ToList(),
                 YearFrom = 1500,
                 YearTo = 1900,
                 Origin = "",
@@ -118,7 +118,7 @@ namespace TestBed
             var tp = b.FTMLocSearch(p);
 
 
-            foreach (var x in tp.Result.results)
+            foreach (var x in tp.Result.rows)
             {
                 
 
