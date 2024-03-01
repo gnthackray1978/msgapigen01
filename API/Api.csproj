@@ -24,4 +24,12 @@
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MSGSharedData\MSGSharedData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Types\SiteMetaData\" />
+  </ItemGroup>
+
 </Project>

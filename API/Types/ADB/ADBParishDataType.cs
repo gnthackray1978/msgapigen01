@@ -1,5 +1,6 @@
 ﻿using Api.Models;
 using HotChocolate.Types;
+using MSGSharedData.Domain.Entities.NonPersistent.ADB;
 
 namespace Api.Types.ADB
 {
@@ -11,14 +12,6 @@ namespace Api.Types.ADB
            descriptor.Field(m => m.ParishId);
            descriptor.Field(m => m.ParishDataString);
         }
-    }
-
-    public class ADBParishData
-    {
-        public int Id { get; set; }
-        public int ParishId { get; set; }
-        public string ParishDataString { get; set; }
-
     }
 }
  

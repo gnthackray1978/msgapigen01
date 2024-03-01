@@ -1,21 +1,22 @@
 ﻿
 using System.Security.Claims;
 using System.Security;
-using Api.Types.DNAAnalyse;
-using Api.Services;
-using Api.Services.interfaces.services;
-using Api.Types.RequestQueries;
 using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.DNAAnalyse;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
     [ExtendObjectType("Query")]
     public class DNAQuery 
     {
-        public Task<Results<Dupe>> dupesearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<Dupe>> dupesearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {
@@ -25,8 +26,8 @@ namespace Api.Schema.SubQueries
             return repository.DupeList(pobj);
         }
 
-        public Task<Results<FTMPersonLocation>> ftmlocsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<FTMPersonLocation>> ftmlocsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {
@@ -36,8 +37,8 @@ namespace Api.Schema.SubQueries
             return repository.FTMLocSearch(pobj);
         }
 
-        public Task<Results<FTMLatLng>> ftmlatlngsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<FTMLatLng>> ftmlatlngsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {
@@ -47,8 +48,8 @@ namespace Api.Schema.SubQueries
             return repository.FTMLatLngList(pobj);
         }
 
-        public Task<Results<FTMView>> ftmviewsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<FTMView>> ftmviewsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {
@@ -58,8 +59,8 @@ namespace Api.Schema.SubQueries
             return repository.FTMViewList(pobj);
         }
 
-        public Task<Results<PersonOfInterestSubset>> poisearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<PersonOfInterestSubset>> poisearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {
@@ -69,8 +70,8 @@ namespace Api.Schema.SubQueries
             return repository.PersonOfInterestList(pobj);
         }
 
-        public Task<Results<TreeRec>> treerecsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<TreeRec>> treerecsearch(DNASearchParamObj pobj, [Service] IDNAAnalyseListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyTreeAnalizer))
             {

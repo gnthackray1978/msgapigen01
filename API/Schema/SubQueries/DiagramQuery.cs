@@ -1,13 +1,13 @@
 ﻿
 using System.Security;
 using System.Security.Claims;
-using Api.Services;
 using System.Threading.Tasks;
-using Api.Types.Diagrams;
-using Api.Services.interfaces.services;
-using Api.Types.RequestQueries;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent.Diagrams;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
@@ -15,10 +15,10 @@ namespace Api.Schema.SubQueries
     public class DiagramQuery 
     {
         public Task<DiagramResults<AncestorNode>> ancestorsearch(DiagramParamObj pobj,
-            [Service] IDiagramService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IDiagramRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
-            if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+            if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
             {
             //    return ErrorHandler.Error<AncestorNode>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
             }
@@ -27,10 +27,10 @@ namespace Api.Schema.SubQueries
         }
 
         public Task<DiagramResults<DescendantNode>> descendantsearch(DiagramParamObj pobj,
-            [Service] IDiagramService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IDiagramRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
-            if (!claimService.UserValid(currentUser, MSGApplications.Wills))
+            if (!claimService.UserValid(currentUser, MSGApplications.Diagrams))
             {
                 //    return ErrorHandler.Error<AncestorNode>(new SecurityException(), claimService.GetClaimDebugString(currentUser));
             }

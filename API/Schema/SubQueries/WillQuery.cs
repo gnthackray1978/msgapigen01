@@ -1,16 +1,16 @@
-﻿using Api.Models;
-using Api.Types;
+﻿using Api.Types;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System;
 using System.Security;
-using Api.Services;
 using System.Threading.Tasks;
-using Api.Schema;
-using Api.Services.interfaces.services;
-using Api.Types.RequestQueries;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.Wills;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
@@ -18,14 +18,14 @@ namespace Api.Schema.SubQueries
     public class WillQuery 
     {
 
-        //public Task<Will> single(int id, [Service] IWillListService repository, 
-        //    [Service] IClaimService claimService)
+        //public Task<Will> single(int id, [Service] IWillListRepositoryrepository, 
+        //    [Service] IClaimRepositoryclaimService)
         //{
         //    return repository.GetAsync(id);
         //}
 
-        public Task<Results<Will>> lincssearch(WillSearchParamObj pobj, [Service] IWillListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<Will>> lincssearch(WillSearchParamObj pobj, [Service] IWillListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.Wills))
             {
@@ -35,8 +35,8 @@ namespace Api.Schema.SubQueries
             return repository.LincolnshireWillsList(pobj);
         }
 
-        public Task<Results<Will>> norfolksearch(WillSearchParamObj pobj, [Service] IWillListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<Will>> norfolksearch(WillSearchParamObj pobj, [Service] IWillListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.Wills))
             {
@@ -48,7 +48,7 @@ namespace Api.Schema.SubQueries
 
 
         #region old
-        //public WillQuery(IWillListService service, IClaimService claimService)
+        //public WillQuery(IWillListRepositoryservice, IClaimRepositoryclaimService)
         //{
         //    Name = "Will";
 

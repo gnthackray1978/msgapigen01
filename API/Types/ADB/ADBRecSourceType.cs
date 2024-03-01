@@ -1,5 +1,6 @@
 ﻿using Api.Models;
 using HotChocolate.Types;
+using MSGSharedData.Domain.Entities.NonPersistent.ADB;
 
 namespace Api.Types.ADB
 {
@@ -11,14 +12,6 @@ namespace Api.Types.ADB
            descriptor.Field(m => m.RecordTypeName);
            descriptor.Field(m => m.RecordTypeDescription);
         }
-    }
-
-
-    public class ADBRecSource
-    {
-        public int Id { get; set; }
-        public string RecordTypeName { get; set; }
-        public string RecordTypeDescription { get; set; }
     }
 }
  

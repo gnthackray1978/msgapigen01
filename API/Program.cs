@@ -1,19 +1,14 @@
 ﻿using Serilog;
 using Api.Schema.SubQueries;
-using Api.Services;
-using Api.Services.interfaces.services;
 using ConfigHelper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using MSGSharedData.Data.Services;
+using MSGSharedData.Data.Services.interfaces.services;
 
 namespace Api
 {
-    public class Query
-    {
-
-    }
-    
     public class Program
     {
         public static void Main(string[] args)
@@ -44,15 +39,15 @@ namespace Api
 
             builder.Services
                 .AddSingleton<IMSGConfigHelper>(msgConfigHelper)
-                .AddSingleton<IWillListService, WillListService>()
-                .AddSingleton<IClaimService, ClaimService>()
-                .AddSingleton<IADBService, ADBService>()
-                .AddSingleton<IBlogService, BlogService>()
-                .AddSingleton<IDiagramService, Api.Services.DiagramService>()
-                .AddSingleton<IDNAAnalyseListService, DNAAnalyseService>()
-                .AddSingleton<IPhotoListService, PhotoListService>()
-                .AddSingleton<IFunctionListService, SiteFunctionService>()
-                .AddSingleton<ISiteListService, SiteListService>()
+                .AddSingleton<IWillListRepository, WillListRepository>()
+                .AddSingleton<IClaimRepository, ClaimRepository>()
+                .AddSingleton<IADBRepository, ADBRepository>()
+                .AddSingleton<IBlogRepository, BlogRepository>()
+                .AddSingleton<IDiagramRepository, DiagramRepository>()
+                .AddSingleton<IDNAAnalyseListRepository, DNAAnalyseRepository>()
+                .AddSingleton<IPhotoListRepository, PhotoListRepository>()
+                .AddSingleton<IFunctionListRepository, SiteFunctionRepository>()
+                .AddSingleton<ISiteListRepository, SiteListRepository>()
                 .AddGraphQLServer()
                 .AddQueryType(q => q.Name("Query"))
                 .AddTypeExtension<ADBQuery>()

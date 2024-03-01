@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MSG.Auth" Version="1.0.1" />
+    <PackageReference Include="MSG.CommonTypes" Version="1.0.1" />
+    <PackageReference Include="MSG.ConfigHelper" Version="1.0.4" />
+    <PackageReference Include="MSG.GoogleMapsHelpers" Version="1.1.8" />
+    <PackageReference Include="MSG.LoggingLib" Version="1.0.0" />
+    <PackageReference Include="MSG.QuickGed" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlaceLibNet\PlaceLibNet.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,5 @@
-﻿using Api.Models;
-using HotChocolate.Types;
+﻿using HotChocolate.Types;
+using MSGSharedData.Domain.Entities.NonPersistent.Auth;
 
 namespace Api.Types
 {

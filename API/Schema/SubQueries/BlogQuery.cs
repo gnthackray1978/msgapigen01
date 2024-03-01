@@ -3,27 +3,28 @@ using System.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Models;
-using Api.Services;
-using Api.Services.interfaces.services;
 using Api.Types;
-using Api.Types.Blog;
-using Api.Types.RequestQueries;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.Blog;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
     [ExtendObjectType("Query")]
     public class BlogQuery 
     {
-        //public Task<Blog> single(int id, [Service] IBlogService repository,
-        //    [Service] IClaimService claimService)
+        //public Task<Blog> single(int id, [Service] IBlogRepositoryrepository,
+        //    [Service] IClaimRepository claimService)
         //{
         //    return repository.GetBlog(id);
         //}
 
-        public Task<Results<Blog>> searchBlog(BlogParamObj pobj, [Service] IBlogService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<Blog>> searchBlog(BlogParamObj pobj, [Service] IBlogRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.Blog))
             {

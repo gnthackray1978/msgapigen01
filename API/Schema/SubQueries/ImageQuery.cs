@@ -1,20 +1,20 @@
-﻿using Api.Models;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security;
 using System.Threading.Tasks;
-using Api.Services;
-using Api.Types.Images;
-using Api.Services.interfaces.services;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.Images;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
     [ExtendObjectType("Query")]
     public class ImageQuery  
     {
-        public Task<Results<ApiImage>> imagesearch(string page, [Service] IPhotoListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<ApiImage>> imagesearch(string page, [Service] IPhotoListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
             {
@@ -24,8 +24,8 @@ namespace Api.Schema.SubQueries
             return repository.ImagesList("",page);
         }
 
-        public Task<Results<ApiParentImages>> imageparentsearch(string page, [Service] IPhotoListService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+        public Task<Results<ApiParentImages>> imageparentsearch(string page, [Service] IPhotoListRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.FamilyHistoryPhotos))
             {

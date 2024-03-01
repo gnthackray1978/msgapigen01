@@ -1,33 +1,17 @@
-﻿//using Api.Schema;
-//using Api.Types.Images;
-//using GraphQL.Types;
+﻿using HotChocolate.Types;
+using MSGSharedData.Domain.Entities.NonPersistent.Images;
 
-//namespace Api.Models
-//{
-//    public class ApiImagesType<GraphT, ObjT> : ObjectGraphType<Results<ObjT>>
-//      where GraphT : IGraphType
-//    {
-//        public ApiImagesType()
-//        {
-//            Field<ListGraphType<GraphT>>(
-//                "results",
-//                resolve: context =>
-//                {
-//                    return context.Source.results;
-//                }
-//            );
-//            Field(r => r.Page);
-//            Field(r => r.TotalResults);
-//            Field(r => r.TotalPages);
-//            Field(r => r.Error);
-//            Field(r => r.LoginInfo);
-//        }
-//    }
-
-//    public class ApiImagesResult : ApiImagesType<ApiImagesType, ApiImage> { }
-
-//    public class ApiParentImagesResult : ApiImagesType<ApiParentImagesType, ApiParentImages> { }
-
-
-//}
-
+namespace Api.Types.Images
+{
+    public class ApiImagesType : ObjectType<ApiImage>
+    {
+        protected override void Configure(IObjectTypeDescriptor<ApiImage> descriptor)
+        {
+            descriptor.Field(m => m.Id);
+            descriptor.Field(m => m.Path);
+            descriptor.Field(m => m.Title);
+            descriptor.Field(m => m.Info);
+            descriptor.Field(m => m.ParentImageId);
+        }
+    }
+}

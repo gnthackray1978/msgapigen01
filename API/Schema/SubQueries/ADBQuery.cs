@@ -1,12 +1,13 @@
-﻿using Api.Types.ADB;
-using Api.Services;
-using System.Security;
+﻿using System.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Api.Services.interfaces.services;
-using Api.Types.RequestQueries;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.ADB;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Enumerations;
 
 namespace Api.Schema.SubQueries
 {
@@ -14,8 +15,8 @@ namespace Api.Schema.SubQueries
     public class ADBQuery 
     { 
         public Task<Results<ADBMarriage>> marriagesearch(ADBMarriageParamObj pobj, 
-            [Service] IADBService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IADBRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.ThackrayDB))
             {
@@ -26,8 +27,8 @@ namespace Api.Schema.SubQueries
         }
 
         public Task<Results<ADBPerson>> personsearch(ADBPersonParamObj pobj,
-            [Service] IADBService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IADBRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.ThackrayDB))
             {
@@ -38,8 +39,8 @@ namespace Api.Schema.SubQueries
         }
 
         public Task<Results<ADBParish>> parishsearch(ADBParishParamObj pobj,
-            [Service] IADBService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IADBRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.ThackrayDB))
             {
@@ -50,8 +51,8 @@ namespace Api.Schema.SubQueries
         }
 
         public Task<Results<ADBSource>> sourcesearch(ADBSourceParamObj pobj,
-            [Service] IADBService repository,
-            [Service] IClaimService claimService, ClaimsPrincipal currentUser)
+            [Service] IADBRepository repository,
+            [Service] IClaimRepository claimService, ClaimsPrincipal currentUser)
         {
             if (!claimService.UserValid(currentUser, MSGApplications.ThackrayDB))
             {

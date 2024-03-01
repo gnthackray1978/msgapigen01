@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Collections.Generic;
 using System;
@@ -11,13 +10,6 @@ using Api.Schema;
 
 namespace Api.Controllers
 {
-    public class GraphQLQuery
-    {
-        public string OperationName { get; set; }
-        public string Query { get; set; }
-        public JObject Variables { get; set; }
-    }
-
     //Route("api/[controller]")]
     [ApiController]
     //[Authorize]

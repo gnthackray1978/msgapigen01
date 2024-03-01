@@ -1,6 +1,6 @@
 ﻿using Api.Models;
 using HotChocolate.Types;
-using System;
+using MSGSharedData.Domain.Entities.NonPersistent.ADB;
 
 namespace Api.Types.ADB
 {
@@ -15,15 +15,6 @@ namespace Api.Types.ADB
            descriptor.Field(m => m.SourceMappingUser);
             
         }
-    }
-
-    public class ADBParishMap
-    {
-        public int Id { get; set; }
-        public int? SourceMappingParishId { get; set; }
-        public int? SourceMappingSourceId { get; set; }
-        public DateTime? SourceMappingDateAdded { get; set; }
-        public int? SourceMappingUser { get; set; }
     }
 }
  

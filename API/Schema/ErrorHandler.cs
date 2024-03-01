@@ -1,4 +1,5 @@
-﻿using Api.Types.Diagrams;
+﻿using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.Diagrams;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

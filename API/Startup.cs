@@ -3,20 +3,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Api.Services;
 using Api.Types;
 using Api.Models;
 using Api.Types.DNAAnalyse;
-using Api.Schema;
 using Api.Types.ADB;
 using Api.Types.Images;
 using Api.Types.Diagrams;
 using Api.Schema.SubQueries;
-using Api.Services.interfaces.services;
 using Api.Types.Blog;
-using HotChocolate.AspNetCore;
 using ConfigHelper;
-using Serilog;
+using MSGSharedData.Data.Services;
+using MSGSharedData.Data.Services.interfaces.services;
 
 namespace Api
 {
@@ -83,15 +80,15 @@ namespace Api
             //        type => (IGraphType)s.GetRequiredService(type))));
 
             #region AddHttpClient services
-            services.AddHttpClient<IClaimService, ClaimService>();
-            services.AddHttpClient<ISiteListService, SiteListService>();
-            services.AddHttpClient<IFunctionListService, SiteFunctionService>();
-            services.AddHttpClient<IWillListService, WillListService>();
-            services.AddHttpClient<IDNAAnalyseListService, DNAAnalyseService>();
-            services.AddHttpClient<IADBService, ADBService>();
-            services.AddHttpClient<IPhotoListService, PhotoListService>();
-            services.AddHttpClient<IDiagramService, DiagramService>();
-            services.AddHttpClient<IBlogService, BlogService>();
+            services.AddHttpClient<IClaimRepository, ClaimRepository>();
+            services.AddHttpClient<ISiteListRepository, SiteListRepository>();
+            services.AddHttpClient<IFunctionListRepository, SiteFunctionRepository>();
+            services.AddHttpClient<IWillListRepository, WillListRepository>();
+            services.AddHttpClient<IDNAAnalyseListRepository, DNAAnalyseRepository>();
+            services.AddHttpClient<IADBRepository, ADBRepository>();
+            services.AddHttpClient<IPhotoListRepository, PhotoListRepository>();
+            services.AddHttpClient<IDiagramRepository, DiagramRepository>();
+            services.AddHttpClient<IBlogRepository, BlogRepository>();
             #endregion
 
             //inherit from ObjectGraphType

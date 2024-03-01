@@ -1,12 +1,10 @@
-﻿using Api.Models;
-using ConfigHelper;
+﻿using ConfigHelper;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Api.DB;
-using Api.Services;
-using Api.Types.RequestQueries;
-using static Api.Services.DiagramService;
+using MSGSharedData.Data.Services;
+using MSGSharedData.Data;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
 
 namespace TestBed
 {
@@ -65,20 +63,20 @@ namespace TestBed
             var c = new config() { };
 
 
-            var b = new DNAAnalyseService(c);
+            var b = new DNAAnalyseRepository(c);
 
             // var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
 
            
-            var treeDictionary = az.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+            var treeDictionary = az.TreeRecord.ToDictionary(p => p.Id, p => p.Name);
 
             treeDictionary.Add(0, "Unknown");
 
             var p = new DNASearchParamObj
             {
             //    Groupings = az.TreeRecordMapGroup.ToList(),
-                YearFrom = 1500,
-                YearTo = 1900,
+                YearStart = 1500,
+                YearEnd = 1900,
                 Origin = "",
                 Location = "wiltshire"
 
@@ -95,20 +93,20 @@ namespace TestBed
             var c = new config() { };
 
 
-            var b = new DNAAnalyseService(c);
+            var b = new DNAAnalyseRepository(c);
 
             // var tree = az.TreeRecord.FirstOrDefault(f => f.Name == "_34_Kennington");
 
 
-            var treeDictionary = az.TreeRecord.ToDictionary(p => p.ID, p => p.Name);
+            var treeDictionary = az.TreeRecord.ToDictionary(p => p.Id, p => p.Name);
 
             treeDictionary.Add(0, "Unknown");
 
             var p = new DNASearchParamObj
             {
              //   Groupings = az.TreeRecordMapGroup.ToList(),
-                YearFrom = 1500,
-                YearTo = 1900,
+                YearStart = 1500,
+                YearEnd = 1900,
                 Origin = "",
                 Location = "wiltshire"
 

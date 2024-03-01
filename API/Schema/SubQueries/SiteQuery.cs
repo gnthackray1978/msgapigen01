@@ -1,22 +1,23 @@
-using Api.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Api.Services.interfaces.services;
-using Api.Types.RequestQueries;
 using HotChocolate;
 using HotChocolate.Types;
+using MSGSharedData.Data.Services.interfaces.services;
+using MSGSharedData.Domain.Entities.NonPersistent;
+using MSGSharedData.Domain.Entities.NonPersistent.RequestQueries;
+using MSGSharedData.Domain.Entities.NonPersistent.SiteMetaData;
 
 namespace Api.Schema.SubQueries
 {
     [ExtendObjectType("Query")]
     public class SiteQuery 
     {
-        //public Task<Site> single([Service] ISiteListService repository, int id)
+        //public Task<Site> single([Service] ISiteListRepositoryrepository, int id)
         //{
         //    return repository.GetSite(id);
         //}
 
-        public Task<Results<Site>> searchSite([Service] ISiteListService repository,
+        public Task<Results<Site>> searchSite([Service] ISiteListRepository repository,
             ClaimsPrincipal currentUser, int? appId)
         {
             var siteParamObj = new SiteParamObj
@@ -27,7 +28,7 @@ namespace Api.Schema.SubQueries
             return repository.ListSites(siteParamObj);
         }
 
-        //public SiteQuery(ISiteListService service, IClaimService claimService)
+        //public SiteQuery(ISiteListRepositoryservice, IClaimRepositoryclaimService)
         //{
         //    Name = "Site";
             

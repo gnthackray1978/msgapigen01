@@ -1,5 +1,6 @@
 ﻿using Api.Models;
 using HotChocolate.Types;
+using MSGSharedData.Domain.Entities.NonPersistent.ADB;
 
 namespace Api.Types.ADB
 {
@@ -11,12 +12,5 @@ namespace Api.Types.ADB
             descriptor.Field(m => m.SourceTypeDesc);
             descriptor.Field(m => m.SourceDateAdded);
         }
-    }
-
-    public class ADBInternalSourceType
-    {
-        public int Id { get; set; }
-        public string SourceTypeDesc { get; set; }
-        public string SourceDateAdded { get; set; }
     }
 }

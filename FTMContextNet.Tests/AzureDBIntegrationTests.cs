@@ -128,8 +128,8 @@ namespace FTMContextNet.Tests
                 Id = 999999, 
                 PersonId = 1, 
                 UserId = 1,
-                BirthYearFrom = 1500,
-                BirthYearTo = 1600,
+                YearStart = 1500,
+                YearEnd = 1600,
                 FirstName = "George",
                 Surname = "Smith",
                 Ident = "ident",
@@ -303,15 +303,15 @@ namespace FTMContextNet.Tests
             var person = new FTMPersonView()
             {
                 ImportId = 1,
-                AltLat = "1",
-                AltLong = "1",
+                AltLat = 1,
+                AltLong = 1,
                 AltLocation = "altLocation",
                 AltLocationDesc = "altLocationDesc",
-                BirthFrom = 1500,
-                BirthTo = 1600,
-                BirthLat = "1",
-                BirthLocation = "birthLocation",
-                BirthLong = "1",
+                YearStart = 1500,
+                YearEnd = 1600,
+                Lat = 1,
+                Location = "birthLocation",
+                Lng = 1,
                 DirectAncestor = true,
                 FatherId = 1,
                 FirstName = "George",
@@ -363,15 +363,15 @@ namespace FTMContextNet.Tests
             var person = new FTMPersonView()
             {
                 ImportId = 1,
-                AltLat = "1",
-                AltLong = "1",
+                AltLat = 1,
+                AltLong =1,
                 AltLocation = "altLocation",
                 AltLocationDesc = "altLocationDesc",
-                BirthFrom = 1500,
-                BirthTo = 1600,
-                BirthLat = "1",
-                BirthLocation = "birthLocation",
-                BirthLong = "1",
+                YearStart = 1500,
+                YearEnd = 1600,
+                Lat = 1,
+                Location = "birthLocation",
+                Lng = 1,
                 DirectAncestor = true,
                 FatherId = 1,
                 FirstName = "George",
@@ -402,8 +402,8 @@ namespace FTMContextNet.Tests
 
             Assert.NotNull(pclone);
 
-            var isEqual = pclone.AltLat.ToDecimal() == "5".ToDecimal() && pclone.AltLong.ToDecimal() == "4".ToDecimal() && pclone.BirthLat.ToDecimal() == "3".ToDecimal() &&
-                          pclone.BirthLong.ToDecimal() == "2".ToDecimal();
+            var isEqual = pclone.AltLat.ToString() == "5" && pclone.AltLong.ToString() == "4" && pclone.Lat.ToString() == "3" &&
+                          pclone.Lng.ToString() == "2";
 
             Assert.True(isEqual);
 
@@ -468,15 +468,15 @@ namespace FTMContextNet.Tests
             var person = new FTMPersonView()
             {
                 ImportId = 5,
-                AltLat = "1",
-                AltLong = "1",
+                AltLat = 1,
+                AltLong = 1,
                 AltLocation = "altLocation",
                 AltLocationDesc = "altLocationDesc",
-                BirthFrom = 1500,
-                BirthTo = 1600,
-                BirthLat = "1",
-                BirthLocation = "birthLocation",
-                BirthLong = "1",
+                YearStart = 1500,
+                YearEnd = 1600,
+                Lat = 1,
+                Location = "birthLocation",
+                Lng = 1,
                 DirectAncestor = true,
                 FatherId = 1,
                 FirstName = "George",
