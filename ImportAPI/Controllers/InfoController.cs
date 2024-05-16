@@ -32,8 +32,6 @@ namespace ImportAPI.Controllers
         [Route("/info/people")]
         public InfoModel GetPeopleInfo()
         {
-
-
             return _mediator
                 .Send(new GetInfoServiceQuery(), new CancellationToken(false)).Result;
         }
@@ -51,7 +49,7 @@ namespace ImportAPI.Controllers
         public IEnumerable<ImportModel> GetGedFileInfo()
         {
             return _mediator
-                .Send(new GetGedFilesQuery(), new CancellationToken(false)).Result;
+                .Send(new GetGedFilesQuery(false), new CancellationToken(false)).Result;
         }
     }
 }

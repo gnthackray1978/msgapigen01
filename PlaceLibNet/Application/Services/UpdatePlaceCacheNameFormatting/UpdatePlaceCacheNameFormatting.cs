@@ -37,7 +37,7 @@ public class UpdatePlaceCacheNameFormatting : IRequestHandler<UpdatePlaceCacheCo
             return CommandResult.Fail(CommandResultType.Unauthorized);
         }
 
-        _iLog.WriteLine("Executing UpdatePlaceCacheNameFormatting");
+        _iLog.WriteLine("Executing UpdatePlaceCacheNameFormatting",2);
  
         await Task.Run(() =>
         {
@@ -52,7 +52,7 @@ public class UpdatePlaceCacheNameFormatting : IRequestHandler<UpdatePlaceCacheCo
           }
         }, cancellationToken);
 
-        _iLog.WriteLine("UpdatePlaceCacheNameFormatting ended");
+        _iLog.WriteLine("UpdatePlaceCacheNameFormatting ended", 2);
 
         return CommandResult.Success();
     }

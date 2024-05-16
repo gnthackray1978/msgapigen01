@@ -19,7 +19,7 @@ namespace ImportAPI.Controllers
         
         }
 
-        public void WriteLine(string line)
+        public void WriteLine(string line, int subtype =0)
         {
             Serilog.Log.Information("WriteLine: "+ line);
 

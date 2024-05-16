@@ -16,4 +16,14 @@ public class ImportModel
 
     public int UserId { get; set; }
 
+    public DateTime? PersonsProcessed { get; set; }
+
+    public DateTime? CCProcessed { get; set; }
+
+    public DateTime? GeocodingProcessed { get; set; }
+
+    public DateTime? MissingLocationsProcessed { get; set; }
+
+    public DateTime? DupesProcessed { get; set; }
+
 }

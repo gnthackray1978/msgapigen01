@@ -23,7 +23,7 @@ namespace FTMContextNet.Application.UserServices.GetTreeImportStatus
         public async Task<bool> Handle(GetTreeImportStatusQuery request,
             CancellationToken cancellationToken)
         {
-            _iLog.WriteLine("Executing GetInfoService");
+            _iLog.WriteLine("Refreshing Ged Selection Status", 2);
 
             bool isFound = false;
 

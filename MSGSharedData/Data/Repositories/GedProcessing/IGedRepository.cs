@@ -4,5 +4,5 @@ namespace FTMContextNet.Data.Repositories.GedProcessing;
 
 public interface IGedRepository
 {
-    GedDb ParseLabelledTree(string path);
+    GedDb ParseLabelledTree(string path, int lastId);
 }

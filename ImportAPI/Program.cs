@@ -41,7 +41,6 @@ namespace ImportAPI
             
             var config = new MapperConfiguration(cfg =>
             {
-
                 cfg.AddProfile(new AutoMapperConfiguration());
             });
             

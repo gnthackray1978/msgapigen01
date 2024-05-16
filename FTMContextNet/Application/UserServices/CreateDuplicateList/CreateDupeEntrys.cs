@@ -42,7 +42,7 @@ namespace FTMContextNet.Application.UserServices.CreateDuplicateList
                 return CommandResult.Fail(CommandResultType.Unauthorized);
             }
 
-            _ilog.WriteLine("Executing Create Dupe Entries");
+            _ilog.WriteLine("Creating Potential Dupe List", 2);
 
             await Task.Run(Execute,cancellationToken);
 
@@ -63,10 +63,10 @@ namespace FTMContextNet.Application.UserServices.CreateDuplicateList
             int idx = 0;
             int comparisonTotal = comparisonPersons.Count();
 
-            _ilog.WriteLine(comparisonTotal + " records");
+            _ilog.WriteLine(comparisonTotal + " records", 2);
 
             foreach (var cp in comparisonPersons)
-            {
+            { 
                 if (idx % 1000 == 0)
                     _ilog.ProgressUpdate(idx, comparisonTotal, " dupes");
 
@@ -87,7 +87,7 @@ namespace FTMContextNet.Application.UserServices.CreateDuplicateList
                 idx++;
             }
 
-            _ilog.WriteLine("Found: " + groupCollection.Groups.Count());
+            _ilog.WriteLine("Found: " + groupCollection.Groups.Count(), 2);
 
             groupCollection.SetAggregates();
 
@@ -106,6 +106,11 @@ namespace FTMContextNet.Application.UserServices.CreateDuplicateList
             }
 
             _persistedCacheRepository.AddDupeEntrys(tp, _auth.GetUser());
+
+
+           // var importId = _persistedImportCacheRepository.GetCurrentImportId();
+
+            //_persistedImportCacheRepository.SetDupesProcessed(importId);
         }
     }
 }

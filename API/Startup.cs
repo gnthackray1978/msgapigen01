@@ -1,176 +1,176 @@
 ﻿
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Api.Types;
-using Api.Models;
-using Api.Types.DNAAnalyse;
-using Api.Types.ADB;
-using Api.Types.Images;
-using Api.Types.Diagrams;
-using Api.Schema.SubQueries;
-using Api.Types.Blog;
-using ConfigHelper;
-using MSGSharedData.Data.Services;
-using MSGSharedData.Data.Services.interfaces.services;
+//using Microsoft.AspNetCore.Builder;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Api.Types;
+//using Api.Models;
+//using Api.Types.DNAAnalyse;
+//using Api.Types.ADB;
+//using Api.Types.Images;
+//using Api.Types.Diagrams;
+//using Api.Schema.SubQueries;
+//using Api.Types.Blog;
+//using ConfigHelper;
+//using MSGSharedData.Data.Services;
+//using MSGSharedData.Data.Services.interfaces.services;
 
-namespace Api
-{
-    public class Startup
-    {
-        public IConfiguration Configuration { get; set; }
+//namespace Api
+//{
+//    public class Startup
+//    {
+//        public IConfiguration Configuration { get; set; }
 
-        public Startup(IConfiguration configuration)
-        {
-           // Environment = environment;
-            Configuration = configuration;
-        }
+//        public Startup(IConfiguration configuration)
+//        {
+//           // Environment = environment;
+//            Configuration = configuration;
+//        }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            var msgConfigHelper = new MSGConfigHelper();
+//        public void ConfigureServices(IServiceCollection services)
+//        {
+//            var msgConfigHelper = new MSGConfigHelper();
 
-            services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
+//            services.AddSingleton<IMSGConfigHelper>(msgConfigHelper);
 
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+//            services.AddControllersWithViews();
+//            services.AddRazorPages();
 
-            services.AddMvcCore()//(o=>o.EnableEndpointRouting =false)
-                .AddAuthorization()
-                .AddNewtonsoftJson();
+//            services.AddMvcCore()//(o=>o.EnableEndpointRouting =false)
+//                .AddAuthorization()
+//                .AddNewtonsoftJson();
             
-            #region cors and auth
+//            #region cors and auth
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//            services.AddAuthentication(options =>
+//            {
+//                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            })
-            .AddJwtBearer(o =>
-            {
-                o.SecurityTokenValidators.Clear();
-                o.SecurityTokenValidators.Add(new GoogleTokenValidator());
-            });
+//            })
+//            .AddJwtBearer(o =>
+//            {
+//                o.SecurityTokenValidators.Clear();
+//                o.SecurityTokenValidators.Add(new GoogleTokenValidator());
+//            });
 
-            string[] o = { msgConfigHelper.ClientURLs };
+//            string[] o = { msgConfigHelper.ClientURLs };
 
-            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
-                o = msgConfigHelper.ClientURLs.Split(' ');
+//            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
+//                o = msgConfigHelper.ClientURLs.Split(' ');
 
-            //5003 was the client
-            services.AddCors(options =>
-            {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins(o)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
+//            //5003 was the client
+//            services.AddCors(options =>
+//            {
+//                // this defines a CORS policy called "default"
+//                options.AddPolicy("default", policy =>
+//                {
+//                    policy.WithOrigins(o)
+//                        .AllowAnyHeader()
+//                        .AllowAnyMethod();
+//                });
+//            });
 
-            #endregion
+//            #endregion
 
-            //services.AddSingleton(s => 
-            //    new MainSchema( new FuncServiceProvider(
-            //        type => (IGraphType)s.GetRequiredService(type))));
+//            //services.AddSingleton(s => 
+//            //    new MainSchema( new FuncServiceProvider(
+//            //        type => (IGraphType)s.GetRequiredService(type))));
 
-            #region AddHttpClient services
-            services.AddHttpClient<IClaimRepository, ClaimRepository>();
-            services.AddHttpClient<ISiteListRepository, SiteListRepository>();
-            services.AddHttpClient<IFunctionListRepository, SiteFunctionRepository>();
-            services.AddHttpClient<IWillListRepository, WillListRepository>();
-            services.AddHttpClient<IDNAAnalyseListRepository, DNAAnalyseRepository>();
-            services.AddHttpClient<IADBRepository, ADBRepository>();
-            services.AddHttpClient<IPhotoListRepository, PhotoListRepository>();
-            services.AddHttpClient<IDiagramRepository, DiagramRepository>();
-            services.AddHttpClient<IBlogRepository, BlogRepository>();
-            #endregion
+//            #region AddHttpClient services
+//            services.AddHttpClient<IClaimRepository, ClaimRepository>();
+//            services.AddHttpClient<ISiteListRepository, SiteListRepository>();
+//            services.AddHttpClient<IFunctionListRepository, SiteFunctionRepository>();
+//            services.AddHttpClient<IWillListRepository, WillListRepository>();
+//            services.AddHttpClient<IDNAAnalyseListRepository, DNAAnalyseRepository>();
+//            services.AddHttpClient<IADBRepository, ADBRepository>();
+//            services.AddHttpClient<IPhotoListRepository, PhotoListRepository>();
+//            services.AddHttpClient<IDiagramRepository, DiagramRepository>();
+//            services.AddHttpClient<IBlogRepository, BlogRepository>();
+//            #endregion
 
-            //inherit from ObjectGraphType
-            //  services.AddSingleton<ClaimQuery>();
-            //  services.AddSingleton<SiteQuery>();
-            //  services.AddSingleton<SiteFunctionQuery>();
-            //   services.AddSingleton<WillQuery>();
-            // services.AddSingleton<DNAQuery>();
-            // services.AddSingleton<ADBQuery>();
-            //  services.AddSingleton<ImageQuery>();
-            //  services.AddSingleton<DiagramQuery>();
-            //  services.AddSingleton<BlogQuery>();
-
-
-
-            //   AddDomainSingletons(services); 
-
-            //inherit from schema
-            //   services.AddSingleton<MainSchema>();
-
-            //  services.AddControllers().AddNewtonsoftJson();
-
-            services.AddGraphQLServer()
-                .AddQueryType<WillQuery>();
-
-        }
-
-        private static void AddDomainSingletons(IServiceCollection services)
-        {
-            services.AddSingleton<ApiImagesType>();
-            services.AddSingleton<ApiParentImagesType>();
-            services.AddSingleton<MSGClaimType>();
-          //  services.AddSingleton<SiteType>();
-         //   services.AddSingleton<SiteFunctionType>();
-            services.AddSingleton<WillType>();
-            services.AddSingleton<BlogType>();
-
-            services.AddSingleton<FTMPersonLocationType>();
-            services.AddSingleton<FTMPersonSummaryType>();
-            services.AddSingleton<FTMLatLngType>();
-            services.AddSingleton<FTMViewType>();
-            services.AddSingleton<TreeRecType>();
-            services.AddSingleton<PersonOfInterestType>();
-            services.AddSingleton<DupeType>();
-
-            services.AddSingleton<ADBMarriageType>();
-            services.AddSingleton<ADBPersonType>();
-            services.AddSingleton<ADBSourceType>();
-            services.AddSingleton<ADBParishType>();
-            services.AddSingleton<ADBISourceType>();
+//            //inherit from ObjectGraphType
+//            //  services.AddSingleton<ClaimQuery>();
+//            //  services.AddSingleton<SiteQuery>();
+//            //  services.AddSingleton<SiteFunctionQuery>();
+//            //   services.AddSingleton<WillQuery>();
+//            // services.AddSingleton<DNAQuery>();
+//            // services.AddSingleton<ADBQuery>();
+//            //  services.AddSingleton<ImageQuery>();
+//            //  services.AddSingleton<DiagramQuery>();
+//            //  services.AddSingleton<BlogQuery>();
 
 
-            services.AddSingleton<ADBISourceType>();
 
-            services.AddSingleton<AncestorNodeType>();
-            services.AddSingleton<DescendantNodeType>();
+//            //   AddDomainSingletons(services); 
+
+//            //inherit from schema
+//            //   services.AddSingleton<MainSchema>();
+
+//            //  services.AddControllers().AddNewtonsoftJson();
+
+//            services.AddGraphQLServer()
+//                .AddQueryType<WillQuery>();
+
+//        }
+
+//        private static void AddDomainSingletons(IServiceCollection services)
+//        {
+//            services.AddSingleton<ApiImagesType>();
+//            services.AddSingleton<ApiParentImagesType>();
+//            services.AddSingleton<MSGClaimType>();
+//          //  services.AddSingleton<SiteType>();
+//         //   services.AddSingleton<SiteFunctionType>();
+//            services.AddSingleton<WillType>();
+//            services.AddSingleton<BlogType>();
+
+//            services.AddSingleton<FTMPersonLocationType>();
+//            services.AddSingleton<FTMPersonSummaryType>();
+//            services.AddSingleton<FTMLatLngType>();
+//            services.AddSingleton<FTMViewType>();
+//            services.AddSingleton<TreeRecType>();
+//            services.AddSingleton<PersonOfInterestType>();
+//            services.AddSingleton<DupeType>();
+
+//            services.AddSingleton<ADBMarriageType>();
+//            services.AddSingleton<ADBPersonType>();
+//            services.AddSingleton<ADBSourceType>();
+//            services.AddSingleton<ADBParishType>();
+//            services.AddSingleton<ADBISourceType>();
+
+
+//            services.AddSingleton<ADBISourceType>();
+
+//            services.AddSingleton<AncestorNodeType>();
+//            services.AddSingleton<DescendantNodeType>();
 
             
-        }
+//        }
 
-        public void Configure(IApplicationBuilder app)
-        {
+//        public void Configure(IApplicationBuilder app)
+//        {
             
 
-            //app.UseCors("default");
-            //app.UseAuthentication();
+//            //app.UseCors("default");
+//            //app.UseAuthentication();
 
-            //app.UseWebSockets();
+//            //app.UseWebSockets();
 
-            //app.UseRouting();
-            //app.UseAuthorization();
+//            //app.UseRouting();
+//            //app.UseAuthorization();
 
-            //app.UseDefaultFiles();
+//            //app.UseDefaultFiles();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller}/{action=Index}/{id?}");
-            //    endpoints.MapRazorPages();
-            //});
+//            //app.UseEndpoints(endpoints =>
+//            //{
+//            //    endpoints.MapControllerRoute(
+//            //        name: "default",
+//            //        pattern: "{controller}/{action=Index}/{id?}");
+//            //    endpoints.MapRazorPages();
+//            //});
 
-        }
-    }
-}
+//        }
+//    }
+//}

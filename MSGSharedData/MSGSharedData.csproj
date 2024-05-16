@@ -19,8 +19,8 @@
     <PackageReference Include="MSG.CommonTypes" Version="1.0.1" />
     <PackageReference Include="MSG.ConfigHelper" Version="1.0.4" />
     <PackageReference Include="MSG.GoogleMapsHelpers" Version="1.1.8" />
-    <PackageReference Include="MSG.LoggingLib" Version="1.0.0" />
-    <PackageReference Include="MSG.QuickGed" Version="1.0.1" />
+    <PackageReference Include="MSG.LoggingLib" Version="1.0.1" />
+    <PackageReference Include="MSG.QuickGed" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,7 +33,7 @@ public class CreatePersonOrigin : IRequestHandler<CreatePersonOriginListCommand,
             return CommandResult.Fail(CommandResultType.Unauthorized);
         }
 
-        _ilog.WriteLine("Executing Create Person Origin");
+        _ilog.WriteLine("Setting Person Tree Origin", 2);
 
         await Task.Run(()=>_persistedCacheRepository.CreatePersonOriginEntries(_importCacheRepository.GetCurrentImportId(), _auth.GetUser()), cancellationToken);
 

@@ -8,6 +8,7 @@ using MediatR;
 using MSG.CommonTypes;
 using FTMContextNet.Data.Repositories.GedProcessing;
 using FTMContextNet.Data.Repositories.TreeAnalysis;
+using System;
 
 namespace FTMContextNet.Application.UserServices.DeleteImport
 {
@@ -32,30 +33,35 @@ namespace FTMContextNet.Application.UserServices.DeleteImport
             _auth = auth;
         }
 
-        public void Execute()
+        public void Execute(int importId)
         {
-             
-            var importId = _persistedImportCacheRepository.GetCurrentImportId();
+            if(importId==0) 
+                importId = _persistedImportCacheRepository.GetCurrentImportId();
             
-            _ilog.WriteLine("Deleting persons for import id: " + importId);
+            //if(importId == 1)
+            //{
+            //    return;
+            //}
+
+            _ilog.WriteLine("Deleting persons for import id: " + importId,2);
             _persistedCacheRepository.DeletePersons(importId);
 
-            _ilog.WriteLine("Deleting relationships for import id: " + importId);
+            _ilog.WriteLine("Deleting relationships for import id: " + importId, 2);
             _persistedCacheRepository.DeleteRelationships(importId);
 
-            _ilog.WriteLine("Deleting dupes for import id: " + importId);
+            _ilog.WriteLine("Deleting dupes for import id: " + importId, 2);
             _persistedCacheRepository.DeleteDupes(importId);
 
-            _ilog.WriteLine("Deleting origins for import id: " + importId);
-            _persistedCacheRepository.DeleteOrigins(importId);
+            _ilog.WriteLine("Deleting origins for import id: " + importId, 2);
+            _persistedCacheRepository.DeleteOrigins(importId);  
 
-            _ilog.WriteLine("Deleting record map groups for import id: " + importId);
+            _ilog.WriteLine("Deleting record map groups for import id: " + importId, 2);
             _persistedCacheRepository.DeleteRecordMapGroups(importId);
 
-            _ilog.WriteLine("Deleting tree groups for import id: " + importId);
+            _ilog.WriteLine("Deleting tree groups for import id: " + importId, 2);
             _persistedCacheRepository.DeleteTreeGroups(importId);
 
-            _ilog.WriteLine("Deleting tree records for import id: " + importId);
+            _ilog.WriteLine("Deleting tree records for import id: " + importId, 2);
             _persistedCacheRepository.DeleteTreeRecord(importId);
 
             
@@ -70,8 +76,14 @@ namespace FTMContextNet.Application.UserServices.DeleteImport
             {
                 return CommandResult.Fail(CommandResultType.Unauthorized);
             }
-             
-            await Task.Run(Execute, cancellationToken);
+
+            var exists = _persistedImportCacheRepository.ImportExists(request.ImportId);
+
+            //todo magic strings....
+            if (!exists) return CommandResult.Fail(CommandResultType.RecordExists, request.ImportId + ": Record doesnt exist");
+
+         
+            await Task.Run(()=>Execute(request.ImportId), cancellationToken);
 
             return CommandResult.Success();
         }

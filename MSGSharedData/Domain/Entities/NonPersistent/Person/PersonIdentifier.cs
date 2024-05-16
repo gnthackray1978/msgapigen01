@@ -33,6 +33,18 @@ namespace FTMContextNet.Domain.Entities.NonPersistent.Person
             if (other == null) 
                 return false;
 
+            bool isMat = this.Origin.ToLower().Contains("|mat");
+            bool isPat = this.Origin.ToLower().Contains("|pat");
+
+            bool isOtherSideMat = other.Origin.ToLower().Contains("|mat");
+            bool isOtherSidePat = other.Origin.ToLower().Contains("|pat");
+
+            if (isMat && isOtherSidePat)
+                return false;
+
+            if (isPat && isOtherSideMat)
+                return false;
+
             if (this.Origin == other.Origin)
                 return false;
 

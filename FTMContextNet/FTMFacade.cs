@@ -88,17 +88,17 @@ namespace FTMContextNet
         /// <summary>
         /// Updates place entry in cacheData.FTMPlaceCache with result we got back from google geocode.
         /// </summary>
-        public void WriteGeoCodedData(GeoCodeResultModel value)
-        {
-           // var persistedCacheRepository = new PersistedCacheRepository(PersistedCacheContext.Create(_iMSGConfigHelper), _outputHandler);
+        //public void WriteGeoCodedData(GeoCodeResultModel value)
+        //{
+        //   // var persistedCacheRepository = new PersistedCacheRepository(PersistedCacheContext.Create(_iMSGConfigHelper), _outputHandler);
 
-            var placeRepository = new PlaceRepository(new PlacesContext(_iMSGConfigHelper), _outputHandler);
+        //    var placeRepository = new PlaceRepository(new PlacesContext(_iMSGConfigHelper), _outputHandler);
 
 
-            var service = new UpdatePlaceGeoData(placeRepository, _outputHandler, _mapper,new Auth());
+        //    var service = new UpdatePlaceGeoData(placeRepository, _outputHandler, _mapper,new Auth());
              
-            service.Handle(new UpdatePlaceGeoDataCommand(value.placeid, value.results), new CancellationToken(false)).Wait();
-        }
+        //    service.Handle(new UpdatePlaceGeoDataCommand(value.placeid, value.results), new CancellationToken(false)).Wait();
+        //}
 
         /// <summary>
         /// Updates PlaceFormatting field of the place cache table
@@ -121,7 +121,9 @@ namespace FTMContextNet
 
             var persistedCacheRepository = new PersistedCacheRepository(SQLitePersistedCacheContext.Create(_iMSGConfigHelper, _outputHandler), _outputHandler);
 
-            var service = new UpdatePersonLocations(placeRepository, persistedCacheRepository, _outputHandler, new Auth());
+            var persistedImportRepository = new PersistedImportCacheRepository(SQLitePersistedCacheContext.Create(_iMSGConfigHelper, _outputHandler), _outputHandler);
+
+            var service = new UpdatePersonLocations(placeRepository, persistedCacheRepository, persistedImportRepository, _outputHandler, new Auth());
 
             return service.Handle(new UpdatePersonLocationsCommand(),new CancellationToken(false)).Result;
         }
@@ -164,7 +166,7 @@ namespace FTMContextNet
             if (CommandResult.CommandResultType != CommandResultType.Success)
                 return CommandResult;
             
-            var service = new CreatePersonLocationsInCache(placeRepository,
+            var service = new CreatePersonLocationsInCache(placeRepository, persistedImportedCacheRepository,
                 placeLibCoordCache,
                 personPlaceCache,
                 placeCache,
@@ -191,7 +193,7 @@ namespace FTMContextNet
 
             var tp = new GetGedFiles(persistedCacheRepository, _outputHandler, _mapper);
 
-            return tp.Handle(new GetGedFilesQuery(), new CancellationToken(false)).Result;
+            return tp.Handle(new GetGedFilesQuery(false), new CancellationToken(false)).Result;
         }
 
         public CommandResult CreateImport(CreateImportModel createImportModel)
@@ -211,7 +213,7 @@ namespace FTMContextNet
 
             var tp = new UpdateImportStatus(persistedCacheRepository, _outputHandler, new Auth());
 
-            return tp.Handle(new UpdateImportStatusCommand(importId),new CancellationToken(false)).Result;
+            return tp.Handle(new UpdateImportStatusCommand(importId,false),new CancellationToken(false)).Result;
         }
 
         public CommandResult DeleteImport(int importId)
@@ -229,7 +231,7 @@ namespace FTMContextNet
             var d = new DeleteImportService(persistedCacheRepository, persistedImportedCacheRepository, gr, auth,
                 _outputHandler);
 
-            d.Handle(new DeleteTreeCommand(), new CancellationToken(false)).Wait();
+            d.Handle(new DeleteTreeCommand(importId), new CancellationToken(false)).Wait(); 
 
             var tp = new DeleteImport(persistedImportedCacheRepository, _outputHandler, new Auth());
 

@@ -23,7 +23,7 @@ namespace PlaceLibNet.Application.Services.GetPlaceInfoService
 
         public async Task<PlaceInfoModel> Handle(GetPlaceInfoQuery request, CancellationToken cancellationToken)
         {
-            _iLog.WriteLine("Executing GetInfoService");
+            _iLog.WriteLine("Refreshed Place Info",1);
 
             var infoModal = new PlaceInfoModel();
 

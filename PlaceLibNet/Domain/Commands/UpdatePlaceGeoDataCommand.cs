@@ -6,13 +6,13 @@ namespace PlaceLibNet.Domain.Commands;
 
 public class UpdatePlaceGeoDataCommand : IRequest<CommandResult>
 {
-    public UpdatePlaceGeoDataCommand(int placeId, string results)
+    public UpdatePlaceGeoDataCommand(int amount, int delay)
     {
-        PlaceId = placeId;
-        Results = results;
+        Amount = amount;
+        Delay = delay;
     }
 
-    public int PlaceId { get; private set; }
+    public int Amount { get; private set; }
 
-    public string Results { get; private set; }
+    public int Delay { get; private set; }
 }

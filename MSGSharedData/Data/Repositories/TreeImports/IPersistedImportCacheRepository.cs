@@ -12,6 +12,21 @@ public interface IPersistedImportCacheRepository
 
     string SelectImport(int importId, int userId);
 
+    string SetDupesProcessed(int importId);
+
+    string SetPersonsProcessed(int importId);
+
+    string SetMissingLocationsProcessed(int importId);
+
+    string SetGeocodingProcessed(int importId);
+
+    string SetCCProcessed(int importId);
+
+
+
+
+
+
     bool ImportExists(string fileName, string fileSize, int userId);
 
     bool ImportExists(int importId);
@@ -19,6 +34,8 @@ public interface IPersistedImportCacheRepository
     void DeleteImport(int importId);
 
     List<TreeImport> GetImportData();
+
+    List<TreeImport> GetImportData(bool selectedOnly);
 
     string GedFileName();
 }

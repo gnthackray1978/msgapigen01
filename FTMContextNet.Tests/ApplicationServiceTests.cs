@@ -170,7 +170,15 @@ public class ApplicationServiceTests
         var imports = new List<TreeImport>
         {
             new (){UserId =1, Selected =false, DateImported = "1 Jan 2023", FileName = "x", FileSize = "1", Id = 2},
-            new (){UserId =2, Selected =true,DateImported = "2 Jan 2023", FileName = "x", FileSize = "1", Id = 1}
+            new ()
+            {
+                UserId =2, Selected =true,DateImported = "2 Jan 2023", FileName = "x", FileSize = "1", Id = 1,
+                CCProcessed = new DateTime(2000,1,1),
+                DupesProcessed = new DateTime(2001,1,1),
+                GeocodingProcessed = new DateTime(2002,1,1),
+                MissingLocationsProcessed = new DateTime(2003,1,1),
+                PersonsProcessed = new DateTime(2004,1,1)
+            }
         };
 
         _mockPersistedImportCacheRepository
@@ -179,12 +187,14 @@ public class ApplicationServiceTests
 
         var gis = new GetGedFiles(_mockPersistedImportCacheRepository.Object, _mockLog.Object, mapper);
 
-        var mod = gis.Handle(new GetGedFilesQuery(), new CancellationToken(false)).Result;
+        var mod = gis.Handle(new GetGedFilesQuery(false), new CancellationToken(false)).Result;
 
         DateTime.TryParse("1 Jan 2023", out DateTime dt);
 
         mod[0].DateImported.Should().Be(dt);
+        mod[0].PersonsProcessed.Should().Be(null);
 
+        mod[1].PersonsProcessed.Should().Be(new DateTime(2004, 1, 1));
         mod[1].Selected.Should().Be(true);
         mod[1].UserId.Should().Be(2);
 

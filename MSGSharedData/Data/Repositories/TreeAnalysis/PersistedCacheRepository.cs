@@ -291,7 +291,7 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
 
             }
 
-            _iLog.WriteLine("Created " + _persistedCacheContext.BulkInsertTreeRecord(userId, treeRecords) + " tree records");
+            _iLog.WriteLine("Created " + _persistedCacheContext.BulkInsertTreeRecord(userId, treeRecords) + " tree records",2);
         }
 
         #region inserts
@@ -327,12 +327,17 @@ namespace FTMContextNet.Data.Repositories.TreeAnalysis
             _persistedCacheContext.UpdateRecordMapGroupIds();
         }
 
+        public int LastId()
+        {
+            return _persistedCacheContext.FTMPersonView.Max(m => m.Id);
+        }
+
         public void InsertPersons(int importId, int userId, List<Person> persons)
         {
-            int nextId = 1;
+            //int nextId = 1;
             
-            if(_persistedCacheContext.FTMPersonView.Any())
-                nextId= _persistedCacheContext.FTMPersonView.Max(m => m.Id) + 1;
+            //if(_persistedCacheContext.FTMPersonView.Any())
+            //    nextId= _persistedCacheContext.FTMPersonView.Max(m => m.Id) + 1;
 
             var ftmPersons = persons.Select(person => FTMPersonView.Create(person)).ToList();
 

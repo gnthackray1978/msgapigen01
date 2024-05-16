@@ -68,9 +68,9 @@ namespace MSGSharedData.Data
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.YearStart).HasColumnName("BirthYearFrom");
+                entity.Property(e => e.YearStart);
 
-                entity.Property(e => e.YearEnd).HasColumnName("BirthYearTo");
+                entity.Property(e => e.YearEnd);
 
                 entity.Property(e => e.Ident).HasMaxLength(500);
 

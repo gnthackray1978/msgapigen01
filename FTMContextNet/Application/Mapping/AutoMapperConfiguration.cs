@@ -44,6 +44,8 @@ namespace FTMContextNet.Application.Mapping
                 .Select(item =>
                 {
                     DateTime.TryParse(item.DateImported, out DateTime dt);
+             
+
 
                     return new ImportModel
                     {
@@ -52,7 +54,12 @@ namespace FTMContextNet.Application.Mapping
                         FileSize = item.FileSize,
                         DateImported = dt,
                         Selected = item.Selected,
-                        UserId = item.UserId
+                        UserId = item.UserId,
+                        DupesProcessed = item.DupesProcessed,
+                        MissingLocationsProcessed = item.MissingLocationsProcessed,
+                        PersonsProcessed = item.PersonsProcessed,
+                        CCProcessed = item.CCProcessed,
+                        GeocodingProcessed = item.GeocodingProcessed
                     };
                 }).ToList();
         }

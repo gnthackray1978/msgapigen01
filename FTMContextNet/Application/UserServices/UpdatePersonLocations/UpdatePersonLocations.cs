@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using FTMContextNet.Data.Repositories.GedImports;
 using MSGIdent;
 using FTMContextNet.Domain.Commands;
 using LoggingLib;
@@ -21,14 +22,20 @@ public class UpdatePersonLocations : IRequestHandler<UpdatePersonLocationsComman
 
     private readonly IPersistedCacheRepository _persistedCacheRepository;
 
+    private readonly IPersistedImportCacheRepository _persistedImportCacheRepository;
+
     private readonly IAuth _auth;
 
     private readonly Ilog _ilog;
 
     public UpdatePersonLocations(IPlaceRepository placeRepository, 
-        IPersistedCacheRepository persistedCacheRepository, Ilog logger, IAuth auth)
+        IPersistedCacheRepository persistedCacheRepository,
+        IPersistedImportCacheRepository persistedImportCacheRepository,
+        Ilog logger, IAuth auth)
     {
         _persistedCacheRepository = persistedCacheRepository;
+
+        _persistedImportCacheRepository = persistedImportCacheRepository;
 
         _placeRepository = placeRepository;
 
@@ -47,7 +54,7 @@ public class UpdatePersonLocations : IRequestHandler<UpdatePersonLocationsComman
 
         placeCache.Load();
 
-        _ilog.WriteLine("UpdatePersonLocations: " + locations.Count + " locations");
+        _ilog.WriteLine("UpdatePersonLocations: " + locations.Count + " locations", 2);
 
         int count = 0;
 
@@ -100,9 +107,11 @@ public class UpdatePersonLocations : IRequestHandler<UpdatePersonLocationsComman
 
         timer.Stop();
 
-        _ilog.WriteLine("Time taken: " + timer.Elapsed.ToString(@"m\:ss\.fff"));
+        _ilog.WriteLine("Time taken: " + timer.Elapsed.ToString(@"m\:ss\.fff"),2);
      
-        _ilog.WriteLine("found " + count + "locations");
+        _ilog.WriteLine("found " + count + "locations", 2);
+
+        _persistedImportCacheRepository.SetCCProcessed(_persistedImportCacheRepository.GetCurrentImportId());
     }
 
     public async Task<CommandResult> Handle(UpdatePersonLocationsCommand request, CancellationToken cancellationToken)
@@ -112,7 +121,7 @@ public class UpdatePersonLocations : IRequestHandler<UpdatePersonLocationsComman
             return CommandResult.Fail(CommandResultType.Unauthorized);
         }
          
-        _ilog.WriteLine("UpdatePersonLocations started");
+        _ilog.WriteLine("UpdatePersonLocations started",2);
 
         
 

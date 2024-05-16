@@ -47,10 +47,13 @@ namespace ImportAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(GeoCodeResultModel value)
         {
-      //      _facade.WriteGeoCodedData(value);
-          //Update Geocoded data to the place cache table.
+            //      _facade.WriteGeoCodedData(value);
+            //Update Geocoded data to the place cache table.
+            Serilog.Log.Information("GeoCodeController Post");
 
-          var r = await _mediator.Send(new UpdatePlaceGeoDataCommand(value.placeid, value.results),
+            return Ok(1);
+
+            var r = await _mediator.Send(new UpdatePlaceGeoDataCommand(value.Amount, value.Delay),
               new CancellationToken(false));
 
             return this.ConvertResult(r);
@@ -62,6 +65,10 @@ namespace ImportAPI.Controllers
             // Update place cache lat long
             // Update place cache county
             // Update place cache bad data where appropriate
+            Serilog.Log.Information("GeoCodeController Put");
+
+            return Ok(1);
+
 
             var r = await _mediator.Send(new UpdatePlaceMetaDataCommand(),
                 new CancellationToken(false));

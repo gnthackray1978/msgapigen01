@@ -60,9 +60,9 @@ namespace FTMContextNet.Data.Repositories.GedProcessing
 
         #endregion
 
-        public GedDb ParseLabelledTree(string path)
+        public GedDb ParseLabelledTree(string path, int lastId)
         {
-            var gedDb = _gedParser.Parse(path);
+            var gedDb = _gedParser.Parse(path,lastId);
 
             var rootPersons = gedDb.Persons.Where(w => w.IsRootPerson).ToList();
             // if there are no root persons then we need to 

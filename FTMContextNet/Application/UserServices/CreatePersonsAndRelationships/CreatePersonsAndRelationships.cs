@@ -49,6 +49,8 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
                 return CommandResult.Fail(CommandResultType.Unauthorized);
             }
 
+            _currentImportId = _persistedImportCacheRepository.GetCurrentImportId();
+
             if (IsTreeImported())
             {
                 return CommandResult.Fail(CommandResultType.RecordExists);
@@ -56,10 +58,9 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
 
             //check if tree has been imported already if so then abort.
 
-            _ilog.WriteLine("Executing CreatePersonsAndRelationships Handler");
+            _ilog.WriteLine("Creating Persons and Relationships", 2);
 
-            _currentImportId = _persistedImportCacheRepository.GetCurrentImportId();
-
+           
             _currentUserId = _auth.GetUser();
 
 
@@ -68,6 +69,8 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
             AddTreeMetaData();
 
             await AddGroups(cancellationToken);
+
+            _persistedImportCacheRepository.SetPersonsProcessed(_currentImportId);
 
             return CommandResult.Success();
         }
@@ -83,15 +86,15 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
             {
                 string path = Path.Combine(_iMSGConfigHelper.GedPath, _persistedImportCacheRepository.GedFileName());
 
-                _ilog.WriteLine("Parsing Tree");
+                _ilog.WriteLine("Parsing Tree", 2);
 
-                var gedDb = _gedRepository.ParseLabelledTree(path);
+                var gedDb = _gedRepository.ParseLabelledTree(path, _persistedCacheRepository.LastId()+1);
                 
-                _ilog.WriteLine("Adding Person Details");
+                _ilog.WriteLine("Adding Person Details", 2);
 
                 _persistedCacheRepository.InsertPersons(_currentImportId, _currentUserId, gedDb.Persons);
 
-                _ilog.WriteLine("Adding Relationships");
+                _ilog.WriteLine("Adding Relationships", 2);
 
                 //var p1 = gedDb.Persons.FirstOrDefault(w => w.FamilyName == "Douglas" && w.Forename == "John");
 
@@ -102,10 +105,11 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
 
                 _persistedCacheRepository.InsertRelationships(_currentImportId, _currentUserId, gedDb.Relationships);
 
-                _ilog.WriteLine("Adding Person Tree Origins");
+                _ilog.WriteLine("Adding Person Tree Origins", 2);
 
                 _persistedCacheRepository.CreatePersonOriginEntries(_currentImportId, _currentUserId);
 
+                
             }, cancellationToken);
         }
 
@@ -117,22 +121,22 @@ namespace FTMContextNet.Application.UserServices.CreatePersonsAndRelationships
 
             await Task.Run(() =>
             {
-                _ilog.WriteLine("Adding Tree Groups");
+                _ilog.WriteLine("Adding Tree Groups", 2);
 
                 _persistedCacheRepository.InsertTreeGroups(groupPersons, _currentImportId, _currentUserId);
 
-                _ilog.WriteLine("Adding Tree Group Mappings");
+                _ilog.WriteLine("Adding Tree Group Mappings", 2);
 
                 _persistedCacheRepository.InsertTreeRecordMapGroup(groups, _currentImportId, _currentUserId);
 
-                _ilog.WriteLine("Finished Create Tree Group Mappings");
+                _ilog.WriteLine("Finished Create Tree Group Mappings",2);
 
             }, cancellationToken);
         }
 
         private void AddTreeMetaData()
         {
-            _ilog.WriteLine("Creating Tree Records");
+            _ilog.WriteLine("Creating Tree Records",2);
 
             _persistedCacheRepository.PopulateTreeRecordFromCache(_currentUserId, _currentImportId);
         }

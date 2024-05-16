@@ -6,6 +6,7 @@ using ImportAPI.Hub;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json.Linq;
 
 namespace ImportAPI.Controllers
 {
@@ -29,6 +30,10 @@ namespace ImportAPI.Controllers
         [Route("/data/persons/locations")]
         public async Task<IActionResult> AddPersonLocations()
         {
+            Serilog.Log.Information("AddPersonLocations");
+
+            return Ok(1);
+
             var r = await _mediator
                 .Send(new CreatePersonLocationsCommand()
                     , new CancellationToken(false));
@@ -40,6 +45,10 @@ namespace ImportAPI.Controllers
         [Route("/data/persons/locations")]
         public async Task<IActionResult> UpdatePersonLocations()
         {
+            Serilog.Log.Information("UpdatePersonLocations");
+
+            return Ok(1);
+
             var r = await _mediator
                 .Send(new UpdatePersonLocationsCommand()
                     , new CancellationToken(false));
@@ -51,6 +60,10 @@ namespace ImportAPI.Controllers
         [Route("/data/persons/add")]
         public async Task<IActionResult> AddPersons()
         {
+            Serilog.Log.Information("AddPersons");
+
+            return Ok(1);
+
             var r = await _mediator
                 .Send(new CreatePersonAndRelationshipsCommand()
                     , new CancellationToken(false));
@@ -62,6 +75,10 @@ namespace ImportAPI.Controllers
         [Route("/data/dupes")]
         public async Task<IActionResult> AddDupes()
         {
+            Serilog.Log.Information("AddDupes");
+
+            return Ok(1);
+
             var r = await _mediator
                 .Send(new CreateDuplicateListCommand(), new CancellationToken(false));
 

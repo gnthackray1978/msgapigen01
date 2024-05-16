@@ -39,13 +39,9 @@ public class UpdateImportStatus : IRequestHandler<UpdateImportStatusCommand, Com
         if (!exists) return CommandResult.Fail(CommandResultType.RecordExists, request.ImportId + ": Record doesnt exist");
 
 
-        var id = "";
-
-        await Task.Run(() =>
-        {
-            id = _persistedImportCacheRepository.SelectImport(request.ImportId, _auth.GetUser());
-        }, cancellationToken);
-
+        string id = await Task.Run(() => request.GeoCodeComplete ? 
+            _persistedImportCacheRepository.SetGeocodingProcessed(request.ImportId) : 
+            _persistedImportCacheRepository.SelectImport(request.ImportId, _auth.GetUser()), cancellationToken);
 
         return CommandResult.SuccessWithId(id);
     }

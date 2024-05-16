@@ -29,7 +29,7 @@ namespace FTMContextNet.Application.UserServices.GetInfoList
 
         public async Task<InfoModel> Handle(GetInfoServiceQuery request, CancellationToken cancellationToken)
         {
-            _iLog.WriteLine("Executing GetInfoService");
+            _iLog.WriteLine("Refreshed Person Info", 1);
 
             var infoModal = new InfoModel();
 

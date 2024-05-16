@@ -21,10 +21,18 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
     <PackageReference Include="MSG.ConfigHelper" Version="1.0.4" />
+    <PackageReference Include="MSG.LoggingLib" Version="1.0.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.22.0" />    
+    <PackageReference Include="Serilog.Expressions" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FTMContextNet\FTMContextNet.csproj" />
+    <ProjectReference Include="..\Geocoder\Geocoder.csproj" />
     <ProjectReference Include="..\MSGSharedData\MSGSharedData.csproj" />
   </ItemGroup>
 

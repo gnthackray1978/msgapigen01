@@ -10,8 +10,14 @@ public interface IPlaceRepository
     List<PlaceSearchCoordSubset> GetPlaceLibCoords();
     int GetGeoCodeCacheSize();
     int GetUnsearchedCount();
-    void InsertIntoCache(IEnumerable<PlaceCache> placeCaches);
+    void InsertPlacesIntoCache(IEnumerable<PlaceCache> placeCaches);
+
+    void InsertPlaceIntoCache(PlaceCache place);
+
     void UpdateCacheEntry(int id, string name);
+
+    void UpdateCacheEntries(IEnumerable<PlaceCache> cacheEntries);
+
     void SetPlaceGeoData(int id, string results);
 
     /// <summary>
@@ -19,6 +25,7 @@ public interface IPlaceRepository
     /// fill out place cache fields
     /// </summary>
     void SetGeolocatedResult();
+
 
     void SetCounties();
     List<PlaceLookup> GetCachedPlaces();

@@ -101,9 +101,12 @@ namespace PlaceLibNet.Data.Contexts
             using var connection = new SqlConnection(_configObj.MSGGenDB01);
 
             var command = connection.CreateCommand();
-            command.CommandText = "UPDATE ukp.PlaceCache SET Lat = @Lat, Long = @Lon, BadData = @BadData, County = @County, Country = @Country, Src = @Src WHERE Id = @Id;";
+            command.CommandText = "UPDATE ukp.PlaceCache SET Lat = @Lat, Long = @Lon, BadData = @BadData, County = @County, Country = @Country, Src = @Src, JSONResult =@JSONResult, DateCreated =@DateCreated, Searched =@Searched WHERE Id = @Id;";
  
             connection.Open();
+
+            string dateStr = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " " +
+                             DateTime.Today.Hour + ":" + DateTime.Today.Minute + ":" + DateTime.Today.Second + ".000";
 
             using var transaction = connection.BeginTransaction();
 
@@ -111,13 +114,15 @@ namespace PlaceLibNet.Data.Contexts
             command.Prepare();
 
             command.Parameters.Add(new SqlParameter { ParameterName = "@Id", Value = placeCache.Id });
-            command.Parameters.Add(new SqlParameter { ParameterName = "@BadData", Value = 0 });
+            command.Parameters.Add(new SqlParameter { ParameterName = "@BadData", Value = placeCache.BadData });
             command.Parameters.Add(new SqlParameter { ParameterName = "@Lat", Value = placeCache.Lat });
             command.Parameters.Add(new SqlParameter { ParameterName = "@Lon", Value = placeCache.Long });
             command.Parameters.Add(new SqlParameter { ParameterName = "@Src", Value = placeCache.Src });
             command.Parameters.Add(new SqlParameter { ParameterName = "@County", Value = placeCache.County });
             command.Parameters.Add(new SqlParameter { ParameterName = "@Country", Value = placeCache.Country });
-            
+            command.Parameters.Add(new SqlParameter { ParameterName = "@JSONResult", Value = "[]" });
+            command.Parameters.Add(new SqlParameter { ParameterName = "@DateCreated", Value = dateStr });
+            command.Parameters.Add(new SqlParameter { ParameterName = "@Searched", Value = placeCache.Searched });
             command.ExecuteNonQuery();
 
             transaction.Commit();

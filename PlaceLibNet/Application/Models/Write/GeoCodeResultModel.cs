@@ -2,9 +2,9 @@
 {
     public class GeoCodeResultModel
     {
-        public int placeid { get; set; }
+        public int Amount { get; set; }
 
-        public string results { get; set; }
+        public int Delay { get; set; }
 
     }
 }

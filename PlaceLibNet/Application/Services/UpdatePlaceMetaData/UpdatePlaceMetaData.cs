@@ -11,6 +11,9 @@ using PlaceLibNet.Domain.Commands;
 namespace PlaceLibNet.Application.Services.UpdatePlaceMetaData
 {
     /// <summary>
+    /// shouldn't be needed now!
+    /// these fields are set when geocode has finished.
+    /// 
     /// Update place cache lat long
     /// Update place cache county
     /// Update place cache bad data where appropriate
@@ -40,16 +43,16 @@ namespace PlaceLibNet.Application.Services.UpdatePlaceMetaData
                 return CommandResult.Fail(CommandResultType.Unauthorized);
             }
 
-            _iLog.WriteLine("Executing UpdatePlaceMetaData");
+            _iLog.WriteLine("Updating Place MetaData Started", 2);
 
             await Task.Run(()=>{
 
                 _placeRepository.SetGeolocatedResult();
-                _iLog.WriteLine("Finished - SetGeolocatedResult");
+                _iLog.WriteLine("Geolocations set", 2);
                 _placeRepository.SetCounties();
-                _iLog.WriteLine("Finished - SetCounties");
+                _iLog.WriteLine("Counties set", 2);
             }, cancellationToken);
-            _iLog.WriteLine("Finished UpdatePlaceMetaData");
+            _iLog.WriteLine("Updating Place MetaData Finished", 2);
 
             return CommandResult.Success();
         }

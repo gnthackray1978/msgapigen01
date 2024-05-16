@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FTMContextNet.Data.Repositories.GedImports;
 using MSGIdent;
 using FTMContextNet.Domain.Caching;
 using FTMContextNet.Domain.Commands;
@@ -26,11 +27,14 @@ public class CreatePersonLocationsInCache : IRequestHandler<CreatePersonLocation
 
     private readonly IPlaceLibCoordCache _placeLibCoordCache;
 
+    private readonly IPersistedImportCacheRepository _persistedImportCacheRepository;
+
     private readonly Ilog _logger;
 
     private readonly IAuth _auth;
 
     public CreatePersonLocationsInCache(IPlaceRepository placeRepository,
+        IPersistedImportCacheRepository importCacheRepository,
         IPlaceLibCoordCache placeLibCoordCache,
         IPersonPlaceCache personPlaceCache,
         IPlaceLookupCache placeLookupCache,
@@ -44,6 +48,8 @@ public class CreatePersonLocationsInCache : IRequestHandler<CreatePersonLocation
         _placeRepository = placeRepository;
 
         _placeLookupCache = placeLookupCache;
+
+        _persistedImportCacheRepository = importCacheRepository;
 
         _auth = auth;
 
@@ -96,8 +102,8 @@ public class CreatePersonLocationsInCache : IRequestHandler<CreatePersonLocation
 
      //   var t = _personPlaceCache.Items.Where(w => w.Place.Contains("Hawks")).ToList();
 
-        _logger.WriteLine("Unencoded places in cache: " + unencodedPlacesCount);
-        _logger.WriteLine("Person table locations count: " + _personPlaceCache.Count);
+        _logger.WriteLine("Unencoded places in cache: " + unencodedPlacesCount, 2);
+        _logger.WriteLine("Person table locations count: " + _personPlaceCache.Count, 2);
 
         //search the persons table place entries to see if they already exist in the place cache
         //if they don't exist then add a new placecache entry. 
@@ -110,15 +116,18 @@ public class CreatePersonLocationsInCache : IRequestHandler<CreatePersonLocation
                 Convert(personPlace, _placeLibCoordCache.Search(personPlace.GetComponents(), personPlace.PlaceFormatted))).ToList();
         
         //todo make the repo async
-        await Task.Run(() =>_placeRepository.InsertIntoCache(newCacheEntries),cancellationToken);
+        await Task.Run(() =>_placeRepository.InsertPlacesIntoCache(newCacheEntries),cancellationToken);
 
         timer.Stop();
 
 
-        _logger.WriteLine("new records added: " + newCacheEntries.Count());
+        _logger.WriteLine("new records added: " + newCacheEntries.Count(), 2);
 
-        _logger.WriteLine("Time taken: " + timer.Elapsed.ToString(@"m\:ss\.fff"));
+        _logger.WriteLine("Time taken: " + timer.Elapsed.ToString(@"m\:ss\.fff"), 2);
 
+
+        _persistedImportCacheRepository.SetMissingLocationsProcessed(
+            _persistedImportCacheRepository.GetCurrentImportId());
 
         return CommandResult.Success();
     }

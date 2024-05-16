@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportAPI", "ImportAPI\Impo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSite", "TestSite\TestSite.csproj", "{09FEFE6D-8E18-4B84-A21C-81C56A82B2F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSGSharedData", "MSGSharedData\MSGSharedData.csproj", "{9E9290E6-F383-4093-9456-3085510534C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSGSharedData", "MSGSharedData\MSGSharedData.csproj", "{9E9290E6-F383-4093-9456-3085510534C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geocoder", "Geocoder\Geocoder.csproj", "{A4872EB5-CB42-4F68-96B7-E8BA7F8BA8BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{9E9290E6-F383-4093-9456-3085510534C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E9290E6-F383-4093-9456-3085510534C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E9290E6-F383-4093-9456-3085510534C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4872EB5-CB42-4F68-96B7-E8BA7F8BA8BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4872EB5-CB42-4F68-96B7-E8BA7F8BA8BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4872EB5-CB42-4F68-96B7-E8BA7F8BA8BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4872EB5-CB42-4F68-96B7-E8BA7F8BA8BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

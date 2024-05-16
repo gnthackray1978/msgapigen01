@@ -6,24 +6,48 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using MSGSharedData.Data.Services;
 using MSGSharedData.Data.Services.interfaces.services;
+using AutoMapper;
+using FTMContextNet.Data.Repositories.GedImports;
+using FTMContextNet.Data.Repositories.GedProcessing;
+using FTMContextNet.Data.Repositories.TreeAnalysis;
+using FTMContextNet.Data;
+using FTMContextNet.Domain.Caching;
+using LoggingLib;
+using Microsoft.Extensions.Hosting;
+using MSGIdent;
+using PlaceLibNet.Data.Contexts;
+using PlaceLibNet.Data.Repositories;
+using PlaceLibNet.Domain.Caching;
+using PlaceLibNet.Domain;
+using QuickGed.Domain;
+using QuickGed.Services;
+using System.Reflection;
+using System;
+using FTMContextNet.Application.Mapping;
+using Api.Hub;
+using Api.Controllers;
+using GoogleMapsGeocoding;
 
 namespace Api
 {
-    public class Program
+    public static class RegisterDependentServices
     {
-        public static void Main(string[] args)
+        public static WebApplicationBuilder RegisterServices(this WebApplicationBuilder builder)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Debug()
-                .WriteTo.Console()
-                .WriteTo.File("log.txt")
-                .CreateBootstrapLogger();
+        //    string MyAllowSpecificOrigin = "_myAllowSpecificOrigin";
 
-            Log.Information("Starting up");
+            Serilog.Log.Information("RegisterServices");
 
-            var builder = WebApplication.CreateBuilder(args);
+        //    var builder = WebApplication.CreateBuilder(args);
             var msgConfigHelper = new MSGConfigHelper();
-             
+
+            var azureHelper = new AzureDBHelpers(msgConfigHelper.MSGGenDB01);
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperConfiguration());
+            });
+
             builder.Services.AddAuthorization().AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,6 +61,24 @@ namespace Api
                 o.SecurityTokenValidators.Add(new GoogleTokenValidator());
             });
 
+            string[] o = { msgConfigHelper.ClientURLs };
+
+            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
+                o = msgConfigHelper.ClientURLs.Split(' ');
+
+            builder.Services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins(o)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
+
+
             builder.Services
                 .AddSingleton<IMSGConfigHelper>(msgConfigHelper)
                 .AddSingleton<IWillListRepository, WillListRepository>()
@@ -48,6 +90,24 @@ namespace Api
                 .AddSingleton<IPhotoListRepository, PhotoListRepository>()
                 .AddSingleton<IFunctionListRepository, SiteFunctionRepository>()
                 .AddSingleton<ISiteListRepository, SiteListRepository>()
+                .AddSingleton<INodeTypeCalculator>(new NodeTypeCalculator())
+                .AddSingleton<IMapper>(config.CreateMapper())
+                .AddSingleton<IAuth>(new Auth())
+                .AddSingleton<IPlaceNameFormatter>(new PlaceNameFormatter())
+                .AddSingleton<IMSGConfigHelper>(msgConfigHelper)
+                .AddSingleton<IAzureDBHelpers>(azureHelper)
+                .AddTransient<Ilog, OutputHandler>()
+                .AddTransient<IGedParser, GedParser>()
+                .AddTransient<IGedRepository, GedRepository>()
+                .AddTransient<IPlacesContext, AzurePlacesContext>()
+                .AddTransient<IPersonPlaceCache, PersonPlaceCache>()
+                .AddTransient<IGeocoder,GoogleMapsGeocoding.Geocoder>()
+                .AddTransient<IPersistedCacheContext, AzurePersistedCacheContext>()
+                .AddTransient<IPersistedImportCacheRepository, PersistedImportCacheRepository>()
+                .AddTransient<IPersistedCacheRepository, PersistedCacheRepository>()
+                .AddTransient<IPlaceLibCoordCache, PlaceLibCoordCache>()
+                .AddTransient<IPlaceLookupCache, PlaceLookupCache>()
+                .AddTransient<IPlaceRepository, PlaceRepository>()
                 .AddGraphQLServer()
                 .AddQueryType(q => q.Name("Query"))
                 .AddTypeExtension<ADBQuery>()
@@ -60,31 +120,79 @@ namespace Api
                 .AddTypeExtension<SiteQuery>()
                 .AddTypeExtension<WillQuery>();
 
-            string[] o = { msgConfigHelper.ClientURLs };
+            builder.Services
+                .AddMediatR(cfg => cfg
+                    .RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+                    .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
+                .AddSignalR();
+                  // TURNED OFF AZURE SIGNALR BY COMMENTING THIS OUT
+                  // AND NOTHING ELSE
+                  //  .AddAzureSignalR(msgConfigHelper.SigRConnStr);
 
-            if (msgConfigHelper.ClientURLs.Trim().Contains(' '))
-                o = msgConfigHelper.ClientURLs.Split(' ');
-         
-            builder.Services.AddCors(options =>
+            //PersistedImportCacheRepository
+            builder.Services.AddControllers();
+
+            return builder;
+        }
+    }
+
+    public static class SetupMiddlewarePipeline
+    {
+        public static WebApplication SetupMiddleware(this WebApplication app)
+        {
+            
+            Serilog.Log.Information("SetupMiddleware");
+
+            if (app.Environment.IsDevelopment())
             {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins(o)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
+                app.UseDeveloperExceptionPage();
+            }
 
-            var app = builder.Build();
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+            app.UseRouting();
 
             app.UseCors("default");
+
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseEndpoints(e =>
+            {
+                e.MapHub<MsgNotificationHub>("/hub/msgnotificationhub");
+                e.MapControllers();
+            });
+
             app.MapGraphQL();
 
-            app.Run();
+            return app;
+        }
+    }
+
+
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Serilog.Log.Logger = new LoggerConfiguration()
+                           .WriteTo.Debug()
+                           .WriteTo.Console()
+                           .WriteTo.File("log.txt")
+                           .CreateBootstrapLogger();
+
+            Serilog.Log.Information("Starting up");
+
+            Console.Title = "API";
+
+            WebApplication app = WebApplication.CreateBuilder(args)
+                .RegisterServices()
+                .Build();
+
+            app.SetupMiddleware()
+                .Run();
         }
          
     }

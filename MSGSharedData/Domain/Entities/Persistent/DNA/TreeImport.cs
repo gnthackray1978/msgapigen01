@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authentication;
+
 namespace FTMContextNet.Domain.Entities.Persistent.Cache;
 
 public partial class TreeImport: IEquatable<TreeImport>
@@ -9,6 +11,16 @@ public partial class TreeImport: IEquatable<TreeImport>
     public string FileSize { get; set; }
 
     public string FileName { get; set; }
+
+    public DateTime? PersonsProcessed { get; set; }
+
+    public DateTime? DupesProcessed { get; set; }
+
+    public DateTime? MissingLocationsProcessed { get; set; }
+
+    public DateTime? GeocodingProcessed { get; set; }
+
+    public DateTime? CCProcessed { get; set; }
 
     public bool Selected { get; set; }
 
@@ -26,6 +38,12 @@ public partial class TreeImport: IEquatable<TreeImport>
             hash = hash * 23 + FileName.GetHashCode();
             hash = hash * 23 + Selected.GetHashCode();
             hash = hash * 23 + UserId.GetHashCode();
+            hash = hash * 23 + DupesProcessed.GetHashCode();
+            hash = hash * 23 + MissingLocationsProcessed.GetHashCode();
+            hash = hash * 23 + GeocodingProcessed.GetHashCode();
+            hash = hash * 23 + CCProcessed.GetHashCode();
+            hash = hash * 23 + PersonsProcessed.GetHashCode();
+
             return hash;
         } 
     }
@@ -39,6 +57,14 @@ public partial class TreeImport: IEquatable<TreeImport>
         if (this.FileName != other.FileName) return false;
         if (this.Selected != other.Selected) return false;
         if (this.UserId != other.UserId) return false;
+
+        if (this.GeocodingProcessed != other.GeocodingProcessed) return false;
+        if (this.CCProcessed != other.CCProcessed) return false;
+        if (this.DateImported!=other.DateImported) return false;
+        if (this.PersonsProcessed != other.PersonsProcessed) return false;
+        if (this.DupesProcessed  != other.DupesProcessed) return false;
+        if (this.MissingLocationsProcessed !=  other.MissingLocationsProcessed) return false;
+
 
         return true;
     }

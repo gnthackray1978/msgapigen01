@@ -63,7 +63,7 @@ public partial class GedController : ControllerBase
     public async Task<IActionResult> SelectGed([FromBody] int importId)
     {
         var r = await  _mediator
-            .Send(new UpdateImportStatusCommand(importId), new CancellationToken(false));
+            .Send(new UpdateImportStatusCommand(importId,false), new CancellationToken(false));
         
         return  this.ConvertResult(r);
     }
@@ -72,10 +72,10 @@ public partial class GedController : ControllerBase
     [Route("/ged/delete")]
     public async Task<IActionResult> DeleteGed([FromBody]int importId)
     {
-     //   if (importId == 42) return Ok();
+       // if (importId == 42) return Ok();
 
         var r = await _mediator
-            .Send(new DeleteTreeCommand(), new CancellationToken(false));
+            .Send(new DeleteTreeCommand(importId), new CancellationToken(false));
 
         return this.ConvertResult(r);
     }

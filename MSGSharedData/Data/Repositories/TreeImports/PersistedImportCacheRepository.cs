@@ -48,10 +48,55 @@ public class PersistedImportCacheRepository : IPersistedImportCacheRepository
         
         return "";
     }
-     
+      
+    public string SetDupesProcessed(int importId)
+    {
+        _persistedCacheContext.TreeImport.First(f => f.Id == importId).DupesProcessed = DateTime.Today;
+
+        _persistedCacheContext.SaveChanges();
+        return "";
+    }
+    public string SetPersonsProcessed(int importId)
+    {
+        _persistedCacheContext.TreeImport.First(f => f.Id == importId).PersonsProcessed = DateTime.Today;
+
+        _persistedCacheContext.SaveChanges();
+        return "";
+    }
+    public string SetMissingLocationsProcessed(int importId)
+    {
+        _persistedCacheContext.TreeImport.First(f => f.Id == importId).MissingLocationsProcessed = DateTime.Today;
+
+        _persistedCacheContext.SaveChanges();
+        return "";
+    }
+    public string SetGeocodingProcessed(int importId)
+    {
+        _persistedCacheContext.TreeImport.First(f => f.Id == importId).GeocodingProcessed = DateTime.Today;
+
+        _persistedCacheContext.SaveChanges();
+        return "";
+    }
+    public string SetCCProcessed(int importId)
+    {
+        _persistedCacheContext.TreeImport.First(f => f.Id == importId).CCProcessed = DateTime.Today;
+
+        _persistedCacheContext.SaveChanges();
+        return "";
+    }
+
+
     public List<TreeImport> GetImportData()
     {
         return _persistedCacheContext.TreeImport.ToList();
+    }
+
+    public List<TreeImport> GetImportData(bool selectedOnly)
+    {
+        if(!selectedOnly)
+            return _persistedCacheContext.TreeImport.ToList();
+
+        return _persistedCacheContext.TreeImport.Where(w=>w.Selected).ToList();
     }
 
     public string GedFileName()

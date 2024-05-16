@@ -125,7 +125,7 @@ public partial class AzurePersistedCacheContext : DbContext, IPersistedCacheCont
 
         foreach (var row in ftmPersonViews)
         {
-            row.Id = idx;
+            row.Id = row.PersonId;
             row.ImportId = importId;
             row.UserId = userId;
             idx++;
@@ -172,11 +172,11 @@ public partial class AzurePersistedCacheContext : DbContext, IPersistedCacheCont
         copy.ColumnMappings.Add("Id", "ID");
         copy.ColumnMappings.Add("FirstName", "FirstName");
         copy.ColumnMappings.Add("Surname", "Surname");
-        copy.ColumnMappings.Add("BirthFrom", "BirthFrom");
-        copy.ColumnMappings.Add("BirthTo", "BirthTo");
+        copy.ColumnMappings.Add("YearStart", "YearStart");
+        copy.ColumnMappings.Add("YearEnd", "YearEnd");
         copy.ColumnMappings.Add("Location", "Location");
-        copy.ColumnMappings.Add("BirthLat", "BirthLat");
-        copy.ColumnMappings.Add("BirthLong", "BirthLong");
+        copy.ColumnMappings.Add("Lat", "Lat");
+        copy.ColumnMappings.Add("Lng", "Lng");
         copy.ColumnMappings.Add("AltLocationDesc", "AltLocationDesc");
         copy.ColumnMappings.Add("AltLocation", "AltLocation");
         copy.ColumnMappings.Add("AltLat", "AltLat");

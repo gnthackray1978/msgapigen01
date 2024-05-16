@@ -65,8 +65,20 @@ namespace PlaceLibNet.Data.Repositories
         {
             return _placesContext.PlaceCache.Count(w => !w.Searched);
         }
-        
-        public void InsertIntoCache(IEnumerable<PlaceCache> placeCaches)
+
+        public void InsertPlaceIntoCache(PlaceCache pc)
+        {
+            var id = _placesContext.PlaceCache.Max(m => m.Id) + 1;
+
+            _placesContext.InsertPlaceCache(id,
+                pc.Name, pc.NameFormatted, pc.JSONResult,
+                pc.Country, pc.County,
+                pc.Searched, pc.BadData,
+                pc.Lat, pc.Long, pc.Src);
+
+        }
+
+        public void InsertPlacesIntoCache(IEnumerable<PlaceCache> placeCaches)
         {
             var id= _placesContext.PlaceCache.Max(m=>m.Id) + 1;
 
@@ -121,7 +133,7 @@ namespace PlaceLibNet.Data.Repositories
                 })
                 .Where(w => w.Src != "placelib" && w.Lat=="").ToList();
 
-            _iLog.WriteLine(placeList.Count + " places with unset lat and longs");
+            _iLog.WriteLine(placeList.Count + " places with unset lat and longs", 2);
 
             foreach (var place in placeList
                          .Where(w=>w.parsedLocation.IsValid))
@@ -226,6 +238,14 @@ namespace PlaceLibNet.Data.Repositories
             }
 
             return places;
+        }
+
+        public void UpdateCacheEntries(IEnumerable<PlaceCache> cacheEntries)
+        {
+            foreach (var place in cacheEntries)
+            {
+                _placesContext.UpdatePlaceCacheLatLong(place);
+            }
         }
     }
 }

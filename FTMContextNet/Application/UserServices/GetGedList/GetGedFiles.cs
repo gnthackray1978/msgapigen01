@@ -25,14 +25,14 @@ namespace FTMContextNet.Application.UserServices.GetGedList
         public async Task<List<ImportModel>> Handle(GetGedFilesQuery request, 
                         CancellationToken cancellationToken)
         {
-            _iLog.WriteLine("Executing GetInfoService");
+            _iLog.WriteLine("Refreshing GED List", 1);
 
             var gedFileModel = new List<ImportModel>();
             
             //todo do this in a better way
             await Task.Run(()=> 
                 gedFileModel = _iMapper
-                    .Map<List<ImportModel>>(_persistedImportCacheRepository.GetImportData()));
+                    .Map<List<ImportModel>>(_persistedImportCacheRepository.GetImportData(request.Selected)));
 
 
             return gedFileModel;
